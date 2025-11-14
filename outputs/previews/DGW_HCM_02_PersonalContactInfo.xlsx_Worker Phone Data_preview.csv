@@ -1,0 +1,11 @@
+Worker ID,Worker Type,Phone Number Type,Primary,Country ISO Code,International Phone Code,Phone Number,Phone Extension,Phone Device Type
+E123456,EE,Home,True,USA,1,7708437776,,Mobile
+E123457,EE,Work,True,USA,1,6782477465,,Landline
+E123458,EE,Work,True,USA,1,7326033643,,Landline
+E123459,EE,Home,True,USA,1,3022344619,,Landline
+E123460,EE,Work,True,USA,1,6782477121,,Landline
+E123461,EE,Home,True,USA,1,6783728726,,Mobile
+E123462,EE,Work,True,USA,1,6782472779,,Landline
+E123463,EE,Home,True,USA,1,4046645337,,Mobile
+E123464,EE,Work,True,USA,1,6782477461,,Landline
+E123465,EE,Home,True,USA,1,7703355810,,Mobile

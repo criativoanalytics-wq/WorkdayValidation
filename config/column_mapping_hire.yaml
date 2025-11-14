@@ -1,0 +1,9 @@
+#🟦 Chave: coluna no DGW Template
+#🟨 Valor: coluna correspondente no arquivo de origem (SFTP)
+column_mapping:
+  legacy_employee_id: Employee ID
+  hire_subcategory: Hire Subcategory Reason
+  hire_date_start: First Day of Work
+  hire_date_confirmed: Hire Date
+  employee_type_desc: Employee Type
+  position_code: Position Number

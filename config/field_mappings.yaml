@@ -1,0 +1,39 @@
+aliases:
+  employee_id:
+    - "Employee ID"
+    - "Worker ID"
+    - "EMPLID"
+
+  hire_date:
+    - "Hire Date"
+    - "First Day of Work"
+    - "Employment Start Date"
+
+  employee_type:
+    - "Employee Type"
+    - "Employee_Type_ID"
+
+  country_code:
+    - "Country ISO Code"
+    - "ISO3166_Alpha3"
+    - "Country"
+
+  currency_code:
+    - "Currency Code"
+    - "Currency"
+    - "CURRERNCY_CD"
+
+  email:
+    - "Work Email"
+    - "Personal Email"
+    - "Email Address"
+
+  phone:
+    - "Phone"
+    - "Phone Number"
+    - "PhoneNumber"
+
+  position_number:
+    - "Position ID"
+    - "Position_Number"
+    - "Position"

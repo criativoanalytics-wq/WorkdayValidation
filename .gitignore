@@ -1,0 +1,108 @@
+# =========================================
+#   PYTHON
+# =========================================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+*.swp
+*.swo
+
+# Virtual envs
+.venv/
+venv/
+env/
+.venv311/
+
+# Jupyter / notebooks
+.ipynb_checkpoints/
+
+# Caches
+.cache/
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# =========================================
+#   IDEs
+# =========================================
+
+# PyCharm / JetBrains
+.idea/
+# (Keep only if needed: .idea/runConfigurations/)
+shelf/
+workspace.xml
+
+# VSCode
+.vscode/
+
+# =========================================
+#   OS / GENERAL
+# =========================================
+.DS_Store
+Thumbs.db
+
+# =========================================
+#   LOGS & TEMP FILES
+# =========================================
+*.log
+*.tmp
+*.bak
+
+# =========================================
+#   PROJECT-SPECIFIC (AIDA / DGW)
+# =========================================
+
+# Local data lake
+data/raw/
+data/source/
+data/tmp/
+data/staging/
+data/output/
+data/curated/
+
+# Allow only schema / empty folders if needed
+# !data/raw/.gitkeep
+# !data/curated/.gitkeep
+
+# Index & embeddings
+index_cache/
+*.index
+*.json
+
+# Orchestration output
+output/
+exports/
+
+# YAML configs (if sensitive)
+# configs/*.yaml  # Uncomment if you want to hide mappings
+
+# Large DGW templates & Workday extracts
+templates/*.xlsx
+legacy_templates/*.xlsx
+
+# =========================================
+#   SECURITY
+# =========================================
+
+# Environment variables
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.crt
+
+# Secrets in Python
+secrets.py
+credentials.json
+token.json
+
+# =========================================
+#   OPTIONAL – uncomment if needed
+# =========================================
+# *.xlsx
+# *.docx
+# *.pdf

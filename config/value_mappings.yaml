@@ -1,0 +1,10 @@
+value_mappings:
+  employee_type:
+    Regular: Permanent
+    Intern: Intern
+    Temporary Staff: Temporary
+    Contractor: Contractor
+
+  country:
+    Brasil: BRA
+    United States: USA

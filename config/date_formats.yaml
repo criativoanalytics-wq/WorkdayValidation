@@ -1,0 +1,6 @@
+date_formats:
+  possible_formats:
+    - "%d/%m/%Y"
+    - "%m/%d/%Y"
+    - "%Y-%m-%d"
+  output_format: "%Y-%m-%d"

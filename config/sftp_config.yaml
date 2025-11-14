@@ -1,0 +1,7 @@
+sftp:
+  host: sftp.companyserver.com
+  port: 22
+  username: your_user
+  password: your_password
+  remote_path: /export/hr/dgw_files/
+  local_path: data/incoming/

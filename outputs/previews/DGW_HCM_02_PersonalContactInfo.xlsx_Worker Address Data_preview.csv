@@ -1,0 +1,11 @@
+Worker ID,Worker Type,Address Type,Primary,Event Effective Date,Address Effective Date,Country ISO Code,Address Line 1,Address Line 2,Address Line 3,Address Line 4,Address Line 5,Address Line 6,Address Line 7,Address Line 8,Address Line 9,City,City Subdivision 1,City Subdivision 2,Region,Region Subdivision 1,Region Subdivision 2,Postal Code,Communication Usage Behavior 1,Communication Usage Behavior 2,Communication Usage Behavior 3,Address Reference ID,Is Worker Remote,Address Line 1 - Local,Address Line 2 - Local,Address Line 3 - Local,Address Line 4 - Local,Address Line 5 - Local,Address Line 6 - Local,Address Line 7 - Local,Address Line 8 - Local,Address Line 9 - Local,City - Local,City Subdivision 1 - Local,City Subdivision 2 - Local,Region Subdivision 1 - Local,Region Subdivision 2 - Local
+E123456,EE,Home,True,,,ARE,Street 12e,Appartement  1,,,,,,,,Dubai,,,ARE-DU,,,,,,,,,,,,,,,,,,,,,,
+E123457,EE,Home,True,,,ARE,17 Street,Appartement  2,,,,,,,,Dubai,,,ARE-DU,,,,,,,,,,,,,,,,,,,,,,
+E123458,EE,Home,True,,,ARE,Mira Oasis 2,Appartement  3,,,,,,,,Dubai,,,ARE-DU,,,,,,,,,,,,,,,,,,,,,,
+E123459,EE,Home,True,,,ARE,Damac Hills - 2 Albizia,Appartement  4,,,,,,,,Dubai,,,ARE-DU,,,,,,,,,,,,,,,,,,,,,,
+E123460,EE,Home,True,,,ARE,the matrix,Appartement  5,,,,,,,,Dubai,,,ARE-DU,,,,,,,,,,,,,,,,,,,,,,
+E123461,EE,Home,True,,,BRA,Rua 1,,,,,,,,,Limeira,,,BRA-SP,,,13480-705,,,,,,,,,,,,,,,,,,,
+E123462,EE,Home,True,,,BRA,Rua 2,,,,,,,,,LIMEIRA,,,BRA-SP,,,13486-445,,,,,,,,,,,,,,,,,,,
+E123463,EE,Home,True,,,BRA,Rua 3,,,,,,,,,Limeira,,,BRA-SP,,,13482-504,,,,,,,,,,,,,,,,,,,
+E123464,EE,Home,True,,,BRA,Rua 4,,,,,,,,,Americana,,,BRA-SP,,,13475-150,,,,,,,,,,,,,,,,,,,
+E123465,EE,Home,True,,,BRA,Rua 5,,,,,,,,,Limeira,,,BRA-SP,,,13480-738,,,,,,,,,,,,,,,,,,,

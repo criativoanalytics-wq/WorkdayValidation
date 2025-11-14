@@ -1,0 +1,19 @@
+mappings:
+  Employee ID: USER - USER ID
+  Hire Subcategory Reason: Hire Subcategory Reason
+  First Day of Work: FIRST_DAY_WORK
+  Hire Date: HIRE_DATE
+  Employee Type: EMPLOYEE_TYPE
+  Position ID: POSITION
+  Position Title: POSITION_TITLE
+  Job Code: JOB_CODE
+  Location Reference ID: LOCATION_REF_ID
+  Position Time Type: POSITION_TYPE
+  Default Weekly Hours: STD_HOURS
+  Scheduled Weekly Hours: STD_HOURS_SCH
+  Pay Rate Type: PAYMENT_TYPE
+  Supervisory Organization Reference ID: SUPERVISORY_ORG_ID
+  Company Reference ID: Company Reference ID
+  Cost Center Reference ID: Cost Center Reference ID
+  Region Reference ID: Region Reference ID
+  Custom Organization Reference ID 1: Custom Organization Reference ID 1
