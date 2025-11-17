@@ -482,32 +482,55 @@ def main():
             // SELECT-BASED FILTERING SYSTEM
             // -------------------------------
             function applyFilters() {{
+
                 const fileValue = document.getElementById("filterFile").value;
                 const sheetValue = document.getElementById("filterSheet").value;
 
-                const rows = document.querySelectorAll("#all tbody tr.data-row");
+                const rows = document.querySelectorAll("#all tbody tr");
 
                 let visible = [];
 
                 rows.forEach(row => {{
-                    const f = row.dataset.file;
-                    const s = row.dataset.sheet;
 
-                    const matchFile = (!fileValue || f === fileValue);
-                    const matchSheet = (!sheetValue || s === sheetValue);
+                    const isData = row.classList.contains("data-row");
+                    const isDetail = row.classList.contains("detail-row");
 
-                    if (matchFile && matchSheet) {{
-                        row.style.display = "table-row";
-                        visible.push(row);
-                    }} else {{
-                        row.style.display = "none";
+                    if (isData) {{
+                        const f = row.dataset.file;
+                        const s = row.dataset.sheet;
+
+                        const matchFile = (!fileValue || f === fileValue);
+                        const matchSheet = (!sheetValue || s === sheetValue);
+
+                        if (matchFile && matchSheet) {{
+                            row.style.display = "table-row";
+
+                            const next = row.nextElementSibling;
+                            if (next && next.classList.contains("detail-row")) {{
+                                next.style.display = "table-row";
+                            }}
+
+                            visible.push(row);
+
+                        }} else {{
+                            row.style.display = "none";
+
+                            const next = row.nextElementSibling;
+                            if (next && next.classList.contains("detail-row")) {{
+                                next.style.display = "none";
+                            }}
+                        }}
                     }}
                 }});
 
                 // fix striping
-                visible.forEach((row, idx) => {{
-                    row.style.backgroundColor = idx % 2 === 0 ? "#ffffff" : "#f7f7f7";
+                let idx = 0;
+                const allRows = document.querySelectorAll("#all tbody tr.data-row:not([style*='display: none'])");
+                allRows.forEach(row => {{
+                    row.style.backgroundColor = (idx % 2 === 0) ? "#ffffff" : "#f7f7f7";
+                    idx++;
                 }});
+
             }}
 
             // Populate selects
@@ -576,13 +599,14 @@ def main():
     """
 
     # -----------------------------
-    # ALL FILES ROWS (with data-row)
+    # ALL FILES ROWS
     # -----------------------------
     for i, res in enumerate(all_results):
 
         bar = build_progress_bar(res)
         btn = f"<button class='toggle-btn' onclick=\"toggleDetails('fail_{i}')\">Show/Hide</button>" if res["Fail HTML"] else ""
 
+        # Linha principal
         styled_html += f"""
         <tr class="data-row"
             data-file="{res['File']}"
@@ -598,11 +622,12 @@ def main():
             <td>{btn}</td>
         </tr>"""
 
+        # Linha de detalhes (agora class detail-row)
         if res["Fail HTML"]:
             styled_html += f"""
-            <tr><td colspan='9'>
-                <div id='fail_{i}' style='display:none'>{res['Fail HTML']}</div>
-            </td></tr>
+            <tr class='detail-row'>
+                <td colspan='9'><div id='fail_{i}' style='display:none'>{res['Fail HTML']}</div></td>
+            </tr>
             """
 
     styled_html += "</tbody></table></div>"
@@ -611,9 +636,93 @@ def main():
     # HireStack Tab
     # -----------------------------
     if hire_exists:
-        ...
 
-    # idem para contact (não repeti para economizar espaço)
+        hire_rows = ""
+        for i, res in enumerate(all_results):
+            if res["Type"] == "HireStack":
+                bar = build_progress_bar(res)
+                btn = f"<button class='toggle-btn' onclick=\"toggleDetails('hire_fail_{i}')\">Show/Hide</button>" if res["Fail HTML"] else ""
+
+                hire_rows += f"""
+                <tr>
+                    <td>{res['File']}</td>
+                    <td>{res['Sheet']}</td>
+                    <td>{res['Total Checks']}</td>
+                    <td>{res['Failed']}</td>
+                    <td>{res['Success %']}%</td>
+                    <td>{bar}</td>
+                    <td>{btn}</td>
+                </tr>"""
+
+                if res["Fail HTML"]:
+                    hire_rows += f"""
+                    <tr class='detail-row'>
+                        <td colspan='7'><div id='hire_fail_{i}' style='display:none'>{res['Fail HTML']}</div></td>
+                    </tr>
+                    """
+
+        styled_html += f"""
+        <div id="hire" class="tab-content">
+            <h3>📘 HireStack Files</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>File</th><th>Sheet</th><th>Total Checks</th>
+                        <th>Failed</th><th>Success %</th><th>Progress</th><th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {hire_rows}
+                </tbody>
+            </table>
+        </div>
+        """
+
+    # -----------------------------
+    # Contact Info Tab
+    # -----------------------------
+    if contact_exists:
+
+        contact_rows = ""
+        for i, res in enumerate(all_results):
+            if res["Type"] == "PersonalContactInfo":
+                bar = build_progress_bar(res)
+                btn = f"<button class='toggle-btn' onclick=\"toggleDetails('contact_fail_{i}')\">Show/Hide</button>" if res["Fail HTML"] else ""
+
+                contact_rows += f"""
+                <tr>
+                    <td>{res['File']}</td>
+                    <td>{res['Sheet']}</td>
+                    <td>{res['Total Checks']}</td>
+                    <td>{res['Failed']}</td>
+                    <td>{res['Success %']}%</td>
+                    <td>{bar}</td>
+                    <td>{btn}</td>
+                </tr>"""
+
+                if res["Fail HTML"]:
+                    contact_rows += f"""
+                    <tr class='detail-row'>
+                        <td colspan='7'><div id='contact_fail_{i}' style='display:none'>{res['Fail HTML']}</div></td>
+                    </tr>
+                    """
+
+        styled_html += f"""
+        <div id="contact" class="tab-content">
+            <h3>📇 Contact Info Files</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>File</th><th>Sheet</th><th>Total Checks</th>
+                        <th>Failed</th><th>Success %</th><th>Progress</th><th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {contact_rows}
+                </tbody>
+            </table>
+        </div>
+        """
 
     styled_html += "</body></html>"
 
