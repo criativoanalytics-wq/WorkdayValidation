@@ -227,6 +227,5 @@ Cor	Significado
 🟥 Vermelho	Abaixo de 80%
 
 👨‍💻 Autor
-Lucas Silva
+Antonio Azevedo
 Desenvolvimento e Data Quality – Integração Workday
-📍 Blumenau, SC – 2025
