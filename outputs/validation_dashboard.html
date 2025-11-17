@@ -1,155 +1,226 @@
 
     <html>
     <head>
-    <meta charset='utf-8'>
-    <title>Workday DGW Validation Dashboard</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 40px;
-            background-color: #f5f7fa;
-        }
-        .none {
-            background: #ccc;   /* cinza neutro */
-        }
+        <meta charset='utf-8'>
+        <title>Workday DGW Validation Dashboard</title>
 
-        h1 {
-            color: #2A6592;
-            margin-bottom: 5px;
-        }
-        .tabs {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-            border-bottom: 2px solid #ccc;
-        }
-        .tab {
-            background: #e6f0ff;
-            padding: 10px 18px;
-            border-radius: 6px 6px 0 0;
-            cursor: pointer;
-            font-weight: bold;
-            color: #2A6592;
-        }
-        .tab.active {
-            background: #2A6592;
-            color: white;
-        }
-        .tab-content {
-            display: none;
-            background: white;
-            padding: 20px;
-            border-radius: 0 0 6px 6px;
-            border: 1px solid #ddd;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-top: 10px;
-            background-color: white;
-        }
-        th, td {
-            padding: 8px 12px;
-            text-align: center;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #e6f0ff;
-        }
-        tr:nth-child(even) {
-            background-color: #f8f8f8;
-        }
-        .fail-table {
-            margin: 8px auto;
-            width: 95%;
-            border-collapse: collapse;
-        }
-        .fail-table th, .fail-table td {
-            border: 1px solid #ddd;
-            padding: 6px;
-            font-size: 13px;
-        }
-        .fail-table th {
-            background-color: #ffe6e6;
-            color: #a00;
-        }
-        .toggle-btn {
-            background: #2A6592;
-            color: white;
-            border: none;
-            padding: 6px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-        .toggle-btn:hover {
-            background: #1d4c6f;
-        }
-        .progress {
-            background:#eee;
-            width:120px;
-            height:14px;
-            border-radius:4px;
-            overflow:hidden;
-            display:inline-block;
-        }
-        .progress-bar {
-            height:14px;
-        }
-        .success { background:#27ae60; }
-        .warning { background:#f39c12; }
-        .error { background:#c0392b; }
-    </style>
-    <script>
-    function toggleDetails(id) {
-        const container = document.getElementById(id);
-        if (!container) return;
-        const isHidden = container.style.display === "none" || container.style.display === "";
-        container.style.display = isHidden ? "block" : "none";
-    }
-    function showTab(tabName) {
-        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-        document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-        document.getElementById(tabName + "-tab").classList.add("active");
-        document.getElementById(tabName).classList.add("active");
-    }
-    </script>
+        <style>
+            body {
+                font-family: 'Segoe UI', Arial, sans-serif;
+                margin: 40px;
+                background-color: #f5f7fa;
+            }
+
+            h1 {
+                color: #2A6592;
+                margin-bottom: 5px;
+            }
+
+            .tabs {
+                margin-top: 20px;
+                display: flex;
+                gap: 10px;
+                border-bottom: 2px solid #ccc;
+            }
+
+            .tab {
+                background: #e6f0ff;
+                padding: 10px 18px;
+                border-radius: 6px 6px 0 0;
+                cursor: pointer;
+                font-weight: bold;
+                color: #2A6592;
+            }
+
+            .tab.active {
+                background: #2A6592;
+                color: white;
+            }
+
+            .tab-content {
+                display: none;
+                background: white;
+                padding: 20px;
+                border-radius: 0 0 6px 6px;
+                border: 1px solid #ddd;
+            }
+
+            .tab-content.active {
+                display: block;
+            }
+
+            table {
+                border-collapse: collapse;
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            th, td {
+                padding: 8px 12px;
+                text-align: center;
+                border-bottom: 1px solid #ddd;
+            }
+
+            th {
+                background-color: #e6f0ff;
+            }
+
+            .toggle-btn {
+                background: #2A6592;
+                color: white;
+                border: none;
+                padding: 6px 10px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 12px;
+            }
+
+            .progress {
+                background:#eee;
+                width:120px;
+                height:14px;
+                border-radius:4px;
+                overflow:hidden;
+                display:inline-block;
+            }
+
+            .progress-bar {
+                height:14px;
+            }
+
+            .success { background:#27ae60; }
+            .warning { background:#f39c12; }
+            .error { background:#c0392b; }
+        </style>
+
+        <script>
+
+            function toggleDetails(id) {
+                const c = document.getElementById(id);
+                if (!c) return;
+                c.style.display = (c.style.display === "none" || c.style.display === "") ? "block" : "none";
+            }
+
+            function showTab(tabName) {
+                document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+                document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+                document.getElementById(tabName + "-tab").classList.add("active");
+                document.getElementById(tabName).classList.add("active");
+            }
+
+            // -------------------------------
+            // SELECT-BASED FILTERING SYSTEM
+            // -------------------------------
+            function applyFilters() {
+                const fileValue = document.getElementById("filterFile").value;
+                const sheetValue = document.getElementById("filterSheet").value;
+
+                const rows = document.querySelectorAll("#all tbody tr.data-row");
+
+                let visible = [];
+
+                rows.forEach(row => {
+                    const f = row.dataset.file;
+                    const s = row.dataset.sheet;
+
+                    const matchFile = (!fileValue || f === fileValue);
+                    const matchSheet = (!sheetValue || s === sheetValue);
+
+                    if (matchFile && matchSheet) {
+                        row.style.display = "table-row";
+                        visible.push(row);
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+
+                // fix striping
+                visible.forEach((row, idx) => {
+                    row.style.backgroundColor = idx % 2 === 0 ? "#ffffff" : "#f7f7f7";
+                });
+            }
+
+            // Populate selects
+            document.addEventListener("DOMContentLoaded", () => {
+                const rows = document.querySelectorAll("#all tbody tr.data-row");
+                const fSel = document.getElementById("filterFile");
+                const sSel = document.getElementById("filterSheet");
+
+                const files = new Set();
+                const sheets = new Set();
+
+                rows.forEach(r => {
+                    files.add(r.dataset.file);
+                    sheets.add(r.dataset.sheet);
+                });
+
+                [...files].sort().forEach(f => {
+                    fSel.innerHTML += `<option value="${f}">${f}</option>`;
+                });
+
+                [...sheets].sort().forEach(s => {
+                    sSel.innerHTML += `<option value="${s}">${s}</option>`;
+                });
+            });
+        </script>
+
     </head>
     <body>
+
         <h1>Workday DGW Validation Dashboard</h1>
-        <p>Gerado em 2025-11-13 14:50:33</p>
+        <p>Generated at 2025-11-17 08:59:38</p>
 
         <div class="tabs">
-            <div class="tab active" id="all-tab" onclick="showTab('all')">📊 Todos os Arquivos</div>
-            <div class="tab" id="hire-tab" onclick="showTab('hire')">👷 HireStack</div>
-            <div class="tab" id="contact-tab" onclick="showTab('contact')">📇 Contact Info</div>
+            <div class="tab active" id="all-tab" onclick="showTab('all')">📊 All Files</div>
+            <div class='tab' id='hire-tab' onclick="showTab('hire')">👷 HireStack</div>
+            
         </div>
 
+        <!-- ALL FILES TAB -->
         <div id="all" class="tab-content active">
-        <table>
-        <thead>
-            <tr>
-                <th>File</th><th>Sheet</th><th>Type</th><th>Total Checks</th><th>Failed</th><th>Success %</th><th>Progress</th><th>Error</th><th>Details</th>
-            </tr>
-        </thead>
-        <tbody>
+            <div style="margin-bottom: 15px; display: flex; gap: 20px; align-items: center;">
+                <div>
+                    <label><b>Filter by File:</b></label><br>
+                    <select id="filterFile" onchange="applyFilters()" style="padding:5px; width:220px;">
+                        <option value="">All</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label><b>Filter by Sheet:</b></label><br>
+                    <select id="filterSheet" onchange="applyFilters()" style="padding:5px; width:220px;">
+                        <option value="">All</option>
+                    </select>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>File</th><th>Sheet</th><th>Type</th>
+                        <th>Total Checks</th><th>Failed</th><th>Success %</th>
+                        <th>Progress</th><th>Error</th><th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
     
-        <tr>
-            <td>DGW_HCM_03_HireStack.xlsx</td>
+        <tr class="data-row"
+            data-file="BR_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Hire Employee">
+            <td>BR_HCM_03_HireStack_DGW_ready.xlsx</td>
             <td>Hire Employee</td>
             <td>HireStack</td>
             <td>5</td>
-            <td>4</td>
-            <td>20.0%</td>
-            <td><div class='progress'><div class='progress-bar error' style='width:20.0%;'></div></div></td>
+            <td>5</td>
+            <td>0.0%</td>
+            <td><div class='progress'><div class='progress-bar error' style='width:2%;'></div></div></td>
             <td></td>
-            <td><button class='toggle-btn' onclick="toggleDetails('fail_0')">Mostrar/Ocultar</button></td>
-        </tr><tr><td colspan='9'><div id='fail_0' style='display:none'>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_0')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_0' style='display:none'>
             <div class="fail-container" style="margin-top:10px;">
-                <h4 style='color:#b00000;margin:10px 0;'>Detalhes de Falhas — Aba: Hire Employee</h4>
+                <h4 style='color:#b00000;margin:10px 0;'>Fault Details — Aba: Hire Employee</h4>
                 <table class="dataframe fail-table">
   <thead>
     <tr style="text-align: center;">
@@ -424,12 +495,256 @@
       <td>Regular</td>
       <td>expect_column_values_to_be_in_set</td>
     </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>7</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>8</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>9</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>11</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>12</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>13</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>14</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>15</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>16</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>17</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>18</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>19</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>20</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>21</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>22</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>23</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>24</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>25</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>26</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>27</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>28</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>29</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>30</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>31</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>32</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>33</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>34</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>35</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>36</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>37</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>38</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>39</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>40</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>41</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>42</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>43</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>44</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>45</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>46</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
   </tbody>
 </table>
             </div>
-            </div></td></tr>
-        <tr>
-            <td>DGW_HCM_03_HireStack.xlsx</td>
+            </div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="BR_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Open Positions">
+            <td>BR_HCM_03_HireStack_DGW_ready.xlsx</td>
             <td>Open Positions</td>
             <td>HireStack</td>
             <td>1</td>
@@ -437,10 +752,12 @@
             <td>0.0%</td>
             <td><div class='progress'><div class='progress-bar error' style='width:2%;'></div></div></td>
             <td></td>
-            <td><button class='toggle-btn' onclick="toggleDetails('fail_1')">Mostrar/Ocultar</button></td>
-        </tr><tr><td colspan='9'><div id='fail_1' style='display:none'>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_1')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_1' style='display:none'>
             <div class="fail-container" style="margin-top:10px;">
-                <h4 style='color:#b00000;margin:10px 0;'>Detalhes de Falhas — Aba: Open Positions</h4>
+                <h4 style='color:#b00000;margin:10px 0;'>Fault Details — Aba: Open Positions</h4>
                 <table class="dataframe fail-table">
   <thead>
     <tr style="text-align: center;">
@@ -472,9 +789,13 @@
   </tbody>
 </table>
             </div>
-            </div></td></tr>
-        <tr>
-            <td>DGW_HCM_03_HireStack.xlsx</td>
+            </div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="BR_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Job Changes">
+            <td>BR_HCM_03_HireStack_DGW_ready.xlsx</td>
             <td>Job Changes</td>
             <td>HireStack</td>
             <td>2</td>
@@ -482,10 +803,16 @@
             <td>100.0%</td>
             <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
             <td></td>
-            <td><button class='toggle-btn' onclick="toggleDetails('fail_2')">Mostrar/Ocultar</button></td>
-        </tr><tr><td colspan='9'><div id='fail_2' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Job Changes.</i></div></div></td></tr>
-        <tr>
-            <td>DGW_HCM_03_HireStack.xlsx</td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_2')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_2' style='display:none'><div class='fail-container'><i>No errors reported in the tab Job Changes.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="BR_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Background Check Data">
+            <td>BR_HCM_03_HireStack_DGW_ready.xlsx</td>
             <td>Background Check Data</td>
             <td>HireStack</td>
             <td>0</td>
@@ -493,10 +820,16 @@
             <td>0.0%</td>
             <td><div class='progress'><div class='progress-bar none' style='width:2%;'></div></div></td>
             <td></td>
-            <td><button class='toggle-btn' onclick="toggleDetails('fail_3')">Mostrar/Ocultar</button></td>
-        </tr><tr><td colspan='9'><div id='fail_3' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Background Check Data.</i></div></div></td></tr>
-        <tr>
-            <td>DGW_HCM_03_HireStack.xlsx</td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_3')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_3' style='display:none'><div class='fail-container'><i>No errors reported in the tab Background Check Data.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="BR_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Employee Compensation Data">
+            <td>BR_HCM_03_HireStack_DGW_ready.xlsx</td>
             <td>Employee Compensation Data</td>
             <td>HireStack</td>
             <td>2</td>
@@ -504,10 +837,16 @@
             <td>100.0%</td>
             <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
             <td></td>
-            <td><button class='toggle-btn' onclick="toggleDetails('fail_4')">Mostrar/Ocultar</button></td>
-        </tr><tr><td colspan='9'><div id='fail_4' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Employee Compensation Data.</i></div></div></td></tr>
-        <tr>
-            <td>DGW_HCM_03_HireStack.xlsx</td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_4')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_4' style='display:none'><div class='fail-container'><i>No errors reported in the tab Employee Compensation Data.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="BR_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Assign Employee to Pay Group">
+            <td>BR_HCM_03_HireStack_DGW_ready.xlsx</td>
             <td>Assign Employee to Pay Group</td>
             <td>HireStack</td>
             <td>2</td>
@@ -515,10 +854,16 @@
             <td>100.0%</td>
             <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
             <td></td>
-            <td><button class='toggle-btn' onclick="toggleDetails('fail_5')">Mostrar/Ocultar</button></td>
-        </tr><tr><td colspan='9'><div id='fail_5' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Assign Employee to Pay Group.</i></div></div></td></tr>
-        <tr>
-            <td>DGW_HCM_03_HireStack.xlsx</td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_5')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_5' style='display:none'><div class='fail-container'><i>No errors reported in the tab Assign Employee to Pay Group.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="BR_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Payment Election Enrollment">
+            <td>BR_HCM_03_HireStack_DGW_ready.xlsx</td>
             <td>Payment Election Enrollment</td>
             <td>HireStack</td>
             <td>3</td>
@@ -526,10 +871,16 @@
             <td>100.0%</td>
             <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
             <td></td>
-            <td><button class='toggle-btn' onclick="toggleDetails('fail_6')">Mostrar/Ocultar</button></td>
-        </tr><tr><td colspan='9'><div id='fail_6' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Payment Election Enrollment.</i></div></div></td></tr>
-        <tr>
-            <td>DGW_HCM_03_HireStack.xlsx</td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_6')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_6' style='display:none'><div class='fail-container'><i>No errors reported in the tab Payment Election Enrollment.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="BR_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Terminate Employee">
+            <td>BR_HCM_03_HireStack_DGW_ready.xlsx</td>
             <td>Terminate Employee</td>
             <td>HireStack</td>
             <td>1</td>
@@ -537,10 +888,16 @@
             <td>100.0%</td>
             <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
             <td></td>
-            <td><button class='toggle-btn' onclick="toggleDetails('fail_7')">Mostrar/Ocultar</button></td>
-        </tr><tr><td colspan='9'><div id='fail_7' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Terminate Employee.</i></div></div></td></tr>
-        <tr>
-            <td>DGW_HCM_03_HireStack.xlsx</td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_7')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_7' style='display:none'><div class='fail-container'><i>No errors reported in the tab Terminate Employee.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="BR_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Add Retiree Status">
+            <td>BR_HCM_03_HireStack_DGW_ready.xlsx</td>
             <td>Add Retiree Status</td>
             <td>HireStack</td>
             <td>1</td>
@@ -548,21 +905,283 @@
             <td>100.0%</td>
             <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
             <td></td>
-            <td><button class='toggle-btn' onclick="toggleDetails('fail_8')">Mostrar/Ocultar</button></td>
-        </tr><tr><td colspan='9'><div id='fail_8' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Add Retiree Status.</i></div></div></td></tr>
-        <tr>
-            <td>DGW_HCM_03_HireStack.xlsx</td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_8')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_8' style='display:none'><div class='fail-container'><i>No errors reported in the tab Add Retiree Status.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="BR_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Add Additional Job">
+            <td>BR_HCM_03_HireStack_DGW_ready.xlsx</td>
             <td>Add Additional Job</td>
             <td>HireStack</td>
             <td>5</td>
-            <td>0</td>
-            <td>100.0%</td>
-            <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
+            <td>3</td>
+            <td>40.0%</td>
+            <td><div class='progress'><div class='progress-bar error' style='width:40.0%;'></div></div></td>
             <td></td>
-            <td><button class='toggle-btn' onclick="toggleDetails('fail_9')">Mostrar/Ocultar</button></td>
-        </tr><tr><td colspan='9'><div id='fail_9' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Add Additional Job.</i></div></div></td></tr>
-        <tr>
-            <td>DGW_HCM_03_HireStack.xlsx</td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_9')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_9' style='display:none'>
+            <div class="fail-container" style="margin-top:10px;">
+                <h4 style='color:#b00000;margin:10px 0;'>Fault Details — Aba: Add Additional Job</h4>
+                <table class="dataframe fail-table">
+  <thead>
+    <tr style="text-align: center;">
+      <th>Column</th>
+      <th>Row</th>
+      <th>Value</th>
+      <th>Rule</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>First Day of Work</td>
+      <td>7</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>8</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>9</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>10</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>11</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>12</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>13</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>14</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>15</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>16</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>17</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>18</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>19</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>7</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>8</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>9</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>10</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>11</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>12</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>13</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>14</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>15</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>16</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>17</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>18</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>19</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>7</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>8</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>9</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>11</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>12</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>13</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>14</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>15</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>16</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>17</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>18</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>19</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+  </tbody>
+</table>
+            </div>
+            </div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="BR_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Addl Job Compensation ">
+            <td>BR_HCM_03_HireStack_DGW_ready.xlsx</td>
             <td>Addl Job Compensation </td>
             <td>HireStack</td>
             <td>2</td>
@@ -570,10 +1189,16 @@
             <td>100.0%</td>
             <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
             <td></td>
-            <td><button class='toggle-btn' onclick="toggleDetails('fail_10')">Mostrar/Ocultar</button></td>
-        </tr><tr><td colspan='9'><div id='fail_10' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Addl Job Compensation .</i></div></div></td></tr>
-        <tr>
-            <td>DGW_HCM_03_HireStack.xlsx</td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_10')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_10' style='display:none'><div class='fail-container'><i>No errors reported in the tab Addl Job Compensation .</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="BR_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Addl Job Pay Group Data">
+            <td>BR_HCM_03_HireStack_DGW_ready.xlsx</td>
             <td>Addl Job Pay Group Data</td>
             <td>HireStack</td>
             <td>1</td>
@@ -581,10 +1206,16 @@
             <td>100.0%</td>
             <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
             <td></td>
-            <td><button class='toggle-btn' onclick="toggleDetails('fail_11')">Mostrar/Ocultar</button></td>
-        </tr><tr><td colspan='9'><div id='fail_11' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Addl Job Pay Group Data.</i></div></div></td></tr>
-        <tr>
-            <td>DGW_HCM_03_HireStack.xlsx</td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_11')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_11' style='display:none'><div class='fail-container'><i>No errors reported in the tab Addl Job Pay Group Data.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="BR_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="End Additional Job">
+            <td>BR_HCM_03_HireStack_DGW_ready.xlsx</td>
             <td>End Additional Job</td>
             <td>HireStack</td>
             <td>2</td>
@@ -592,21 +1223,283 @@
             <td>100.0%</td>
             <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
             <td></td>
-            <td><button class='toggle-btn' onclick="toggleDetails('fail_12')">Mostrar/Ocultar</button></td>
-        </tr><tr><td colspan='9'><div id='fail_12' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba End Additional Job.</i></div></div></td></tr>
-        <tr>
-            <td>DGW_HCM_03_HireStack.xlsx</td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_12')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_12' style='display:none'><div class='fail-container'><i>No errors reported in the tab End Additional Job.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="BR_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Start International Assignment">
+            <td>BR_HCM_03_HireStack_DGW_ready.xlsx</td>
             <td>Start International Assignment</td>
             <td>HireStack</td>
             <td>5</td>
-            <td>0</td>
-            <td>100.0%</td>
-            <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
+            <td>3</td>
+            <td>40.0%</td>
+            <td><div class='progress'><div class='progress-bar error' style='width:40.0%;'></div></div></td>
             <td></td>
-            <td><button class='toggle-btn' onclick="toggleDetails('fail_13')">Mostrar/Ocultar</button></td>
-        </tr><tr><td colspan='9'><div id='fail_13' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Start International Assignment.</i></div></div></td></tr>
-        <tr>
-            <td>DGW_HCM_03_HireStack.xlsx</td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_13')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_13' style='display:none'>
+            <div class="fail-container" style="margin-top:10px;">
+                <h4 style='color:#b00000;margin:10px 0;'>Fault Details — Aba: Start International Assignment</h4>
+                <table class="dataframe fail-table">
+  <thead>
+    <tr style="text-align: center;">
+      <th>Column</th>
+      <th>Row</th>
+      <th>Value</th>
+      <th>Rule</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>First Day of Work</td>
+      <td>7</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>8</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>9</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>10</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>11</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>12</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>13</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>14</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>15</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>16</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>17</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>18</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>19</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>7</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>8</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>9</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>10</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>11</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>12</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>13</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>14</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>15</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>16</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>17</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>18</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>19</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>7</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>8</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>9</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>11</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>12</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>13</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>14</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>15</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>16</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>17</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>18</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>19</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+  </tbody>
+</table>
+            </div>
+            </div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="BR_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Intl Assignment Compensation">
+            <td>BR_HCM_03_HireStack_DGW_ready.xlsx</td>
             <td>Intl Assignment Compensation</td>
             <td>HireStack</td>
             <td>2</td>
@@ -614,10 +1507,16 @@
             <td>100.0%</td>
             <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
             <td></td>
-            <td><button class='toggle-btn' onclick="toggleDetails('fail_14')">Mostrar/Ocultar</button></td>
-        </tr><tr><td colspan='9'><div id='fail_14' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Intl Assignment Compensation.</i></div></div></td></tr>
-        <tr>
-            <td>DGW_HCM_03_HireStack.xlsx</td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_14')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_14' style='display:none'><div class='fail-container'><i>No errors reported in the tab Intl Assignment Compensation.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="BR_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Intl Assignment Pay Group Data">
+            <td>BR_HCM_03_HireStack_DGW_ready.xlsx</td>
             <td>Intl Assignment Pay Group Data</td>
             <td>HireStack</td>
             <td>1</td>
@@ -625,10 +1524,16 @@
             <td>100.0%</td>
             <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
             <td></td>
-            <td><button class='toggle-btn' onclick="toggleDetails('fail_15')">Mostrar/Ocultar</button></td>
-        </tr><tr><td colspan='9'><div id='fail_15' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Intl Assignment Pay Group Data.</i></div></div></td></tr>
-        <tr>
-            <td>DGW_HCM_03_HireStack.xlsx</td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_15')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_15' style='display:none'><div class='fail-container'><i>No errors reported in the tab Intl Assignment Pay Group Data.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="BR_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="End International Assignment">
+            <td>BR_HCM_03_HireStack_DGW_ready.xlsx</td>
             <td>End International Assignment</td>
             <td>HireStack</td>
             <td>2</td>
@@ -636,10 +1541,16 @@
             <td>100.0%</td>
             <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
             <td></td>
-            <td><button class='toggle-btn' onclick="toggleDetails('fail_16')">Mostrar/Ocultar</button></td>
-        </tr><tr><td colspan='9'><div id='fail_16' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba End International Assignment.</i></div></div></td></tr>
-        <tr>
-            <td>DGW_HCM_03_HireStack.xlsx</td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_16')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_16' style='display:none'><div class='fail-container'><i>No errors reported in the tab End International Assignment.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="BR_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Contract Contingent Worker">
+            <td>BR_HCM_03_HireStack_DGW_ready.xlsx</td>
             <td>Contract Contingent Worker</td>
             <td>HireStack</td>
             <td>3</td>
@@ -647,10 +1558,12 @@
             <td>66.67%</td>
             <td><div class='progress'><div class='progress-bar error' style='width:66.67%;'></div></div></td>
             <td></td>
-            <td><button class='toggle-btn' onclick="toggleDetails('fail_17')">Mostrar/Ocultar</button></td>
-        </tr><tr><td colspan='9'><div id='fail_17' style='display:none'>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_17')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_17' style='display:none'>
             <div class="fail-container" style="margin-top:10px;">
-                <h4 style='color:#b00000;margin:10px 0;'>Detalhes de Falhas — Aba: Contract Contingent Worker</h4>
+                <h4 style='color:#b00000;margin:10px 0;'>Fault Details — Aba: Contract Contingent Worker</h4>
                 <table class="dataframe fail-table">
   <thead>
     <tr style="text-align: center;">
@@ -682,9 +1595,13 @@
   </tbody>
 </table>
             </div>
-            </div></td></tr>
-        <tr>
-            <td>DGW_HCM_03_HireStack.xlsx</td>
+            </div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="BR_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="End Contingent Worker Contract">
+            <td>BR_HCM_03_HireStack_DGW_ready.xlsx</td>
             <td>End Contingent Worker Contract</td>
             <td>HireStack</td>
             <td>0</td>
@@ -692,27 +1609,29 @@
             <td>0.0%</td>
             <td><div class='progress'><div class='progress-bar none' style='width:2%;'></div></div></td>
             <td></td>
-            <td><button class='toggle-btn' onclick="toggleDetails('fail_18')">Mostrar/Ocultar</button></td>
-        </tr><tr><td colspan='9'><div id='fail_18' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba End Contingent Worker Contract.</i></div></div></td></tr></tbody></table></div>
-    <div id="hire" class="tab-content">
-        <h3>📘 Arquivos do tipo <b>HireStack</b></h3>
-        <table>
-            <thead>
-                <tr><th>File</th><th>Sheet</th><th>Total Checks</th><th>Failed</th><th>Success %</th><th>Progress</th><th>Details</th></tr>
-            </thead>
-            <tbody>
-                
-            <tr>
-                <td>DGW_HCM_03_HireStack.xlsx</td>
-                <td>Hire Employee</td>
-                <td>5</td>
-                <td>4</td>
-                <td>20.0%</td>
-                <td><div class='progress'><div class='progress-bar error' style='width:20.0%;'></div></div></td>
-                <td><button class='toggle-btn' onclick="toggleDetails('hire_fail_0')">Mostrar/Ocultar</button></td>
-            </tr><tr><td colspan='7'><div id='hire_fail_0' style='display:none'>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_18')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_18' style='display:none'><div class='fail-container'><i>No errors reported in the tab End Contingent Worker Contract.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="US_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Hire Employee">
+            <td>US_HCM_03_HireStack_DGW_ready.xlsx</td>
+            <td>Hire Employee</td>
+            <td>HireStack</td>
+            <td>5</td>
+            <td>5</td>
+            <td>0.0%</td>
+            <td><div class='progress'><div class='progress-bar error' style='width:2%;'></div></div></td>
+            <td></td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_19')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_19' style='display:none'>
             <div class="fail-container" style="margin-top:10px;">
-                <h4 style='color:#b00000;margin:10px 0;'>Detalhes de Falhas — Aba: Hire Employee</h4>
+                <h4 style='color:#b00000;margin:10px 0;'>Fault Details — Aba: Hire Employee</h4>
                 <table class="dataframe fail-table">
   <thead>
     <tr style="text-align: center;">
@@ -987,21 +1906,269 @@
       <td>Regular</td>
       <td>expect_column_values_to_be_in_set</td>
     </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>7</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>8</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>9</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>11</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>12</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>13</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>14</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>15</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>16</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>17</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>18</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>19</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>20</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>21</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>22</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>23</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>24</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>25</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>26</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>27</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>28</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>29</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>30</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>31</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>32</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>33</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>34</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>35</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>36</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>37</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>38</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>39</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>40</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>41</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>42</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>43</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>44</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>45</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>46</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
   </tbody>
 </table>
             </div>
-            </div></td></tr>
-            <tr>
-                <td>DGW_HCM_03_HireStack.xlsx</td>
-                <td>Open Positions</td>
-                <td>1</td>
-                <td>1</td>
-                <td>0.0%</td>
-                <td><div class='progress'><div class='progress-bar error' style='width:2%;'></div></div></td>
-                <td><button class='toggle-btn' onclick="toggleDetails('hire_fail_1')">Mostrar/Ocultar</button></td>
-            </tr><tr><td colspan='7'><div id='hire_fail_1' style='display:none'>
+            </div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="US_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Open Positions">
+            <td>US_HCM_03_HireStack_DGW_ready.xlsx</td>
+            <td>Open Positions</td>
+            <td>HireStack</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0.0%</td>
+            <td><div class='progress'><div class='progress-bar error' style='width:2%;'></div></div></td>
+            <td></td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_20')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_20' style='display:none'>
             <div class="fail-container" style="margin-top:10px;">
-                <h4 style='color:#b00000;margin:10px 0;'>Detalhes de Falhas — Aba: Open Positions</h4>
+                <h4 style='color:#b00000;margin:10px 0;'>Fault Details — Aba: Open Positions</h4>
                 <table class="dataframe fail-table">
   <thead>
     <tr style="text-align: center;">
@@ -1033,153 +2200,781 @@
   </tbody>
 </table>
             </div>
-            </div></td></tr>
-            <tr>
-                <td>DGW_HCM_03_HireStack.xlsx</td>
-                <td>Job Changes</td>
-                <td>2</td>
-                <td>0</td>
-                <td>100.0%</td>
-                <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
-                <td><button class='toggle-btn' onclick="toggleDetails('hire_fail_2')">Mostrar/Ocultar</button></td>
-            </tr><tr><td colspan='7'><div id='hire_fail_2' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Job Changes.</i></div></div></td></tr>
-            <tr>
-                <td>DGW_HCM_03_HireStack.xlsx</td>
-                <td>Background Check Data</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0.0%</td>
-                <td><div class='progress'><div class='progress-bar none' style='width:2%;'></div></div></td>
-                <td><button class='toggle-btn' onclick="toggleDetails('hire_fail_3')">Mostrar/Ocultar</button></td>
-            </tr><tr><td colspan='7'><div id='hire_fail_3' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Background Check Data.</i></div></div></td></tr>
-            <tr>
-                <td>DGW_HCM_03_HireStack.xlsx</td>
-                <td>Employee Compensation Data</td>
-                <td>2</td>
-                <td>0</td>
-                <td>100.0%</td>
-                <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
-                <td><button class='toggle-btn' onclick="toggleDetails('hire_fail_4')">Mostrar/Ocultar</button></td>
-            </tr><tr><td colspan='7'><div id='hire_fail_4' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Employee Compensation Data.</i></div></div></td></tr>
-            <tr>
-                <td>DGW_HCM_03_HireStack.xlsx</td>
-                <td>Assign Employee to Pay Group</td>
-                <td>2</td>
-                <td>0</td>
-                <td>100.0%</td>
-                <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
-                <td><button class='toggle-btn' onclick="toggleDetails('hire_fail_5')">Mostrar/Ocultar</button></td>
-            </tr><tr><td colspan='7'><div id='hire_fail_5' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Assign Employee to Pay Group.</i></div></div></td></tr>
-            <tr>
-                <td>DGW_HCM_03_HireStack.xlsx</td>
-                <td>Payment Election Enrollment</td>
-                <td>3</td>
-                <td>0</td>
-                <td>100.0%</td>
-                <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
-                <td><button class='toggle-btn' onclick="toggleDetails('hire_fail_6')">Mostrar/Ocultar</button></td>
-            </tr><tr><td colspan='7'><div id='hire_fail_6' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Payment Election Enrollment.</i></div></div></td></tr>
-            <tr>
-                <td>DGW_HCM_03_HireStack.xlsx</td>
-                <td>Terminate Employee</td>
-                <td>1</td>
-                <td>0</td>
-                <td>100.0%</td>
-                <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
-                <td><button class='toggle-btn' onclick="toggleDetails('hire_fail_7')">Mostrar/Ocultar</button></td>
-            </tr><tr><td colspan='7'><div id='hire_fail_7' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Terminate Employee.</i></div></div></td></tr>
-            <tr>
-                <td>DGW_HCM_03_HireStack.xlsx</td>
-                <td>Add Retiree Status</td>
-                <td>1</td>
-                <td>0</td>
-                <td>100.0%</td>
-                <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
-                <td><button class='toggle-btn' onclick="toggleDetails('hire_fail_8')">Mostrar/Ocultar</button></td>
-            </tr><tr><td colspan='7'><div id='hire_fail_8' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Add Retiree Status.</i></div></div></td></tr>
-            <tr>
-                <td>DGW_HCM_03_HireStack.xlsx</td>
-                <td>Add Additional Job</td>
-                <td>5</td>
-                <td>0</td>
-                <td>100.0%</td>
-                <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
-                <td><button class='toggle-btn' onclick="toggleDetails('hire_fail_9')">Mostrar/Ocultar</button></td>
-            </tr><tr><td colspan='7'><div id='hire_fail_9' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Add Additional Job.</i></div></div></td></tr>
-            <tr>
-                <td>DGW_HCM_03_HireStack.xlsx</td>
-                <td>Addl Job Compensation </td>
-                <td>2</td>
-                <td>0</td>
-                <td>100.0%</td>
-                <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
-                <td><button class='toggle-btn' onclick="toggleDetails('hire_fail_10')">Mostrar/Ocultar</button></td>
-            </tr><tr><td colspan='7'><div id='hire_fail_10' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Addl Job Compensation .</i></div></div></td></tr>
-            <tr>
-                <td>DGW_HCM_03_HireStack.xlsx</td>
-                <td>Addl Job Pay Group Data</td>
-                <td>1</td>
-                <td>0</td>
-                <td>100.0%</td>
-                <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
-                <td><button class='toggle-btn' onclick="toggleDetails('hire_fail_11')">Mostrar/Ocultar</button></td>
-            </tr><tr><td colspan='7'><div id='hire_fail_11' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Addl Job Pay Group Data.</i></div></div></td></tr>
-            <tr>
-                <td>DGW_HCM_03_HireStack.xlsx</td>
-                <td>End Additional Job</td>
-                <td>2</td>
-                <td>0</td>
-                <td>100.0%</td>
-                <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
-                <td><button class='toggle-btn' onclick="toggleDetails('hire_fail_12')">Mostrar/Ocultar</button></td>
-            </tr><tr><td colspan='7'><div id='hire_fail_12' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba End Additional Job.</i></div></div></td></tr>
-            <tr>
-                <td>DGW_HCM_03_HireStack.xlsx</td>
-                <td>Start International Assignment</td>
-                <td>5</td>
-                <td>0</td>
-                <td>100.0%</td>
-                <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
-                <td><button class='toggle-btn' onclick="toggleDetails('hire_fail_13')">Mostrar/Ocultar</button></td>
-            </tr><tr><td colspan='7'><div id='hire_fail_13' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Start International Assignment.</i></div></div></td></tr>
-            <tr>
-                <td>DGW_HCM_03_HireStack.xlsx</td>
-                <td>Intl Assignment Compensation</td>
-                <td>2</td>
-                <td>0</td>
-                <td>100.0%</td>
-                <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
-                <td><button class='toggle-btn' onclick="toggleDetails('hire_fail_14')">Mostrar/Ocultar</button></td>
-            </tr><tr><td colspan='7'><div id='hire_fail_14' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Intl Assignment Compensation.</i></div></div></td></tr>
-            <tr>
-                <td>DGW_HCM_03_HireStack.xlsx</td>
-                <td>Intl Assignment Pay Group Data</td>
-                <td>1</td>
-                <td>0</td>
-                <td>100.0%</td>
-                <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
-                <td><button class='toggle-btn' onclick="toggleDetails('hire_fail_15')">Mostrar/Ocultar</button></td>
-            </tr><tr><td colspan='7'><div id='hire_fail_15' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba Intl Assignment Pay Group Data.</i></div></div></td></tr>
-            <tr>
-                <td>DGW_HCM_03_HireStack.xlsx</td>
-                <td>End International Assignment</td>
-                <td>2</td>
-                <td>0</td>
-                <td>100.0%</td>
-                <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
-                <td><button class='toggle-btn' onclick="toggleDetails('hire_fail_16')">Mostrar/Ocultar</button></td>
-            </tr><tr><td colspan='7'><div id='hire_fail_16' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba End International Assignment.</i></div></div></td></tr>
-            <tr>
-                <td>DGW_HCM_03_HireStack.xlsx</td>
-                <td>Contract Contingent Worker</td>
-                <td>3</td>
-                <td>1</td>
-                <td>66.67%</td>
-                <td><div class='progress'><div class='progress-bar error' style='width:66.67%;'></div></div></td>
-                <td><button class='toggle-btn' onclick="toggleDetails('hire_fail_17')">Mostrar/Ocultar</button></td>
-            </tr><tr><td colspan='7'><div id='hire_fail_17' style='display:none'>
+            </div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="US_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Job Changes">
+            <td>US_HCM_03_HireStack_DGW_ready.xlsx</td>
+            <td>Job Changes</td>
+            <td>HireStack</td>
+            <td>2</td>
+            <td>0</td>
+            <td>100.0%</td>
+            <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
+            <td></td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_21')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_21' style='display:none'><div class='fail-container'><i>No errors reported in the tab Job Changes.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="US_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Background Check Data">
+            <td>US_HCM_03_HireStack_DGW_ready.xlsx</td>
+            <td>Background Check Data</td>
+            <td>HireStack</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0.0%</td>
+            <td><div class='progress'><div class='progress-bar none' style='width:2%;'></div></div></td>
+            <td></td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_22')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_22' style='display:none'><div class='fail-container'><i>No errors reported in the tab Background Check Data.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="US_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Employee Compensation Data">
+            <td>US_HCM_03_HireStack_DGW_ready.xlsx</td>
+            <td>Employee Compensation Data</td>
+            <td>HireStack</td>
+            <td>2</td>
+            <td>0</td>
+            <td>100.0%</td>
+            <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
+            <td></td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_23')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_23' style='display:none'><div class='fail-container'><i>No errors reported in the tab Employee Compensation Data.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="US_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Assign Employee to Pay Group">
+            <td>US_HCM_03_HireStack_DGW_ready.xlsx</td>
+            <td>Assign Employee to Pay Group</td>
+            <td>HireStack</td>
+            <td>2</td>
+            <td>0</td>
+            <td>100.0%</td>
+            <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
+            <td></td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_24')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_24' style='display:none'><div class='fail-container'><i>No errors reported in the tab Assign Employee to Pay Group.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="US_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Payment Election Enrollment">
+            <td>US_HCM_03_HireStack_DGW_ready.xlsx</td>
+            <td>Payment Election Enrollment</td>
+            <td>HireStack</td>
+            <td>3</td>
+            <td>0</td>
+            <td>100.0%</td>
+            <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
+            <td></td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_25')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_25' style='display:none'><div class='fail-container'><i>No errors reported in the tab Payment Election Enrollment.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="US_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Terminate Employee">
+            <td>US_HCM_03_HireStack_DGW_ready.xlsx</td>
+            <td>Terminate Employee</td>
+            <td>HireStack</td>
+            <td>1</td>
+            <td>0</td>
+            <td>100.0%</td>
+            <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
+            <td></td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_26')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_26' style='display:none'><div class='fail-container'><i>No errors reported in the tab Terminate Employee.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="US_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Add Retiree Status">
+            <td>US_HCM_03_HireStack_DGW_ready.xlsx</td>
+            <td>Add Retiree Status</td>
+            <td>HireStack</td>
+            <td>1</td>
+            <td>0</td>
+            <td>100.0%</td>
+            <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
+            <td></td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_27')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_27' style='display:none'><div class='fail-container'><i>No errors reported in the tab Add Retiree Status.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="US_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Add Additional Job">
+            <td>US_HCM_03_HireStack_DGW_ready.xlsx</td>
+            <td>Add Additional Job</td>
+            <td>HireStack</td>
+            <td>5</td>
+            <td>3</td>
+            <td>40.0%</td>
+            <td><div class='progress'><div class='progress-bar error' style='width:40.0%;'></div></div></td>
+            <td></td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_28')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_28' style='display:none'>
             <div class="fail-container" style="margin-top:10px;">
-                <h4 style='color:#b00000;margin:10px 0;'>Detalhes de Falhas — Aba: Contract Contingent Worker</h4>
+                <h4 style='color:#b00000;margin:10px 0;'>Fault Details — Aba: Add Additional Job</h4>
+                <table class="dataframe fail-table">
+  <thead>
+    <tr style="text-align: center;">
+      <th>Column</th>
+      <th>Row</th>
+      <th>Value</th>
+      <th>Rule</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>First Day of Work</td>
+      <td>7</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>8</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>9</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>10</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>11</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>12</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>13</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>14</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>15</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>16</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>17</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>18</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>19</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>7</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>8</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>9</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>10</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>11</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>12</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>13</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>14</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>15</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>16</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>17</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>18</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>19</td>
+      <td>EMP</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>7</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>8</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>9</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>11</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>12</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>13</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>14</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>15</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>16</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>17</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>18</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>19</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+  </tbody>
+</table>
+            </div>
+            </div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="US_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Addl Job Compensation ">
+            <td>US_HCM_03_HireStack_DGW_ready.xlsx</td>
+            <td>Addl Job Compensation </td>
+            <td>HireStack</td>
+            <td>2</td>
+            <td>0</td>
+            <td>100.0%</td>
+            <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
+            <td></td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_29')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_29' style='display:none'><div class='fail-container'><i>No errors reported in the tab Addl Job Compensation .</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="US_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Addl Job Pay Group Data">
+            <td>US_HCM_03_HireStack_DGW_ready.xlsx</td>
+            <td>Addl Job Pay Group Data</td>
+            <td>HireStack</td>
+            <td>1</td>
+            <td>0</td>
+            <td>100.0%</td>
+            <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
+            <td></td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_30')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_30' style='display:none'><div class='fail-container'><i>No errors reported in the tab Addl Job Pay Group Data.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="US_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="End Additional Job">
+            <td>US_HCM_03_HireStack_DGW_ready.xlsx</td>
+            <td>End Additional Job</td>
+            <td>HireStack</td>
+            <td>2</td>
+            <td>0</td>
+            <td>100.0%</td>
+            <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
+            <td></td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_31')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_31' style='display:none'><div class='fail-container'><i>No errors reported in the tab End Additional Job.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="US_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Start International Assignment">
+            <td>US_HCM_03_HireStack_DGW_ready.xlsx</td>
+            <td>Start International Assignment</td>
+            <td>HireStack</td>
+            <td>5</td>
+            <td>3</td>
+            <td>40.0%</td>
+            <td><div class='progress'><div class='progress-bar error' style='width:40.0%;'></div></div></td>
+            <td></td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_32')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_32' style='display:none'>
+            <div class="fail-container" style="margin-top:10px;">
+                <h4 style='color:#b00000;margin:10px 0;'>Fault Details — Aba: Start International Assignment</h4>
+                <table class="dataframe fail-table">
+  <thead>
+    <tr style="text-align: center;">
+      <th>Column</th>
+      <th>Row</th>
+      <th>Value</th>
+      <th>Rule</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>First Day of Work</td>
+      <td>7</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>8</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>9</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>10</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>11</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>12</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>13</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>14</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>15</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>16</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>17</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>18</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>First Day of Work</td>
+      <td>19</td>
+      <td><NA></td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>7</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>8</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>9</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>10</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>11</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>12</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>13</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>14</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>15</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>16</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>17</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>18</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Employee Type</td>
+      <td>19</td>
+      <td>TEST</td>
+      <td>expect_column_values_to_be_in_set</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>7</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>8</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>9</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>11</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>12</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>13</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>14</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>15</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>16</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>17</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>18</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+    <tr>
+      <td>Position ID</td>
+      <td>19</td>
+      <td>NaN</td>
+      <td>expect_column_values_to_not_be_null</td>
+    </tr>
+  </tbody>
+</table>
+            </div>
+            </div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="US_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Intl Assignment Compensation">
+            <td>US_HCM_03_HireStack_DGW_ready.xlsx</td>
+            <td>Intl Assignment Compensation</td>
+            <td>HireStack</td>
+            <td>2</td>
+            <td>0</td>
+            <td>100.0%</td>
+            <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
+            <td></td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_33')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_33' style='display:none'><div class='fail-container'><i>No errors reported in the tab Intl Assignment Compensation.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="US_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Intl Assignment Pay Group Data">
+            <td>US_HCM_03_HireStack_DGW_ready.xlsx</td>
+            <td>Intl Assignment Pay Group Data</td>
+            <td>HireStack</td>
+            <td>1</td>
+            <td>0</td>
+            <td>100.0%</td>
+            <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
+            <td></td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_34')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_34' style='display:none'><div class='fail-container'><i>No errors reported in the tab Intl Assignment Pay Group Data.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="US_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="End International Assignment">
+            <td>US_HCM_03_HireStack_DGW_ready.xlsx</td>
+            <td>End International Assignment</td>
+            <td>HireStack</td>
+            <td>2</td>
+            <td>0</td>
+            <td>100.0%</td>
+            <td><div class='progress'><div class='progress-bar success' style='width:100.0%;'></div></div></td>
+            <td></td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_35')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_35' style='display:none'><div class='fail-container'><i>No errors reported in the tab End International Assignment.</i></div></div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="US_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="Contract Contingent Worker">
+            <td>US_HCM_03_HireStack_DGW_ready.xlsx</td>
+            <td>Contract Contingent Worker</td>
+            <td>HireStack</td>
+            <td>3</td>
+            <td>1</td>
+            <td>66.67%</td>
+            <td><div class='progress'><div class='progress-bar error' style='width:66.67%;'></div></div></td>
+            <td></td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_36')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_36' style='display:none'>
+            <div class="fail-container" style="margin-top:10px;">
+                <h4 style='color:#b00000;margin:10px 0;'>Fault Details — Aba: Contract Contingent Worker</h4>
                 <table class="dataframe fail-table">
   <thead>
     <tr style="text-align: center;">
@@ -1211,30 +3006,23 @@
   </tbody>
 </table>
             </div>
-            </div></td></tr>
-            <tr>
-                <td>DGW_HCM_03_HireStack.xlsx</td>
-                <td>End Contingent Worker Contract</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0.0%</td>
-                <td><div class='progress'><div class='progress-bar none' style='width:2%;'></div></div></td>
-                <td><button class='toggle-btn' onclick="toggleDetails('hire_fail_18')">Mostrar/Ocultar</button></td>
-            </tr><tr><td colspan='7'><div id='hire_fail_18' style='display:none'><div class='fail-container'><i>Nenhuma falha registrada na aba End Contingent Worker Contract.</i></div></div></td></tr>
-            </tbody>
-        </table>
-    </div>
-    
-    <div id="contact" class="tab-content">
-        <h3>📇 Arquivos do tipo <b>PersonalContactInfo</b></h3>
-        <table>
-            <thead>
-                <tr><th>File</th><th>Sheet</th><th>Total Checks</th><th>Failed</th><th>Success %</th><th>Progress</th><th>Details</th></tr>
-            </thead>
-            <tbody>
-                <tr><td colspan='7'><i>Nenhum arquivo do tipo PersonalContactInfo encontrado.</i></td></tr>
-            </tbody>
-        </table>
-    </div>
-    </body></html>
-    
+            </div>
+            </td></tr>
+            
+        <tr class="data-row"
+            data-file="US_HCM_03_HireStack_DGW_ready.xlsx"
+            data-sheet="End Contingent Worker Contract">
+            <td>US_HCM_03_HireStack_DGW_ready.xlsx</td>
+            <td>End Contingent Worker Contract</td>
+            <td>HireStack</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0.0%</td>
+            <td><div class='progress'><div class='progress-bar none' style='width:2%;'></div></div></td>
+            <td></td>
+            <td><button class='toggle-btn' onclick="toggleDetails('fail_37')">Show/Hide</button></td>
+        </tr>
+            <tr><td colspan='9'>
+                <div id='fail_37' style='display:none'><div class='fail-container'><i>No errors reported in the tab End Contingent Worker Contract.</i></div></div>
+            </td></tr>
+            </tbody></table></div></body></html>

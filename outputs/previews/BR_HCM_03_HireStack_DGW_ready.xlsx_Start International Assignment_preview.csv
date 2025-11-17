@@ -1,0 +1,11 @@
+Employee ID,International Assignment Type,Event Subcategory Reason,Employee Type,Start Date,Expected Assignment End Date,First Day of Work,End Employment Date,Position ID,Job Posting Title,Job Profile Code,Position Title,Business Title,Location Reference ID,Work Space Reference ID,Position Time Type,Work Shift Reference ID,Work Hours Profile Reference ID,Default Weekly Hours,Scheduled Weekly Hours,Working Time Frequency,Working Time Unit Type,Working Time Value,Specify Paid FTE,Paid FTE,Specify Working FTE,Working FTE,Pay Rate Type,Additional Job Classification Reference ID,Company Insider Type Reference ID,Annual Work Period,Disbursement Plan Period,Work Study,Workers Compensation Code Override,Staffing Model,Supervisory Organization Reference ID,Company Reference ID,Cost Center Reference ID,Region Reference ID,Custom Organization Reference ID 1,Flexible Work Arrangement Type Reference ID,Hours Per Week,Days Per Week
+E123462,TEST,TEST,TEST,2025-01-01,,,,,,321,,,123,,T,,,40,40,,,,,,,,T,,,,,,,,123,,,,,,,
+E123463,TEST,TEST,TEST,2025-01-01,,,,,,321,,,123,,T,,,40,40,,,,,,,,T,,,,,,,,124,,,,,,,
+E123464,TEST,TEST,TEST,2025-01-01,,,,,,321,,,123,,T,,,40,40,,,,,,,,T,,,,,,,,125,,,,,,,
+E123465,TEST,TEST,TEST,2025-01-01,,,,,,321,,,123,,T,,,40,40,,,,,,,,T,,,,,,,,126,,,,,,,
+E123466,TEST,TEST,TEST,2025-01-01,,,,,,321,,,123,,T,,,40,40,,,,,,,,T,,,,,,,,127,,,,,,,
+E123467,TEST,TEST,TEST,2025-01-01,,,,,,321,,D,123,,T,,,40,40,,,,,,,,T,,,,,,,,128,,,,,,,
+E123468,TEST,TEST,TEST,2025-01-01,,,,,,321,,,123,,T,,,40,40,,,,,,,,T,,,,,,,,129,,,,,,,
+E123469,TEST,TEST,TEST,2025-01-01,,,,,,321,S,,123,,T,,,40,40,,,,,,,,T,,,,,,,,130,,,,,,,
+E123470,TEST,TEST,TEST,2025-01-01,,,,,,321,,,123,,T,,,40,40,,,,,,,,T,,,,,,,,131,,,,,,,
+E123471,TEST,TEST,TEST,2025-01-01,,,,,,321,,,123,,T,,,40,40,,,,,,,,T,,,,,,,,132,,,,,,,

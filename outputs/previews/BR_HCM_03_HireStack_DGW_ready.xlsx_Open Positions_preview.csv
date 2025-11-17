@@ -1,0 +1,11 @@
+Position ID,Job Posting Title,Job Code,Position Title,Business Title,Location Reference ID,Work Space Reference ID,Position Time Type,Work Shift Reference ID,Work Hours Profile Reference ID,Default Weekly Hours,Scheduled Weekly Hours,Working Time Frequency,Working Time Unit Type,Working Time Value,Specify Paid FTE,Paid FTE,Specify Working FTE,Working FTE,Pay Rate Type,Additional Job Classification Reference ID,Company Insider Type Reference ID,Annual Work Period,Disbursement Plan Period,Work Study,Workers Compensation Code Override,Staffing Model,Supervisory Organization Reference ID,Company Reference ID,Cost Center Reference ID,Region Reference ID,Custom Organization Reference ID 1
+,,P_0009,Junior Accountant,,Brazil-1,,Full_Time,,,40,40,,,,,,,,Salary,,,,,,,,10000000,,,,
+P123457,,P_0010,Vice President,,Brazil-2,,Full_Time,,,40,40,,,,,,,,Salary,,,,,,,,10000000,,,,
+P123458,,P_0001,CFO,,Brazil-3,,Full_Time,,,40,40,,,,,,,,Salary,,,,,,,,10000000,,,,
+P123459,,P_0002,Controller,,Brazil-4,,Full_Time,,,40,40,,,,,,,,Salary,,,,,,,,10000000,,,,
+P123460,,P_0003,Director,,China-1,,Full_Time,,,40,40,,,,,,,,Salary,,,,,,,,10000000,,,,
+,,P_0004,Senior Manager,,China-1,,Full_Time,,,40,40,,,,,,,,Salary,,,,,,,,10000005,,,,
+P123462,,P_0005,Accountant,,China-1,,Full_Time,,,40,40,,,,,,,,Salary,,,,,,,,10000000,,,,
+P123463,,P_0006,Accountant Manager,,China-1,,Full_Time,,,40,40,,,,,,,,Salary,,,,,,,,10000008,,,,
+P123464,,P_0007,Senior Accountant,,China-1,,Full_Time,,,40,40,,,,,,,,Salary,,,,,,,,10000000,,,,
+P123465,,P_0008,IT Specialist,,Denmark-1,,Part_Time,,,40,40,,,,,,,,Salary,,,,,,,,10000001,,,,

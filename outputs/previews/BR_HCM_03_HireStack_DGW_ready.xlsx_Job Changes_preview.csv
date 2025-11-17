@@ -1,0 +1,11 @@
+Employee ID,Effective Date,Effective Sequence,Event Subcategory Reason,Current Position ID,Current Supervisory Organization ID,Headcount Option,New Position ID,Staffing Model,New Supervisory Organization ID,Employee Type,Job Posting Title,Job Profile Code,Position Title,Business Title,Location Reference ID,Work Space Reference ID,Position Time Type,Work Shift Reference ID,Work Hours Profile Reference ID,Default Weekly Hours,Scheduled Weekly Hours,Working Time Frequency,Working Time Unit Type,Working Time Value,Pay Rate Type,Additional Job Classification Reference ID,Company Insider Type Reference ID,Annual Work Period,Disbursement Plan Period,Workers Compensation Code Override,Company Reference ID,Cost Center Reference ID,Region Reference ID,Custom Organization Reference ID 1,Flexible Work Arrangement Type Reference ID,Hours Per Week,Days Per Week
+E123462,2026-01-01,,C,P123457,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+E123463,2026-01-01,,C,P123458,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+E123464,2026-01-01,,C,P123459,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+E123465,2026-01-02,,C,P123460,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+E123466,2026-01-03,,C,P123461,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+E123467,2026-01-04,,C,P123462,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+E123468,2026-01-05,,C,P123463,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+E123469,2026-01-06,,C,P123464,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+E123470,2026-01-07,,C,P123465,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+E123471,2026-01-08,,C,P123466,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

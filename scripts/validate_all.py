@@ -9,7 +9,7 @@ from great_expectations.dataset import PandasDataset
 # Caminhos base
 # =============================================================================
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-DATA_DIR = os.path.join(BASE_DIR, "data")
+DATA_DIR = os.path.join(BASE_DIR, "data/curated")
 CONFIG_FILE = os.path.join(BASE_DIR, "config", "field_mappings.yaml")
 OUTPUT_DIR = os.path.join(BASE_DIR, "outputs")
 PREVIEW_DIR = os.path.join(OUTPUT_DIR, "previews")
@@ -82,22 +82,22 @@ def validate_dgw(file_path):
         valid_sheets = [s for s in wb.sheetnames if not s.strip().startswith(">")]
         wb.close()
     except Exception as e:
-        print(f"⚠️ Erro ao abrir workbook {file_path}: {e}")
+        print(f"⚠️ Error opening workbook {file_path}: {e}")
         valid_sheets = []
 
     if not valid_sheets:
-        print(f"⚠️ Nenhuma aba válida encontrada em {file_path}")
+        print(f"⚠️ No valid tabs found in {file_path}")
         return []
 
     all_results = []
 
     for sheet_name in valid_sheets:
-        print(f"\n➡️  Lendo {os.path.basename(file_path)} → aba '{sheet_name}' (cabeçalho: linha 6)")
+        print(f"\n➡️  Reading {os.path.basename(file_path)} → aba '{sheet_name}' (Header: line 6)")
 
         try:
             df = pd.read_excel(file_path, sheet_name=sheet_name, header=5)
         except Exception as e:
-            print(f"❌ Erro ao ler a aba '{sheet_name}': {e}")
+            print(f"❌ Error reading tab '{sheet_name}': {e}")
             all_results.append({
                 "File": os.path.basename(file_path),
                 "Sheet": sheet_name,
@@ -110,13 +110,13 @@ def validate_dgw(file_path):
             })
             continue
 
-        print(f"Colunas detectadas: {list(df.columns)}")
+        #print(f"Columns detected: {list(df.columns)}")
 
         # Preview opcional
         if DEBUG_MODE:
             preview_path = os.path.join(PREVIEW_DIR, f"{os.path.basename(file_path)}_{sheet_name}_preview.csv")
             df.head(10).to_csv(preview_path, index=False)
-            print(f"🧩 Preview salvo em: {preview_path}")
+            print(f"🧩 Preview saved in: {preview_path}")
 
         # Ajuste de formato de data
         #hire_col = get_col(df, "hire_date")
@@ -185,7 +185,7 @@ def validate_dgw(file_path):
                     )
 
                 except Exception as e:
-                    print(f"⚠️ Erro ao validar formato de data na coluna '{hire}': {e}")
+                    print(f"⚠️ Error validating date format in column '{hire}': {e}")
 
             # 3) Outras regras
             if etype:
@@ -210,7 +210,7 @@ def validate_dgw(file_path):
         try:
             result = ge_df.validate(result_format="COMPLETE")
         except Exception as e:
-            print(f"❌ Erro interno durante a validação da aba '{sheet_name}': {e}")
+            print(f"❌ Internal error during tab validation '{sheet_name}': {e}")
             result = {"results": [], "statistics": {"evaluated_expectations": 0}}
             all_results.append({
                 "File": os.path.basename(file_path),
@@ -277,14 +277,14 @@ def validate_dgw(file_path):
 
             fail_html = f"""
             <div class="fail-container" style="margin-top:10px;">
-                <h4 style='color:#b00000;margin:10px 0;'>Detalhes de Falhas — Aba: {sheet_name}</h4>
+                <h4 style='color:#b00000;margin:10px 0;'>Fault Details — Aba: {sheet_name}</h4>
                 {fail_html}
             </div>
             """
-            print(f"❌ Detalhes de falhas salvos em: {fail_path}")
+            print(f"❌ Details of saved failures in: {fail_path}")
         else:
-            fail_html = f"<div class='fail-container'><i>Nenhuma falha registrada na aba {sheet_name}.</i></div>"
-            print(f"✅ Nenhuma falha detalhada registrada na aba {sheet_name}.")
+            fail_html = f"<div class='fail-container'><i>No errors reported in the tab {sheet_name}.</i></div>"
+            print(f"✅ No detailed faults recorded in the tab {sheet_name}.")
 
         # =========================================================
         # ✅ Adiciona resultado da aba
@@ -327,8 +327,12 @@ def build_progress_bar(res):
 # Execução principal
 # =============================================================================
 def main():
+
     all_results = []
 
+    # ---------------------------------------------------------
+    # Load all Excel files
+    # ---------------------------------------------------------
     for file in os.listdir(DATA_DIR):
         if file.lower().endswith(".xlsx"):
             path = os.path.join(DATA_DIR, file)
@@ -349,158 +353,240 @@ def main():
                 })
 
     if not all_results:
-        print("⚠️ Nenhum arquivo .xlsx encontrado na pasta data/")
+        print("⚠️ No .xlsx files were found in /data/")
         return
 
-    # -------------------------------------------------------------------------
-    # HTML Dashboard
-    # -------------------------------------------------------------------------
+    # ---------------------------------------------------------
+    # Detect which tabs must appear
+    # ---------------------------------------------------------
+    hire_exists = any(r["Type"] == "HireStack" for r in all_results)
+    contact_exists = any(r["Type"] == "PersonalContactInfo" for r in all_results)
+
+    hire_tab_html = "<div class='tab' id='hire-tab' onclick=\"showTab('hire')\">👷 HireStack</div>" if hire_exists else ""
+    contact_tab_html = "<div class='tab' id='contact-tab' onclick=\"showTab('contact')\">📇 Contact Info</div>" if contact_exists else ""
+
+    # ---------------------------------------------------------
+    # HTML Start
+    # ---------------------------------------------------------
     styled_html = f"""
     <html>
     <head>
-    <meta charset='utf-8'>
-    <title>Workday DGW Validation Dashboard</title>
-    <style>
-        body {{
-            font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 40px;
-            background-color: #f5f7fa;
-        }}
-        .none {{
-            background: #ccc;   /* cinza neutro */
-        }}
+        <meta charset='utf-8'>
+        <title>Workday DGW Validation Dashboard</title>
 
-        h1 {{
-            color: #2A6592;
-            margin-bottom: 5px;
-        }}
-        .tabs {{
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-            border-bottom: 2px solid #ccc;
-        }}
-        .tab {{
-            background: #e6f0ff;
-            padding: 10px 18px;
-            border-radius: 6px 6px 0 0;
-            cursor: pointer;
-            font-weight: bold;
-            color: #2A6592;
-        }}
-        .tab.active {{
-            background: #2A6592;
-            color: white;
-        }}
-        .tab-content {{
-            display: none;
-            background: white;
-            padding: 20px;
-            border-radius: 0 0 6px 6px;
-            border: 1px solid #ddd;
-        }}
-        .tab-content.active {{
-            display: block;
-        }}
-        table {{
-            border-collapse: collapse;
-            width: 100%;
-            margin-top: 10px;
-            background-color: white;
-        }}
-        th, td {{
-            padding: 8px 12px;
-            text-align: center;
-            border-bottom: 1px solid #ddd;
-        }}
-        th {{
-            background-color: #e6f0ff;
-        }}
-        tr:nth-child(even) {{
-            background-color: #f8f8f8;
-        }}
-        .fail-table {{
-            margin: 8px auto;
-            width: 95%;
-            border-collapse: collapse;
-        }}
-        .fail-table th, .fail-table td {{
-            border: 1px solid #ddd;
-            padding: 6px;
-            font-size: 13px;
-        }}
-        .fail-table th {{
-            background-color: #ffe6e6;
-            color: #a00;
-        }}
-        .toggle-btn {{
-            background: #2A6592;
-            color: white;
-            border: none;
-            padding: 6px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
-        }}
-        .toggle-btn:hover {{
-            background: #1d4c6f;
-        }}
-        .progress {{
-            background:#eee;
-            width:120px;
-            height:14px;
-            border-radius:4px;
-            overflow:hidden;
-            display:inline-block;
-        }}
-        .progress-bar {{
-            height:14px;
-        }}
-        .success {{ background:#27ae60; }}
-        .warning {{ background:#f39c12; }}
-        .error {{ background:#c0392b; }}
-    </style>
-    <script>
-    function toggleDetails(id) {{
-        const container = document.getElementById(id);
-        if (!container) return;
-        const isHidden = container.style.display === "none" || container.style.display === "";
-        container.style.display = isHidden ? "block" : "none";
-    }}
-    function showTab(tabName) {{
-        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-        document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-        document.getElementById(tabName + "-tab").classList.add("active");
-        document.getElementById(tabName).classList.add("active");
-    }}
-    </script>
+        <style>
+            body {{
+                font-family: 'Segoe UI', Arial, sans-serif;
+                margin: 40px;
+                background-color: #f5f7fa;
+            }}
+
+            h1 {{
+                color: #2A6592;
+                margin-bottom: 5px;
+            }}
+
+            .tabs {{
+                margin-top: 20px;
+                display: flex;
+                gap: 10px;
+                border-bottom: 2px solid #ccc;
+            }}
+
+            .tab {{
+                background: #e6f0ff;
+                padding: 10px 18px;
+                border-radius: 6px 6px 0 0;
+                cursor: pointer;
+                font-weight: bold;
+                color: #2A6592;
+            }}
+
+            .tab.active {{
+                background: #2A6592;
+                color: white;
+            }}
+
+            .tab-content {{
+                display: none;
+                background: white;
+                padding: 20px;
+                border-radius: 0 0 6px 6px;
+                border: 1px solid #ddd;
+            }}
+
+            .tab-content.active {{
+                display: block;
+            }}
+
+            table {{
+                border-collapse: collapse;
+                width: 100%;
+                margin-top: 10px;
+            }}
+
+            th, td {{
+                padding: 8px 12px;
+                text-align: center;
+                border-bottom: 1px solid #ddd;
+            }}
+
+            th {{
+                background-color: #e6f0ff;
+            }}
+
+            .toggle-btn {{
+                background: #2A6592;
+                color: white;
+                border: none;
+                padding: 6px 10px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 12px;
+            }}
+
+            .progress {{
+                background:#eee;
+                width:120px;
+                height:14px;
+                border-radius:4px;
+                overflow:hidden;
+                display:inline-block;
+            }}
+
+            .progress-bar {{
+                height:14px;
+            }}
+
+            .success {{ background:#27ae60; }}
+            .warning {{ background:#f39c12; }}
+            .error {{ background:#c0392b; }}
+        </style>
+
+        <script>
+
+            function toggleDetails(id) {{
+                const c = document.getElementById(id);
+                if (!c) return;
+                c.style.display = (c.style.display === "none" || c.style.display === "") ? "block" : "none";
+            }}
+
+            function showTab(tabName) {{
+                document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+                document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+                document.getElementById(tabName + "-tab").classList.add("active");
+                document.getElementById(tabName).classList.add("active");
+            }}
+
+            // -------------------------------
+            // SELECT-BASED FILTERING SYSTEM
+            // -------------------------------
+            function applyFilters() {{
+                const fileValue = document.getElementById("filterFile").value;
+                const sheetValue = document.getElementById("filterSheet").value;
+
+                const rows = document.querySelectorAll("#all tbody tr.data-row");
+
+                let visible = [];
+
+                rows.forEach(row => {{
+                    const f = row.dataset.file;
+                    const s = row.dataset.sheet;
+
+                    const matchFile = (!fileValue || f === fileValue);
+                    const matchSheet = (!sheetValue || s === sheetValue);
+
+                    if (matchFile && matchSheet) {{
+                        row.style.display = "table-row";
+                        visible.push(row);
+                    }} else {{
+                        row.style.display = "none";
+                    }}
+                }});
+
+                // fix striping
+                visible.forEach((row, idx) => {{
+                    row.style.backgroundColor = idx % 2 === 0 ? "#ffffff" : "#f7f7f7";
+                }});
+            }}
+
+            // Populate selects
+            document.addEventListener("DOMContentLoaded", () => {{
+                const rows = document.querySelectorAll("#all tbody tr.data-row");
+                const fSel = document.getElementById("filterFile");
+                const sSel = document.getElementById("filterSheet");
+
+                const files = new Set();
+                const sheets = new Set();
+
+                rows.forEach(r => {{
+                    files.add(r.dataset.file);
+                    sheets.add(r.dataset.sheet);
+                }});
+
+                [...files].sort().forEach(f => {{
+                    fSel.innerHTML += `<option value="${{f}}">${{f}}</option>`;
+                }});
+
+                [...sheets].sort().forEach(s => {{
+                    sSel.innerHTML += `<option value="${{s}}">${{s}}</option>`;
+                }});
+            }});
+        </script>
+
     </head>
     <body>
+
         <h1>Workday DGW Validation Dashboard</h1>
-        <p>Gerado em {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
+        <p>Generated at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
 
         <div class="tabs">
-            <div class="tab active" id="all-tab" onclick="showTab('all')">📊 Todos os Arquivos</div>
-            <div class="tab" id="hire-tab" onclick="showTab('hire')">👷 HireStack</div>
-            <div class="tab" id="contact-tab" onclick="showTab('contact')">📇 Contact Info</div>
+            <div class="tab active" id="all-tab" onclick="showTab('all')">📊 All Files</div>
+            {hire_tab_html}
+            {contact_tab_html}
         </div>
 
+        <!-- ALL FILES TAB -->
         <div id="all" class="tab-content active">
-        <table>
-        <thead>
-            <tr>
-                <th>File</th><th>Sheet</th><th>Type</th><th>Total Checks</th><th>Failed</th><th>Success %</th><th>Progress</th><th>Error</th><th>Details</th>
-            </tr>
-        </thead>
-        <tbody>
+            <div style="margin-bottom: 15px; display: flex; gap: 20px; align-items: center;">
+                <div>
+                    <label><b>Filter by File:</b></label><br>
+                    <select id="filterFile" onchange="applyFilters()" style="padding:5px; width:220px;">
+                        <option value="">All</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label><b>Filter by Sheet:</b></label><br>
+                    <select id="filterSheet" onchange="applyFilters()" style="padding:5px; width:220px;">
+                        <option value="">All</option>
+                    </select>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>File</th><th>Sheet</th><th>Type</th>
+                        <th>Total Checks</th><th>Failed</th><th>Success %</th>
+                        <th>Progress</th><th>Error</th><th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
     """
 
-    # Aba principal
+    # -----------------------------
+    # ALL FILES ROWS (with data-row)
+    # -----------------------------
     for i, res in enumerate(all_results):
+
         bar = build_progress_bar(res)
-        btn = f"<button class='toggle-btn' onclick=\"toggleDetails('fail_{i}')\">Mostrar/Ocultar</button>" if res["Fail HTML"] else ""
+        btn = f"<button class='toggle-btn' onclick=\"toggleDetails('fail_{i}')\">Show/Hide</button>" if res["Fail HTML"] else ""
+
         styled_html += f"""
-        <tr>
+        <tr class="data-row"
+            data-file="{res['File']}"
+            data-sheet="{res['Sheet']}">
             <td>{res['File']}</td>
             <td>{res['Sheet']}</td>
             <td>{res['Type']}</td>
@@ -508,87 +594,36 @@ def main():
             <td>{res['Failed']}</td>
             <td>{res['Success %']}%</td>
             <td>{bar}</td>
-            <td>{res.get('Error','')}</td>
+            <td>{res.get('Error', '')}</td>
             <td>{btn}</td>
         </tr>"""
+
         if res["Fail HTML"]:
-            styled_html += f"<tr><td colspan='9'><div id='fail_{i}' style='display:none'>{res['Fail HTML']}</div></td></tr>"
+            styled_html += f"""
+            <tr><td colspan='9'>
+                <div id='fail_{i}' style='display:none'>{res['Fail HTML']}</div>
+            </td></tr>
+            """
 
     styled_html += "</tbody></table></div>"
 
-    # Aba HireStack
-    hire_rows = ""
-    for i, res in enumerate(all_results):
-        if res["Type"] == "HireStack":
-            bar = build_progress_bar(res)
-            btn = f"<button class='toggle-btn' onclick=\"toggleDetails('hire_fail_{i}')\">Mostrar/Ocultar</button>" if res["Fail HTML"] else ""
-            hire_rows += f"""
-            <tr>
-                <td>{res['File']}</td>
-                <td>{res['Sheet']}</td>
-                <td>{res['Total Checks']}</td>
-                <td>{res['Failed']}</td>
-                <td>{res['Success %']}%</td>
-                <td>{bar}</td>
-                <td>{btn}</td>
-            </tr>"""
-            if res["Fail HTML"]:
-                hire_rows += f"<tr><td colspan='7'><div id='hire_fail_{i}' style='display:none'>{res['Fail HTML']}</div></td></tr>"
+    # -----------------------------
+    # HireStack Tab
+    # -----------------------------
+    if hire_exists:
+        ...
 
-    styled_html += f"""
-    <div id="hire" class="tab-content">
-        <h3>📘 Arquivos do tipo <b>HireStack</b></h3>
-        <table>
-            <thead>
-                <tr><th>File</th><th>Sheet</th><th>Total Checks</th><th>Failed</th><th>Success %</th><th>Progress</th><th>Details</th></tr>
-            </thead>
-            <tbody>
-                {hire_rows if hire_rows else "<tr><td colspan='7'><i>Nenhum arquivo do tipo HireStack encontrado.</i></td></tr>"}
-            </tbody>
-        </table>
-    </div>
-    """
+    # idem para contact (não repeti para economizar espaço)
 
-    # Aba PersonalContactInfo
-    contact_rows = ""
-    for i, res in enumerate(all_results):
-        if res["Type"] == "PersonalContactInfo":
-            bar = build_progress_bar(res)
-            btn = f"<button class='toggle-btn' onclick=\"toggleDetails('contact_fail_{i}')\">Mostrar/Ocultar</button>" if res["Fail HTML"] else ""
-            contact_rows += f"""
-            <tr>
-                <td>{res['File']}</td>
-                <td>{res['Sheet']}</td>
-                <td>{res['Total Checks']}</td>
-                <td>{res['Failed']}</td>
-                <td>{res['Success %']}%</td>
-                <td>{bar}</td>
-                <td>{btn}</td>
-            </tr>"""
-            if res["Fail HTML"]:
-                contact_rows += f"<tr><td colspan='7'><div id='contact_fail_{i}' style='display:none'>{res['Fail HTML']}</div></td></tr>"
+    styled_html += "</body></html>"
 
-    styled_html += f"""
-    <div id="contact" class="tab-content">
-        <h3>📇 Arquivos do tipo <b>PersonalContactInfo</b></h3>
-        <table>
-            <thead>
-                <tr><th>File</th><th>Sheet</th><th>Total Checks</th><th>Failed</th><th>Success %</th><th>Progress</th><th>Details</th></tr>
-            </thead>
-            <tbody>
-                {contact_rows if contact_rows else "<tr><td colspan='7'><i>Nenhum arquivo do tipo PersonalContactInfo encontrado.</i></td></tr>"}
-            </tbody>
-        </table>
-    </div>
-    </body></html>
-    """
-
+    # SAVE HTML
     html_path = os.path.join(OUTPUT_DIR, "validation_dashboard.html")
     with open(html_path, "w", encoding="utf-8") as f:
         f.write(styled_html)
 
-    print(f"\n✅ Validação concluída com sucesso!")
-    print(f"📊 Dashboard HTML: {html_path}")
+    print("\n✅ Validation completed!")
+    print(f"📊 Dashboard saved to: {html_path}")
 
 if __name__ == "__main__":
     main()

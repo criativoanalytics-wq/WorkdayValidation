@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import yaml
 from openpyxl import load_workbook
+from collections import defaultdict
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 CONFIG_DIR = os.path.join(BASE_DIR, "config", "mappings")
@@ -42,108 +43,102 @@ def transform_to_dgw():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     incoming_files = [f for f in os.listdir(INCOMING_DIR) if f.lower().endswith(".xlsx")]
-    templates = [f for f in os.listdir(TEMPLATES_DIR) if f.lower().endswith(".xlsx")]
+    template_files = [f for f in os.listdir(TEMPLATES_DIR) if f.lower().endswith(".xlsx")]
 
     if not incoming_files:
-        print("⚠️ Nenhum arquivo de origem encontrado.")
+        print("⚠️ No source files found.")
         return
-    if not templates:
-        print("⚠️ Nenhum template DGW encontrado.")
+    if not template_files:
+        print("⚠️ No DGW templates were found in the /templates_dgw folder.")
         return
 
+    # 🔥 Considera apenas 1 template principal (o único que a pasta possui)
+    template_path = os.path.join(TEMPLATES_DIR, template_files[0])
+    print(f"📄 Template Loaded: {template_files[0]}")
+
     for file in incoming_files:
+
+        print(f"\n➡️ Converting {file}...")
+
         input_path = os.path.join(INCOMING_DIR, file)
         mapping_file = detect_mapping_file(file)
         mapping_path = os.path.join(CONFIG_DIR, mapping_file)
 
         if not os.path.exists(mapping_path):
-            print(f"❌ Mapeamento não encontrado: {mapping_file}")
+            print(f"❌ Mapping not found: {mapping_file}")
             continue
 
         mapping = load_yaml(mapping_path)["mappings"]
 
-        # --- encontrar template correspondente
-        template_file = None
-        for t in templates:
-            if "03_hirestack" in file.lower() and "03_hirestack" in t.lower():
-                template_file = t
-                break
+        # carregando template único
+        tmpl_wb = load_workbook(template_path)
+        output_path = os.path.join(OUTPUT_DIR, f"{file.replace('.xlsx','')}_DGW_ready.xlsx")
+        tmpl_wb.save(output_path)
 
-        if not template_file:
-            print(f"⚠️ Nenhum template correspondente ao arquivo {file}")
-            continue
+        out_wb = load_workbook(output_path)
 
-        template_path = os.path.join(TEMPLATES_DIR, template_file)
-        print(f"\n➡️ Convertendo: {file}")
-        print(f"   ↳ Template: {template_file}")
-        print(f"   ↳ Mapping:  {mapping_file}")
-
-        # carregar lista de abas válidas
         src_sheets = get_valid_sheets(input_path)
         tmpl_sheets = get_valid_sheets(template_path)
 
-        # copiar workbook do template
-        output_path = os.path.join(OUTPUT_DIR, f"{file.replace('.xlsx','')}_DGW_ready.xlsx")
-        tmpl_wb = load_workbook(template_path)
-        tmpl_wb.save(output_path)
-
-        # reabrir para escrita
-        out_wb = load_workbook(output_path)
-
         for sheet in tmpl_sheets:
+
             ws = out_wb[sheet]
 
             if sheet not in src_sheets:
-                print(f"⚠️ Aba '{sheet}' não existe no origem — mantendo template vazio.")
+                print(f"⚠️ Sheet '{sheet}' does not exist in the legacy file — it will be left empty.")
                 continue
 
-            print(f"\n📄 Preenchendo aba: {sheet}")
+            print(f"   📝 Filling in tab: {sheet}")
 
-            # 🔹 ORIGEM: cabeçalho na linha 2 → header=1
-            src_df = pd.read_excel(input_path, sheet_name=sheet, header=1)
+            # origem → header na linha 2
+            src_df = pd.read_excel(
+                input_path,
+                sheet_name=sheet,
+                header=1,
+                keep_default_na=False,
+                na_values=[]   # impede conversão de 'NA' → NaN
+            )
+
             src_df.columns = src_df.columns.astype(str).str.strip()
+            src_df = src_df.fillna("")  # garante que nunca apareçam NaN
 
-            #print("📌 Colunas no arquivo de origem:")
-            #print(list(src_df.columns))
-
-            #print("\n📌 Colunas esperadas no mapping (origem):")
-            #for tgt, src in mapping.items():
-            #    print(f"  - {src}  →  {tgt}")
-
-            # 🔹 TEMPLATE DGW: cabeçalho real na linha 6
+            # cabeçalhos do template (linha 6)
             header_row = 6
             template_headers = [
-                (cell.value or "").strip() if isinstance(cell.value, str) else cell.value
+                (cell.value.strip() if isinstance(cell.value, str) else cell.value)
                 for cell in ws[header_row]
             ]
-            header_index = {h: i for i, h in enumerate(template_headers) if h}
 
-            # dados começam na linha 7
+            # cada header → lista de posições (para duplicados)
+            header_positions = defaultdict(list)
+            for col_index, header in enumerate(template_headers):
+                if header:
+                    header_positions[header].append(col_index)
+
             start_row = 7
 
             for r_index, (_, row) in enumerate(src_df.iterrows()):
-                # pula linhas totalmente vazias
                 if row.isna().all():
                     continue
 
                 excel_row = start_row + r_index
 
                 for tgt_col, src_col in mapping.items():
-                    # coluna de origem não existe → pula
+
                     if src_col not in src_df.columns:
                         continue
 
-                    # coluna de destino não existe no template → pula
-                    if tgt_col not in header_index:
+                    if tgt_col not in header_positions:
                         continue
 
-                    col_idx = header_index[tgt_col] + 1
                     value = row[src_col]
-                    ws.cell(row=excel_row, column=col_idx, value=value)
 
-        # salvar final
+                    # escrever em TODAS as colunas com mesmo header
+                    for col_idx in header_positions[tgt_col]:
+                        ws.cell(row=excel_row, column=col_idx + 1, value=value)
+
         out_wb.save(output_path)
-        print(f"✅ DGW gerado com sucesso: {output_path}")
+        print(f"✅ DGW file ready: {output_path}")
 
 
 if __name__ == "__main__":

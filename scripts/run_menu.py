@@ -5,7 +5,7 @@ from datetime import datetime
 from termcolor import colored
 
 # =============================================================
-# ⚙️ Configuração de diretórios base
+# ⚙️ Base directory configuration
 # =============================================================
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA_DIR = os.path.join(BASE_DIR, "data")
@@ -14,7 +14,7 @@ TEMPLATES_DIR = os.path.join(DATA_DIR, "templates_dgw")
 CURATED_DIR = os.path.join(DATA_DIR, "curated")
 
 # =============================================================
-# 🔧 Funções utilitárias
+# 🔧 Utility functions
 # =============================================================
 def clear_screen():
     os.system("cls" if os.name == "nt" else "clear")
@@ -26,73 +26,73 @@ def print_header(title):
     print(colored("=" * 70, "blue"))
 
 # =============================================================
-# 🧩 Funções principais de orquestração
+# 🧩 Main orchestration functions
 # =============================================================
 def transform_templates():
     print_header("Template → DGW Transformation")
     from transform_to_dgw import transform_to_dgw
 
     if not os.path.exists(TEMPLATES_DIR):
-        print(colored(f"❌ Nenhuma pasta encontrada em {TEMPLATES_DIR}", "red"))
-        input("\nPressione Enter para voltar...")
+        print(colored(f"❌ No template folder found at {TEMPLATES_DIR}", "red"))
+        input("\nPress Enter to return...")
         return
 
-    print(colored("🧩 Iniciando transformação de templates legados...\n", "cyan"))
+    print(colored("🧩 Starting legacy template transformation...\n", "cyan"))
     os.makedirs(CURATED_DIR, exist_ok=True)
     for file in os.listdir(TEMPLATES_DIR):
         if file.lower().endswith(".xlsx"):
-            print(f"➡️ Convertendo {file}...")
+            print(f"➡️ Converting {file}...")
             try:
                 transform_to_dgw()
             except Exception as e:
-                print(colored(f"⚠️ Falha ao transformar {file}: {e}", "red"))
-    print(colored("\n✅ Transformação concluída!", "green"))
-    input("\nPressione Enter para voltar ao menu...")
+                print(colored(f"⚠️ Failed to transform {file}: {e}", "red"))
+    print(colored("\n✅ Transformation completed!", "green"))
+    input("\nPress Enter to return to the menu...")
 
 def validate_dgws():
     print_header("DGW Validation")
     from validate_all import main as validate_main
 
-    print(colored("🔍 Executando validação de DGWs...\n", "cyan"))
+    print(colored("🔍 Running DGW validation...\n", "cyan"))
     validate_main()
-    print(colored("\n✅ Validação concluída. Dashboard HTML gerado em /outputs/", "green"))
-    input("\nPressione Enter para voltar ao menu...")
+    print(colored("\n✅ Validation completed. HTML dashboard saved in /outputs/", "green"))
+    input("\nPress Enter to return to the menu...")
 
 def run_full_pipeline():
     print_header("Full Pipeline (Transform + Validate + Dashboard)")
     from transform_to_dgw import transform_to_dgw
     from validate_all import main as validate_main
 
-    print(colored("🧩 Executando pipeline completo...\n", "cyan"))
+    print(colored("🧩 Running full pipeline...\n", "cyan"))
     time.sleep(1)
 
     # 1️⃣ Transform
-    print(colored("➡️ Etapa 1/2: Transformando templates...", "yellow"))
+    print(colored("➡️ Step 1/2: Transforming templates...", "yellow"))
     transform_to_dgw()
 
     # 2️⃣ Validate
-    print(colored("➡️ Etapa 2/2: Validando DGWs gerados...", "yellow"))
+    print(colored("➡️ Step 2/2: Validating generated DGWs...", "yellow"))
     validate_main()
 
-    print(colored("\n✅ Pipeline completo finalizado com sucesso!", "green"))
-    input("\nPressione Enter para voltar ao menu...")
+    print(colored("\n✅ Full pipeline completed successfully!", "green"))
+    input("\nPress Enter to return to the menu...")
 
 def clear_outputs():
     print_header("Clear Outputs")
     if not os.path.exists(OUTPUT_DIR):
-        print(colored("Nenhuma pasta de saída encontrada.", "yellow"))
-        input("\nPressione Enter para voltar...")
+        print(colored("No output folder found.", "yellow"))
+        input("\nPress Enter to return...")
         return
     for folder in ["failures", "previews"]:
         path = os.path.join(OUTPUT_DIR, folder)
         if os.path.exists(path):
             for f in os.listdir(path):
                 os.remove(os.path.join(path, f))
-    print(colored("🧹 Saídas limpas com sucesso.", "green"))
-    input("\nPressione Enter para voltar...")
+    print(colored("🧹 Outputs cleaned successfully.", "green"))
+    input("\nPress Enter to return...")
 
 # =============================================================
-# 🏁 Menu principal
+# 🏁 Main menu
 # =============================================================
 def main_menu():
     while True:
@@ -109,7 +109,7 @@ def main_menu():
         print("0️⃣  Exit")
         print()
 
-        choice = input(colored("Escolha uma opção: ", "yellow")).strip()
+        choice = input(colored("Choose an option: ", "yellow")).strip()
 
         if choice == "1":
             from sftp_downloader import download_from_sftp
@@ -119,14 +119,14 @@ def main_menu():
         elif choice == "3":
             validate_dgws()
         elif choice == "4":
-            run_full_pipeline()  # pode incluir o download
+            run_full_pipeline()  # may include the download
         elif choice == "5":
             clear_outputs()
         elif choice == "0":
             break
 
 # =============================================================
-# 🚀 Execução
+# 🚀 Execution
 # =============================================================
 if __name__ == "__main__":
     main_menu()

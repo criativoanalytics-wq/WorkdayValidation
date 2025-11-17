@@ -1,0 +1,40 @@
+﻿Column,Row,Value,Rule
+First Day of Work,7,,expect_column_values_to_not_be_null
+First Day of Work,8,,expect_column_values_to_not_be_null
+First Day of Work,9,,expect_column_values_to_not_be_null
+First Day of Work,10,,expect_column_values_to_not_be_null
+First Day of Work,11,,expect_column_values_to_not_be_null
+First Day of Work,12,,expect_column_values_to_not_be_null
+First Day of Work,13,,expect_column_values_to_not_be_null
+First Day of Work,14,,expect_column_values_to_not_be_null
+First Day of Work,15,,expect_column_values_to_not_be_null
+First Day of Work,16,,expect_column_values_to_not_be_null
+First Day of Work,17,,expect_column_values_to_not_be_null
+First Day of Work,18,,expect_column_values_to_not_be_null
+First Day of Work,19,,expect_column_values_to_not_be_null
+Employee Type,7,TEST,expect_column_values_to_be_in_set
+Employee Type,8,TEST,expect_column_values_to_be_in_set
+Employee Type,9,TEST,expect_column_values_to_be_in_set
+Employee Type,10,TEST,expect_column_values_to_be_in_set
+Employee Type,11,TEST,expect_column_values_to_be_in_set
+Employee Type,12,TEST,expect_column_values_to_be_in_set
+Employee Type,13,TEST,expect_column_values_to_be_in_set
+Employee Type,14,TEST,expect_column_values_to_be_in_set
+Employee Type,15,TEST,expect_column_values_to_be_in_set
+Employee Type,16,TEST,expect_column_values_to_be_in_set
+Employee Type,17,TEST,expect_column_values_to_be_in_set
+Employee Type,18,TEST,expect_column_values_to_be_in_set
+Employee Type,19,TEST,expect_column_values_to_be_in_set
+Position ID,7,,expect_column_values_to_not_be_null
+Position ID,8,,expect_column_values_to_not_be_null
+Position ID,9,,expect_column_values_to_not_be_null
+Position ID,10,,expect_column_values_to_not_be_null
+Position ID,11,,expect_column_values_to_not_be_null
+Position ID,12,,expect_column_values_to_not_be_null
+Position ID,13,,expect_column_values_to_not_be_null
+Position ID,14,,expect_column_values_to_not_be_null
+Position ID,15,,expect_column_values_to_not_be_null
+Position ID,16,,expect_column_values_to_not_be_null
+Position ID,17,,expect_column_values_to_not_be_null
+Position ID,18,,expect_column_values_to_not_be_null
+Position ID,19,,expect_column_values_to_not_be_null
