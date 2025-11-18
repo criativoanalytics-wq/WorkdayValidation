@@ -32,22 +32,25 @@ def transform_templates():
     print_header("Template → DGW Transformation")
     from transform_to_dgw import transform_to_dgw
 
+    # Confere se há templates
     if not os.path.exists(TEMPLATES_DIR):
         print(colored(f"❌ No template folder found at {TEMPLATES_DIR}", "red"))
         input("\nPress Enter to return...")
         return
 
-    print(colored("🧩 Starting legacy template transformation...\n", "cyan"))
+    print(colored("🧩 Starting legacy → DGW transformation based on incoming files...\n", "cyan"))
+
     os.makedirs(CURATED_DIR, exist_ok=True)
-    for file in os.listdir(TEMPLATES_DIR):
-        if file.lower().endswith(".xlsx"):
-            print(f"➡️ Converting {file}...")
-            try:
-                transform_to_dgw()
-            except Exception as e:
-                print(colored(f"⚠️ Failed to transform {file}: {e}", "red"))
+
+    try:
+        # ✅ Apenas UMA chamada — o transform_to_dgw processa todos os arquivos incoming
+        transform_to_dgw()
+    except Exception as e:
+        print(colored(f"⚠️ Error during transformation: {e}", "red"))
+
     print(colored("\n✅ Transformation completed!", "green"))
     input("\nPress Enter to return to the menu...")
+
 
 def validate_dgws():
     print_header("DGW Validation")
