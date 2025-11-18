@@ -39,6 +39,32 @@ def get_valid_sheets(path):
     return sheets
 
 
+# ---------- resolver coluna de origem a partir da lista de aliases ----------
+def resolve_alias(source_columns, alias_list):
+    """
+    Dado o header do legado (source_columns) e uma lista de aliases,
+    retorna o nome da coluna de origem que existe no arquivo.
+    """
+    if not alias_list:
+        return None
+
+    # garante lista
+    if not isinstance(alias_list, (list, tuple)):
+        alias_list = [alias_list]
+
+    # dict minúsculo -> original
+    source_lower = {c.lower(): c for c in source_columns}
+
+    for alias in alias_list:
+        if alias is None:
+            continue
+        a = str(alias).strip().lower()
+        if a in source_lower:
+            return source_lower[a]
+
+    return None
+
+
 def transform_to_dgw():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
@@ -52,12 +78,11 @@ def transform_to_dgw():
         print("⚠️ No DGW templates were found in the /templates_dgw folder.")
         return
 
-    # 🔥 Considera apenas 1 template principal (o único que a pasta possui)
+    # usa o único template da pasta
     template_path = os.path.join(TEMPLATES_DIR, template_files[0])
-    print(f"📄 Template Loaded: {template_files[0]}")
+    print(f"📄 Template loaded: {template_files[0]}")
 
     for file in incoming_files:
-
         print(f"\n➡️ Converting {file}...")
 
         input_path = os.path.join(INCOMING_DIR, file)
@@ -68,27 +93,58 @@ def transform_to_dgw():
             print(f"❌ Mapping not found: {mapping_file}")
             continue
 
-        mapping = load_yaml(mapping_path)["mappings"]
+        yaml_data = load_yaml(mapping_path) or {}
 
-        # carregando template único
+        # ------------------------------------------------------------------
+        # Suporta os dois formatos:
+        # - antigo:  mappings: { "Employee ID": "EMPLID" }
+        # - novo:    aliases:  { "Employee ID": ["Employee ID","Worker ID","EMPLID"] }
+        # ------------------------------------------------------------------
+        raw_aliases = yaml_data.get("aliases")
+        raw_mappings = yaml_data.get("mappings")
+
+        mapping_aliases = {}
+
+        if raw_aliases:
+            # já está no novo formato
+            for tgt, src_aliases in raw_aliases.items():
+                if isinstance(src_aliases, (list, tuple)):
+                    mapping_aliases[tgt] = [str(s).strip() for s in src_aliases]
+                else:
+                    mapping_aliases[tgt] = [str(src_aliases).strip()]
+        elif raw_mappings:
+            # converte 1:1 antigo para 1:n
+            for tgt, src in raw_mappings.items():
+                mapping_aliases[tgt] = [str(src).strip()]
+        else:
+            print(f"⚠️ No 'aliases' or 'mappings' section found in {mapping_file}.")
+            mapping_aliases = {}
+
+        if not mapping_aliases:
+            print(f"⚠️ Empty mapping for {mapping_file} — nothing will be filled.")
+
+        # ------------------------------------------------------------------
+        # Abre template → salva cópia → reabre para escrita
+        # ------------------------------------------------------------------
         tmpl_wb = load_workbook(template_path)
-        output_path = os.path.join(OUTPUT_DIR, f"{file.replace('.xlsx','')}_DGW_ready.xlsx")
+        output_path = os.path.join(
+            OUTPUT_DIR,
+            f"{file.replace('.xlsx', '')}_DGW_ready.xlsx"
+        )
         tmpl_wb.save(output_path)
-
         out_wb = load_workbook(output_path)
 
         src_sheets = get_valid_sheets(input_path)
         tmpl_sheets = get_valid_sheets(template_path)
 
         for sheet in tmpl_sheets:
-
             ws = out_wb[sheet]
 
             if sheet not in src_sheets:
                 print(f"⚠️ Sheet '{sheet}' does not exist in the legacy file — it will be left empty.")
                 continue
 
-            print(f"   📝 Filling in tab: {sheet}")
+            print(f"   📝 Filling sheet: {sheet}")
 
             # origem → header na linha 2
             src_df = pd.read_excel(
@@ -96,11 +152,11 @@ def transform_to_dgw():
                 sheet_name=sheet,
                 header=1,
                 keep_default_na=False,
-                na_values=[]   # impede conversão de 'NA' → NaN
+                na_values=[]
             )
 
             src_df.columns = src_df.columns.astype(str).str.strip()
-            src_df = src_df.fillna("")  # garante que nunca apareçam NaN
+            src_df = src_df.fillna("")
 
             # cabeçalhos do template (linha 6)
             header_row = 6
@@ -109,7 +165,7 @@ def transform_to_dgw():
                 for cell in ws[header_row]
             ]
 
-            # cada header → lista de posições (para duplicados)
+            # cada header → lista de posições (permite duplicados)
             header_positions = defaultdict(list)
             for col_index, header in enumerate(template_headers):
                 if header:
@@ -118,14 +174,13 @@ def transform_to_dgw():
             start_row = 7
 
             for r_index, (_, row) in enumerate(src_df.iterrows()):
-                if row.isna().all():
-                    continue
-
+                # (row.isna().all()) não faz sentido mais, pois já fizemos fillna("")
                 excel_row = start_row + r_index
 
-                for tgt_col, src_col in mapping.items():
-
-                    if src_col not in src_df.columns:
+                for tgt_col, alias_list in mapping_aliases.items():
+                    # resolve coluna de origem a partir dos aliases
+                    src_col = resolve_alias(src_df.columns, alias_list)
+                    if not src_col:
                         continue
 
                     if tgt_col not in header_positions:
@@ -133,7 +188,7 @@ def transform_to_dgw():
 
                     value = row[src_col]
 
-                    # escrever em TODAS as colunas com mesmo header
+                    # escreve em todas as colunas com o mesmo header
                     for col_idx in header_positions[tgt_col]:
                         ws.cell(row=excel_row, column=col_idx + 1, value=value)
 

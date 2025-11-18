@@ -1,330 +1,697 @@
-mappings:
+aliases:
+
   # ============================================================
   # WORKER IDENTIFICATION
   # ============================================================
-  Employee ID: Employee ID
-  Contingent Worker ID: Contingent Worker ID
-  Employee Visibility Date: Employee Visibility Date
-  Exclude from Headcount: Exclude from Headcount
+  "Employee ID":
+    - "Employee ID"
+
+  "Contingent Worker ID":
+    - "Contingent Worker ID"
+
+  "Employee Visibility Date":
+    - "Employee Visibility Date"
+
+  "Exclude from Headcount":
+    - "Exclude from Headcount"
 
   # ============================================================
   # EVENT CONTROL / EFFECTIVE DATING
   # ============================================================
-  Effective Date: Effective Date
-  Effective Sequence: Effective Sequence
-  Event Subcategory Reason: Event Subcategory Reason
+  "Effective Date":
+    - "Effective Date"
+
+  "Effective Sequence":
+    - "Effective Sequence"
+
+  "Event Subcategory Reason":
+    - "Event Subcategory Reason"
 
   # ============================================================
   # RETIREMENT
   # ============================================================
-  Retiree Status Date: Retiree Status Date
-  Retiree Organization Reference ID: Retiree Organization Reference ID
+  "Retiree Status Date":
+    - "Retiree Status Date"
+
+  "Retiree Organization Reference ID":
+    - "Retiree Organization Reference ID"
 
   # ============================================================
   # APPLICANT / CANDIDATE STATUS
   # ============================================================
-  Applicant ID: Applicant ID
-  Status Date: Status Date
-  Status Reference ID: Status Reference ID
-  Status Comment: Status Comment
+  "Applicant ID":
+    - "Applicant ID"
+
+  "Status Date":
+    - "Status Date"
+
+  "Status Reference ID":
+    - "Status Reference ID"
+
+  "Status Comment":
+    - "Status Comment"
 
   # ============================================================
   # JOB & POSITION
   # ============================================================
-  Position ID: Position ID
-  Addl Position ID: Addl Position ID
-  Current Position ID: Current Position ID
-  New Position ID: New Position ID
-  Intl Position ID: Intl Position ID
+  "Position ID":
+    - "Position ID"
 
-  Job Posting Title: Job Posting Title
-  Job Profile Code: Job Profile Code
-  Job Code: Job Code
-  Position Title: Position Title
-  Business Title: Business Title
+  "Addl Position ID":
+    - "Addl Position ID"
 
-  Employee Type: Employee Type
-  Headcount Option: Headcount Option
-  Assignment Details: Assignment Details
+  "Current Position ID":
+    - "Current Position ID"
+
+  "New Position ID":
+    - "New Position ID"
+
+  "Intl Position ID":
+    - "Intl Position ID"
+
+  "Job Posting Title":
+    - "Job Posting Title"
+
+  "Job Profile Code":
+    - "Job Profile Code"
+
+  "Job Code":
+    - "Job Code"
+
+  "Position Title":
+    - "Position Title"
+
+  "Business Title":
+    - "Business Title"
+
+  "Employee Type":
+    - "Employee Type"
+
+  "Headcount Option":
+    - "Headcount Option"
+
+  "Assignment Details":
+    - "Assignment Details"
 
   # ============================================================
   # ORGANIZATION ASSIGNMENTS
   # ============================================================
-  Current Supervisory Organization ID: Current Supervisory Organization ID
-  New Supervisory Organization ID: New Supervisory Organization ID
-  Supervisory Organization Reference ID: Supervisory Organization Reference ID
-  Company Reference ID: Company Reference ID
-  Cost Center Reference ID: Cost Center Reference ID
-  Region Reference ID: Region Reference ID
-  Custom Organization Reference ID: Custom Organization Reference ID
-  Custom Organization Reference ID 1: Custom Organization Reference ID 1
+  "Current Supervisory Organization ID":
+    - "Current Supervisory Organization ID"
+
+  "New Supervisory Organization ID":
+    - "New Supervisory Organization ID"
+
+  "Supervisory Organization Reference ID":
+    - "Supervisory Organization Reference ID"
+
+  "Company Reference ID":
+    - "Company Reference ID"
+
+  "Cost Center Reference ID":
+    - "Cost Center Reference ID"
+
+  "Region Reference ID":
+    - "Region Reference ID"
+
+  "Custom Organization Reference ID":
+    - "Custom Organization Reference ID"
+
+  "Custom Organization Reference ID 1":
+    - "Custom Organization Reference ID 1"
 
   # ============================================================
   # LOCATION / WORKSPACE
   # ============================================================
-  Location Reference ID: Location Reference ID
-  Work Space Reference ID: Work Space Reference ID
+  "Location Reference ID":
+    - "Location Reference ID"
+
+  "Work Space Reference ID":
+    - "Work Space Reference ID"
 
   # ============================================================
   # TIME / FTE / SCHEDULE / HOURS
   # ============================================================
-  Position Time Type: Position Time Type
-  Work Shift Reference ID: Work Shift Reference ID
-  Work Hours Profile Reference ID: Work Hours Profile Reference ID
+  "Position Time Type":
+    - "Position Time Type"
 
-  Default Weekly Hours: Default Weekly Hours
-  Scheduled Weekly Hours: Scheduled Weekly Hours
-  Hours Per Week: Hours Per Week
-  Days Per Week: Days Per Week
+  "Work Shift Reference ID":
+    - "Work Shift Reference ID"
 
-  Working Time Frequency: Working Time Frequency
-  Working Time Unit Type: Working Time Unit Type
-  Working Time Value: Working Time Value
+  "Work Hours Profile Reference ID":
+    - "Work Hours Profile Reference ID"
 
-  Specify Paid FTE: Specify Paid FTE
-  Paid FTE: Paid FTE
-  Specify Working FTE: Specify Working FTE
-  Working FTE: Working FTE
+  "Default Weekly Hours":
+    - "Default Weekly Hours"
 
-  Flexible Work Arrangement Type Reference ID: Flexible Work Arrangement Type Reference ID
+  "Scheduled Weekly Hours":
+    - "Scheduled Weekly Hours"
+
+  "Hours Per Week":
+    - "Hours Per Week"
+
+  "Days Per Week":
+    - "Days Per Week"
+
+  "Working Time Frequency":
+    - "Working Time Frequency"
+
+  "Working Time Unit Type":
+    - "Working Time Unit Type"
+
+  "Working Time Value":
+    - "Working Time Value"
+
+  "Specify Paid FTE":
+    - "Specify Paid FTE"
+
+  "Paid FTE":
+    - "Paid FTE"
+
+  "Specify Working FTE":
+    - "Specify Working FTE"
+
+  "Working FTE":
+    - "Working FTE"
+
+  "Flexible Work Arrangement Type Reference ID":
+    - "Flexible Work Arrangement Type Reference ID"
 
   # ============================================================
   # DATES — HIRING / PROBATION / CONVERSION / ASSIGNMENT
   # ============================================================
-  Hire Subcategory Reason: Hire Subcategory Reason
-  Hire Date: Hire Date
-  Start Date: Start Date
-  First Day of Work: First Day of Work
-  Probation Start Date: Probation Start Date
-  Probation End Date: Probation End Date
+  "Hire Subcategory Reason":
+    - "Hire Subcategory Reason"
 
-  End Employment Date: End Employment Date
-  Expected Date of Return: Expected Date of Return
+  "Hire Date":
+    - "Hire Date"
 
-  Position Start Date for Conversion: Position Start Date for Conversion
-  Job Profile Start Date for Conversion: Job Profile Start Date for Conversion
+  "Start Date":
+    - "Start Date"
 
-  Expected Assignment End Date: Expected Assignment End Date
-  Pay Through Date: Pay Through Date
-  Last Date for Which Paid: Last Date for Which Paid
+  "First Day of Work":
+    - "First Day of Work"
+
+  "Probation Start Date":
+    - "Probation Start Date"
+
+  "Probation End Date":
+    - "Probation End Date"
+
+  "End Employment Date":
+    - "End Employment Date"
+
+  "Expected Date of Return":
+    - "Expected Date of Return"
+
+  "Position Start Date for Conversion":
+    - "Position Start Date for Conversion"
+
+  "Job Profile Start Date for Conversion":
+    - "Job Profile Start Date for Conversion"
+
+  "Expected Assignment End Date":
+    - "Expected Assignment End Date"
+
+  "Pay Through Date":
+    - "Pay Through Date"
+
+  "Last Date for Which Paid":
+    - "Last Date for Which Paid"
 
   # ============================================================
   # ADDITIONAL JOB
   # ============================================================
-  Add Additional Job Subcategory Reason: Add Additional Job Subcategory Reason
-  End Additional Job Date: End Additional Job Date
-  End Additional Job Subcategory: End Additional Job Subcategory
-  Job Overlap Allowed: Job Overlap Allowed
+  "Add Additional Job Subcategory Reason":
+    - "Add Additional Job Subcategory Reason"
+
+  "End Additional Job Date":
+    - "End Additional Job Date"
+
+  "End Additional Job Subcategory":
+    - "End Additional Job Subcategory"
+
+  "Job Overlap Allowed":
+    - "Job Overlap Allowed"
 
   # ============================================================
   # INTERNATIONAL ASSIGNMENT
   # ============================================================
-  International Assignment Type: International Assignment Type
-  Assgn Pay Group ID: Assgn Pay Group ID
+  "International Assignment Type":
+    - "International Assignment Type"
 
-  End International Assignment Date: End International Assignment Date
-  End International Assignment Reason: End International Assignment Reason
+  "Assgn Pay Group ID":
+    - "Assgn Pay Group ID"
+
+  "End International Assignment Date":
+    - "End International Assignment Date"
+
+  "End International Assignment Reason":
+    - "End International Assignment Reason"
 
   # ============================================================
   # TERMINATION (EMPLOYEE)
   # ============================================================
-  Termination Date: Termination Date
-  #Primary Termination Subcategory Reason: Primary Termination Subcategory Reason
-  #Secondary Termination Subcategory Reason: Secondary Termination Subcategory Reason
-  #Local Termination Reason: Local Termination Reason
-  Resignation Date: Resignation Date
-  #Regrettable: Regrettable
-  Eligible for Rehire: Eligible for Rehire
-  #Close Position: Close Position
-  #Position Available for Overlap: Position Available for Overlap
-  Not Returning: Not Returning
-  Return Unknown: Return Unknown
+  "Termination Date":
+    - "Termination Date"
+
+  "Resignation Date":
+    - "Resignation Date"
+
+  "Eligible for Rehire":
+    - "Eligible for Rehire"
+
+  "Not Returning":
+    - "Not Returning"
+
+  "Return Unknown":
+    - "Return Unknown"
 
   # ============================================================
   # COMPENSATION — GENERAL
   # ============================================================
-  Compensation Change On Next Pay Period: Compensation Change On Next Pay Period
-  Override Compensation Basis Calculation: Override Compensation Basis Calculation
+  "Compensation Change On Next Pay Period":
+    - "Compensation Change On Next Pay Period"
 
-  Primary Compensation Basis: Primary Compensation Basis
-  Primary Compensation Basis Amount Change: Primary Compensation Basis Amount Change
-  Primary Compensation Basis Percent Change: Primary Compensation Basis Percent Change
+  "Override Compensation Basis Calculation":
+    - "Override Compensation Basis Calculation"
 
-  Compensation Package Name: Compensation Package Name
-  Compensation Grade Name: Compensation Grade Name
-  Compensation Grade Profile Name: Compensation Grade Profile Name
-  Compensation Step Name: Compensation Step Name
-  Progression Start Date: Progression Start Date
+  "Primary Compensation Basis":
+    - "Primary Compensation Basis"
 
-  Compensation Plan: Compensation Plan
-  Percent Change: Percent Change
-  Amount Change: Amount Change
+  "Primary Compensation Basis Amount Change":
+    - "Primary Compensation Basis Amount Change"
+
+  "Primary Compensation Basis Percent Change":
+    - "Primary Compensation Basis Percent Change"
+
+  "Compensation Package Name":
+    - "Compensation Package Name"
+
+  "Compensation Grade Name":
+    - "Compensation Grade Name"
+
+  "Compensation Grade Profile Name":
+    - "Compensation Grade Profile Name"
+
+  "Compensation Step Name":
+    - "Compensation Step Name"
+
+  "Progression Start Date":
+    - "Progression Start Date"
+
+  "Compensation Plan":
+    - "Compensation Plan"
+
+  "Percent Change":
+    - "Percent Change"
+
+  "Amount Change":
+    - "Amount Change"
 
   # ============================================================
   # COMPENSATION — PAY PLAN
   # ============================================================
-  Pay Plan Replace: Pay Plan Replace
-  Pay Plan Amount: Pay Plan Amount
-  Pay Plan Currency: Pay Plan Currency
-  Pay Plan Frequency: Pay Plan Frequency
-  Pay Plan Expected End Date: Pay Plan Expected End Date
-  Pay Plan Actual End Date: Pay Plan Actual End Date
-  Pay Rate Type: Pay Rate Type
-  Pay Group ID: Pay Group ID
+  "Pay Plan Replace":
+    - "Pay Plan Replace"
+
+  "Pay Plan Amount":
+    - "Pay Plan Amount"
+
+  "Pay Plan Currency":
+    - "Pay Plan Currency"
+
+  "Pay Plan Frequency":
+    - "Pay Plan Frequency"
+
+  "Pay Plan Expected End Date":
+    - "Pay Plan Expected End Date"
+
+  "Pay Plan Actual End Date":
+    - "Pay Plan Actual End Date"
+
+  "Pay Rate Type":
+    - "Pay Rate Type"
+
+  "Pay Group ID":
+    - "Pay Group ID"
 
   # ============================================================
   # COMPENSATION — UNIT SALARY PLAN
   # ============================================================
-  Unit Salary Plan Replace: Unit Salary Plan Replace
-  Unit Salary Plan: Unit Salary Plan
-  Unit Salary Plan Per Unit Amount: Unit Salary Plan Per Unit Amount
-  Unit Salary Plan Currency: Unit Salary Plan Currency
-  Default Units: Default Units
-  Unit Salary Plan Frequency: Unit Salary Plan Frequency
-  Unit Salary Plan Actual End Date: Unit Salary Plan Actual End Date
+  "Unit Salary Plan Replace":
+    - "Unit Salary Plan Replace"
+
+  "Unit Salary Plan":
+    - "Unit Salary Plan"
+
+  "Unit Salary Plan Per Unit Amount":
+    - "Unit Salary Plan Per Unit Amount"
+
+  "Unit Salary Plan Currency":
+    - "Unit Salary Plan Currency"
+
+  "Default Units":
+    - "Default Units"
+
+  "Unit Salary Plan Frequency":
+    - "Unit Salary Plan Frequency"
+
+  "Unit Salary Plan Actual End Date":
+    - "Unit Salary Plan Actual End Date"
 
   # ============================================================
   # COMPENSATION — ALLOWANCE PLAN
   # ============================================================
-  Allowance Plan Replace: Allowance Plan Replace
-  Allowance Plan: Allowance Plan
-  Allowance Plan Percent: Allowance Plan Percent
-  Allowance Plan Amount: Allowance Plan Amount
-  Allowance Plan Manage by Compensation Basis Override Amount: Allowance Plan Manage by Compensation Basis Override Amount
-  Allowance Plan Currency: Allowance Plan Currency
-  Allowance Plan Frequency: Allowance Plan Frequency
-  Allowance Plan Expected End Date: Allowance Plan Expected End Date
-  Allowance Plan Reimbursement Start Date: Allowance Plan Reimbursement Start Date
-  Allowance Plan Actual End Date: Allowance Plan Actual End Date
-  Allowance Plan Fixed for Manage by Compensation Basis: Allowance Plan Fixed for Manage by Compensation Basis
+  "Allowance Plan Replace":
+    - "Allowance Plan Replace"
+
+  "Allowance Plan":
+    - "Allowance Plan"
+
+  "Allowance Plan Percent":
+    - "Allowance Plan Percent"
+
+  "Allowance Plan Amount":
+    - "Allowance Plan Amount"
+
+  "Allowance Plan Manage by Compensation Basis Override Amount":
+    - "Allowance Plan Manage by Compensation Basis Override Amount"
+
+  "Allowance Plan Currency":
+    - "Allowance Plan Currency"
+
+  "Allowance Plan Frequency":
+    - "Allowance Plan Frequency"
+
+  "Allowance Plan Expected End Date":
+    - "Allowance Plan Expected End Date"
+
+  "Allowance Plan Reimbursement Start Date":
+    - "Allowance Plan Reimbursement Start Date"
+
+  "Allowance Plan Actual End Date":
+    - "Allowance Plan Actual End Date"
+
+  "Allowance Plan Fixed for Manage by Compensation Basis":
+    - "Allowance Plan Fixed for Manage by Compensation Basis"
 
   # ============================================================
   # COMPENSATION — UNIT ALLOWANCE PLAN
   # ============================================================
-  Unit Allowance Plan Replace: Unit Allowance Plan Replace
-  Unit Allowance Plan: Unit Allowance Plan
-  Number of Units: Number of Units
-  Unit Allowance Plan Frequency: Unit Allowance Plan Frequency
-  Unit Allowance Plan Per Unit Amount: Unit Allowance Plan Per Unit Amount
-  Unit Allowance Plan Currency: Unit Allowance Plan Currency
-  Unit Allowance Plan Reimbursement Start Date: Unit Allowance Plan Reimbursement Start Date
-  Unit Allowance Plan Actual End Date: Unit Allowance Plan Actual End Date
-  Unit Allowance Plan Fixed for Manage by Compensation Basis: Unit Allowance Plan Fixed for Manage by Compensation Basis
+  "Unit Allowance Plan Replace":
+    - "Unit Allowance Plan Replace"
+
+  "Unit Allowance Plan":
+    - "Unit Allowance Plan"
+
+  "Number of Units":
+    - "Number of Units"
+
+  "Unit Allowance Plan Frequency":
+    - "Unit Allowance Plan Frequency"
+
+  "Unit Allowance Plan Per Unit Amount":
+    - "Unit Allowance Plan Per Unit Amount"
+
+  "Unit Allowance Plan Currency":
+    - "Unit Allowance Plan Currency"
+
+  "Unit Allowance Plan Reimbursement Start Date":
+    - "Unit Allowance Plan Reimbursement Start Date"
+
+  "Unit Allowance Plan Actual End Date":
+    - "Unit Allowance Plan Actual End Date"
+
+  "Unit Allowance Plan Fixed for Manage by Compensation Basis":
+    - "Unit Allowance Plan Fixed for Manage by Compensation Basis"
 
   # ============================================================
   # COMPENSATION — BONUS PLAN
   # ============================================================
-  Bonus Plan Replace: Bonus Plan Replace
-  Bonus Plan: Bonus Plan
-  Bonus Plan Individual Target Amount: Bonus Plan Individual Target Amount
-  Bonus Plan Individual Target Percent: Bonus Plan Individual Target Percent
-  Bonus Plan Manage by Compensation Basis Override Amount: Bonus Plan Manage by Compensation Basis Override Amount
-  Bonus Plan Guaranteed Minimum: Bonus Plan Guaranteed Minimum
-  Percent Assigned: Percent Assigned
-  Bonus Plan Actual End Date: Bonus Plan Actual End Date
-  Bonus Plan Fixed for Manage by Compensation Basis: Bonus Plan Fixed for Manage by Compensation Basis
+  "Bonus Plan Replace":
+    - "Bonus Plan Replace"
+
+  "Bonus Plan":
+    - "Bonus Plan"
+
+  "Bonus Plan Individual Target Amount":
+    - "Bonus Plan Individual Target Amount"
+
+  "Bonus Plan Individual Target Percent":
+    - "Bonus Plan Individual Target Percent"
+
+  "Bonus Plan Manage by Compensation Basis Override Amount":
+    - "Bonus Plan Manage by Compensation Basis Override Amount"
+
+  "Bonus Plan Guaranteed Minimum":
+    - "Bonus Plan Guaranteed Minimum"
+
+  "Percent Assigned":
+    - "Percent Assigned"
+
+  "Bonus Plan Actual End Date":
+    - "Bonus Plan Actual End Date"
+
+  "Bonus Plan Fixed for Manage by Compensation Basis":
+    - "Bonus Plan Fixed for Manage by Compensation Basis"
 
   # ============================================================
   # COMPENSATION — MERIT PLAN
   # ============================================================
-  Merit Plan Replace: Merit Plan Replace
-  Merit Plan: Merit Plan
-  Merit Plan Individual Target Percent: Merit Plan Individual Target Percent
-  Guaranteed Minimum: Guaranteed Minimum
-  Merit Plan Actual End Date: Merit Plan Actual End Date
+  "Merit Plan Replace":
+    - "Merit Plan Replace"
+
+  "Merit Plan":
+    - "Merit Plan"
+
+  "Merit Plan Individual Target Percent":
+    - "Merit Plan Individual Target Percent"
+
+  "Guaranteed Minimum":
+    - "Guaranteed Minimum"
+
+  "Merit Plan Actual End Date":
+    - "Merit Plan Actual End Date"
 
   # ============================================================
   # COMPENSATION — COMMISSION PLAN
   # ============================================================
-  Commission Plan Replace: Commission Plan Replace
-  Commission Plan: Commission Plan
-  Commission Plan Target Amount: Commission Plan Target Amount
-  Commission Plan Currency: Commission Plan Currency
-  Commission Plan Frequency: Commission Plan Frequency
-  Draw Amount: Draw Amount
-  Draw Frequency: Draw Frequency
-  Draw Duration: Draw Duration
-  Recoverable: Recoverable
-  Commission Plan Actual End Date: Commission Plan Actual End Date
-  Commission Plan Fixed for Manage by Compensation Basis: Commission Plan Fixed for Manage by Compensation Basis
+  "Commission Plan Replace":
+    - "Commission Plan Replace"
+
+  "Commission Plan":
+    - "Commission Plan"
+
+  "Commission Plan Target Amount":
+    - "Commission Plan Target Amount"
+
+  "Commission Plan Currency":
+    - "Commission Plan Currency"
+
+  "Commission Plan Frequency":
+    - "Commission Plan Frequency"
+
+  "Draw Amount":
+    - "Draw Amount"
+
+  "Draw Frequency":
+    - "Draw Frequency"
+
+  "Draw Duration":
+    - "Draw Duration"
+
+  "Recoverable":
+    - "Recoverable"
+
+  "Commission Plan Actual End Date":
+    - "Commission Plan Actual End Date"
+
+  "Commission Plan Fixed for Manage by Compensation Basis":
+    - "Commission Plan Fixed for Manage by Compensation Basis"
 
   # ============================================================
   # COMPENSATION — STOCK PLAN
   # ============================================================
-  Stock Plan Replace: Stock Plan Replace
-  Stock Plan: Stock Plan
-  Stock Plan Individual Target Shares: Stock Plan Individual Target Shares
-  Stock Plan Individual Target Percent: Stock Plan Individual Target Percent
-  Individual Target Amount: Individual Target Amount
-  Stock Plan Manage by Compensation Basis Override Amount: Stock Plan Manage by Compensation Basis Override Amount
-  Stock Plan Currency: Stock Plan Currency
-  Stock Plan Actual End Date: Stock Plan Actual End Date
-  Stock Plan Fixed for Manage by Compensation Basis: Stock Plan Fixed for Manage by Compensation Basis
-  Stock Plan Frequency: Stock Plan Frequency
+  "Stock Plan Replace":
+    - "Stock Plan Replace"
+
+  "Stock Plan":
+    - "Stock Plan"
+
+  "Stock Plan Individual Target Shares":
+    - "Stock Plan Individual Target Shares"
+
+  "Stock Plan Individual Target Percent":
+    - "Stock Plan Individual Target Percent"
+
+  "Individual Target Amount":
+    - "Individual Target Amount"
+
+  "Stock Plan Manage by Compensation Basis Override Amount":
+    - "Stock Plan Manage by Compensation Basis Override Amount"
+
+  "Stock Plan Currency":
+    - "Stock Plan Currency"
+
+  "Stock Plan Actual End Date":
+    - "Stock Plan Actual End Date"
+
+  "Stock Plan Fixed for Manage by Compensation Basis":
+    - "Stock Plan Fixed for Manage by Compensation Basis"
+
+  "Stock Plan Frequency":
+    - "Stock Plan Frequency"
 
   # ============================================================
   # COMPENSATION — PERIOD SALARY PLAN
   # ============================================================
-  Remove Compensation Plan: Remove Compensation Plan
-  Period Salary Replace: Period Salary Replace
-  Period Salary Plan: Period Salary Plan
-  Compensation Period: Compensation Period
-  Period Salary Manage by Compensation Basis Override Amount: Period Salary Manage by Compensation Basis Override Amount
-  Period Salary Currency: Period Salary Currency
-  Compensation Period Multiplier: Compensation Period Multiplier
-  Period Salary Frequency: Period Salary Frequency
+  "Remove Compensation Plan":
+    - "Remove Compensation Plan"
+
+  "Period Salary Replace":
+    - "Period Salary Replace"
+
+  "Period Salary Plan":
+    - "Period Salary Plan"
+
+  "Compensation Period":
+    - "Compensation Period"
+
+  "Period Salary Manage by Compensation Basis Override Amount":
+    - "Period Salary Manage by Compensation Basis Override Amount"
+
+  "Period Salary Currency":
+    - "Period Salary Currency"
+
+  "Compensation Period Multiplier":
+    - "Compensation Period Multiplier"
+
+  "Period Salary Frequency":
+    - "Period Salary Frequency"
 
   # ============================================================
   # PAYMENT ELECTIONS / BANKING
   # ============================================================
-  Country: Country
-  Country*: Country*
-  Currency: Currency
-  Currency*: Currency*
-  Row ID*: Row ID*
-  Row ID**: Row ID**
-  Payment Election Rule*: Payment Election Rule*
-  Order*: Order*
-  Payment Type*: Payment Type*
-  Bank Account Nickname: Bank Account Nickname
-  Bank Account Name: Bank Account Name
-  Account Number: Account Number
-  Roll Number: Roll Number
-  Account Type Code: Account Type Code
-  Account Type: Account Type
-  Bank Name: Bank Name
-  IBAN: IBAN
-  Bank ID Number: Bank ID Number
-  BIC: BIC
-  Branch Name: Branch Name
-  Branch ID Number: Branch ID Number
-  Check Digit: Check Digit
-  Distribution Amount*: Distribution Amount*
-  Distribution Percentage*: Distribution Percentage*
-  Distribution Balance*: Distribution Balance*
+  "Country":
+    - "Country"
+    - "Country*"
+
+  "Currency":
+    - "Currency"
+    - "Currency*"
+
+  "Row ID":
+    - "Row ID*"
+    - "Row ID**"
+
+  "Payment Election Rule":
+    - "Payment Election Rule*"
+
+  "Order":
+    - "Order*"
+
+  "Payment Type":
+    - "Payment Type*"
+
+  "Bank Account Nickname":
+    - "Bank Account Nickname"
+
+  "Bank Account Name":
+    - "Bank Account Name"
+
+  "Account Number":
+    - "Account Number"
+
+  "Roll Number":
+    - "Roll Number"
+
+  "Account Type Code":
+    - "Account Type Code"
+
+  "Account Type":
+    - "Account Type"
+
+  "Bank Name":
+    - "Bank Name"
+
+  "IBAN":
+    - "IBAN"
+
+  "Bank ID Number":
+    - "Bank ID Number"
+
+  "BIC":
+    - "BIC"
+
+  "Branch Name":
+    - "Branch Name"
+
+  "Branch ID Number":
+    - "Branch ID Number"
+
+  "Check Digit":
+    - "Check Digit"
+
+  "Distribution Amount":
+    - "Distribution Amount*"
+
+  "Distribution Percentage":
+    - "Distribution Percentage*"
+
+  "Distribution Balance":
+    - "Distribution Balance*"
 
   # ============================================================
   # CONTINGENT WORKER
   # ============================================================
-  Contingent Worker Type: Contingent Worker Type
-  Supplier Type: Supplier Type
-  Contract Contingent Worker Subcategory: Contract Contingent Worker Subcategory
+  "Contingent Worker Type":
+    - "Contingent Worker Type"
 
-  Contract Begin Date: Contract Begin Date
-  Contract End Date: Contract End Date
+  "Supplier Type":
+    - "Supplier Type"
 
-  Contract Pay Rate: Contract Pay Rate
-  Contract Pay Currency: Contract Pay Currency
-  Contract Pay Frequency: Contract Pay Frequency
+  "Contract Contingent Worker Subcategory":
+    - "Contract Contingent Worker Subcategory"
+
+  "Contract Begin Date":
+    - "Contract Begin Date"
+
+  "Contract End Date":
+    - "Contract End Date"
+
+  "Contract Pay Rate":
+    - "Contract Pay Rate"
+
+  "Contract Pay Currency":
+    - "Contract Pay Currency"
+
+  "Contract Pay Frequency":
+    - "Contract Pay Frequency"
 
   # ============================================================
   # CONTINGENT WORKER — TERMINATION
   # ============================================================
-  Last Day of Work: Last Day of Work
-  Primary Termination Subcategory Reason: Primary Termination Subcategory Reason
-  Secondary Termination Subcategory Reason: Secondary Termination Subcategory Reason
-  Local Termination Reason: Local Termination Reason
-  Notify Employee By Date: Notify Employee By Date
-  Regrettable: Regrettable
-  Close Position: Close Position
-  Position Available for Overlap: Position Available for Overlap
+  "Last Day of Work":
+    - "Last Day of Work"
+
+  "Primary Termination Subcategory Reason":
+    - "Primary Termination Subcategory Reason"
+
+  "Secondary Termination Subcategory Reason":
+    - "Secondary Termination Subcategory Reason"
+
+  "Local Termination Reason":
+    - "Local Termination Reason"
+
+  "Notify Employee By Date":
+    - "Notify Employee By Date"
+
+  "Regrettable":
+    - "Regrettable"
+
+  "Close Position":
+    - "Close Position"
+
+  "Position Available for Overlap":
+    - "Position Available for Overlap"
