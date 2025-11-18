@@ -17,19 +17,58 @@ def load_yaml(path):
 
 
 def detect_mapping_file(filename: str) -> str:
+    """
+    Decide qual arquivo de mapping (YAML) usar com base no nome do arquivo legado.
+    """
     name = filename.lower()
-    if "hire" in name:
+    if "hire" in name or "hirestack" in name:
         return "mapping_hire.yaml"
     elif "contact" in name:
         return "mapping_contact.yaml"
     elif "worker" in name:
         return "mapping_worker.yaml"
-    elif "absence" in name:
+    elif "absence" in name or "abs_" in name:
         return "mapping_absence.yaml"
-    elif "compensation" in name:
+    elif "compensation" in name or "comp_" in name:
         return "mapping_compensation.yaml"
     else:
         return "mapping_generic.yaml"
+
+
+def detect_template_file(filename: str, template_files: list[str]) -> str | None:
+    """
+    Escolhe o template DGW correto com base no nome do arquivo legado.
+    Regras simples de substring para casar tipos (Hire, Absence, Contact etc.).
+    """
+    name = filename.lower()
+
+    # pares (palavra-chave no legado, palavras-chave esperadas no template)
+    rules = [
+        (["hirestack", "hire"], ["hirestack", "hire"]),
+        (["absence", "abs_"], ["absence", "abs_"]),
+        (["contact"], ["contact"]),
+        (["worker"], ["worker"]),
+        (["compensation", "comp_"], ["compensation", "comp_"]),
+    ]
+
+    for legacy_keys, template_keys in rules:
+        if any(k in name for k in legacy_keys):
+            for t in template_files:
+                tl = t.lower()
+                if any(k in tl for k in template_keys):
+                    return t
+
+    # fallback: tenta casar pelo prefixo antes do primeiro "_"
+    prefix = name.split("_")[0]
+    for t in template_files:
+        if t.lower().startswith(prefix):
+            return t
+
+    # último fallback: se só tiver 1 template, usa ele
+    if len(template_files) == 1:
+        return template_files[0]
+
+    return None
 
 
 def get_valid_sheets(path):
@@ -39,93 +78,49 @@ def get_valid_sheets(path):
     return sheets
 
 
-# ---------- resolver coluna de origem a partir da lista de aliases ----------
-def resolve_alias(source_columns, alias_list):
-    """
-    Dado o header do legado (source_columns) e uma lista de aliases,
-    retorna o nome da coluna de origem que existe no arquivo.
-    """
-    if not alias_list:
-        return None
-
-    # garante lista
-    if not isinstance(alias_list, (list, tuple)):
-        alias_list = [alias_list]
-
-    # dict minúsculo -> original
-    source_lower = {c.lower(): c for c in source_columns}
-
-    for alias in alias_list:
-        if alias is None:
-            continue
-        a = str(alias).strip().lower()
-        if a in source_lower:
-            return source_lower[a]
-
-    return None
-
-
 def transform_to_dgw():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-    incoming_files = [f for f in os.listdir(INCOMING_DIR) if f.lower().endswith(".xlsx")]
-    template_files = [f for f in os.listdir(TEMPLATES_DIR) if f.lower().endswith(".xlsx")]
+    incoming_files = [f for f in os.listdir(INCOMING_DIR)
+                      if f.lower().endswith(".xlsx")]
+    template_files = [f for f in os.listdir(TEMPLATES_DIR)
+                      if f.lower().endswith(".xlsx")]
 
     if not incoming_files:
-        print("⚠️ No source files found.")
+        print("⚠️ No source files found in /data/incoming.")
         return
     if not template_files:
-        print("⚠️ No DGW templates were found in the /templates_dgw folder.")
+        print("⚠️ No DGW templates were found in /data/templates_dgw.")
         return
 
-    # usa o único template da pasta
-    template_path = os.path.join(TEMPLATES_DIR, template_files[0])
-    print(f"📄 Template loaded: {template_files[0]}")
+    print("🧩 Starting legacy template transformation...\n")
 
     for file in incoming_files:
-        print(f"\n➡️ Converting {file}...")
+        print(f"➡️ Converting {file}...")
 
         input_path = os.path.join(INCOMING_DIR, file)
+
+        # 1) mapping YAML
         mapping_file = detect_mapping_file(file)
         mapping_path = os.path.join(CONFIG_DIR, mapping_file)
-
         if not os.path.exists(mapping_path):
             print(f"❌ Mapping not found: {mapping_file}")
             continue
 
-        yaml_data = load_yaml(mapping_path) or {}
+        yaml_data = load_yaml(mapping_path)
+        aliases = yaml_data.get("aliases", {})
 
-        # ------------------------------------------------------------------
-        # Suporta os dois formatos:
-        # - antigo:  mappings: { "Employee ID": "EMPLID" }
-        # - novo:    aliases:  { "Employee ID": ["Employee ID","Worker ID","EMPLID"] }
-        # ------------------------------------------------------------------
-        raw_aliases = yaml_data.get("aliases")
-        raw_mappings = yaml_data.get("mappings")
+        # 2) template DGW específico para este arquivo
+        template_name = detect_template_file(file, template_files)
+        if not template_name:
+            print("❌ Could not find a matching DGW template for this file.")
+            continue
 
-        mapping_aliases = {}
+        template_path = os.path.join(TEMPLATES_DIR, template_name)
+        print(f"   📄 Template loaded: {template_name}")
+        print(f"   📑 Mapping YAML:   {mapping_file}")
 
-        if raw_aliases:
-            # já está no novo formato
-            for tgt, src_aliases in raw_aliases.items():
-                if isinstance(src_aliases, (list, tuple)):
-                    mapping_aliases[tgt] = [str(s).strip() for s in src_aliases]
-                else:
-                    mapping_aliases[tgt] = [str(src_aliases).strip()]
-        elif raw_mappings:
-            # converte 1:1 antigo para 1:n
-            for tgt, src in raw_mappings.items():
-                mapping_aliases[tgt] = [str(src).strip()]
-        else:
-            print(f"⚠️ No 'aliases' or 'mappings' section found in {mapping_file}.")
-            mapping_aliases = {}
-
-        if not mapping_aliases:
-            print(f"⚠️ Empty mapping for {mapping_file} — nothing will be filled.")
-
-        # ------------------------------------------------------------------
-        # Abre template → salva cópia → reabre para escrita
-        # ------------------------------------------------------------------
+        # copia workbook do template para saída
         tmpl_wb = load_workbook(template_path)
         output_path = os.path.join(
             OUTPUT_DIR,
@@ -134,6 +129,7 @@ def transform_to_dgw():
         tmpl_wb.save(output_path)
         out_wb = load_workbook(output_path)
 
+        # abas origem x template
         src_sheets = get_valid_sheets(input_path)
         tmpl_sheets = get_valid_sheets(template_path)
 
@@ -146,7 +142,7 @@ def transform_to_dgw():
 
             print(f"   📝 Filling sheet: {sheet}")
 
-            # origem → header na linha 2
+            # header na linha 2 do legado
             src_df = pd.read_excel(
                 input_path,
                 sheet_name=sheet,
@@ -165,7 +161,7 @@ def transform_to_dgw():
                 for cell in ws[header_row]
             ]
 
-            # cada header → lista de posições (permite duplicados)
+            # header template -> lista de posições (para duplicados)
             header_positions = defaultdict(list)
             for col_index, header in enumerate(template_headers):
                 if header:
@@ -173,27 +169,42 @@ def transform_to_dgw():
 
             start_row = 7
 
+            # percorre cada linha da origem
             for r_index, (_, row) in enumerate(src_df.iterrows()):
-                # (row.isna().all()) não faz sentido mais, pois já fizemos fillna("")
+                if row.isna().all():
+                    continue
+
                 excel_row = start_row + r_index
 
-                for tgt_col, alias_list in mapping_aliases.items():
-                    # resolve coluna de origem a partir dos aliases
-                    src_col = resolve_alias(src_df.columns, alias_list)
-                    if not src_col:
-                        continue
+                # para cada coluna do template (alias key)
+                for tgt_col, alias_list in aliases.items():
+                    # alias_list sempre é lista
+                    if isinstance(alias_list, str):
+                        alias_list = [alias_list]
+
+                    # encontra primeiro header de origem que exista
+                    src_col_name = None
+                    for alias in alias_list:
+                        if alias in src_df.columns:
+                            src_col_name = alias
+                            break
+
+                    if not src_col_name:
+                        continue  # nenhum alias presente na origem
 
                     if tgt_col not in header_positions:
-                        continue
+                        continue  # template não tem esta coluna
 
-                    value = row[src_col]
+                    value = row[src_col_name]
 
-                    # escreve em todas as colunas com o mesmo header
+                    # escreve em TODAS as colunas do template com esse header
                     for col_idx in header_positions[tgt_col]:
                         ws.cell(row=excel_row, column=col_idx + 1, value=value)
 
         out_wb.save(output_path)
-        print(f"✅ DGW file ready: {output_path}")
+        print(f"✅ DGW file ready: {output_path}\n")
+
+    print("✅ Transformation completed!")
 
 
 if __name__ == "__main__":
