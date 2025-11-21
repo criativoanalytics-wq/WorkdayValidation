@@ -1,0 +1,168 @@
+﻿Column,Row,Value,Rule
+Location Reference ID,-,,column_missing
+Location Name,-,,column_missing
+Location Usage,-,,column_missing
+Location Type,-,,column_missing
+Default Hours per Week,-,,column_missing
+Currency Code,-,,column_missing
+Country ISO Code,-,,column_missing
+Company Reference ID,-,,column_missing
+Company Name,-,,column_missing
+Organization Subtype,-,,column_missing
+Organization Visibility,-,,column_missing
+Currency ID,-,,column_missing
+Cost Center Reference ID,-,,column_missing
+Cost Center Name,-,,column_missing
+Cost Center Hierarchy ID,-,,column_missing
+Region Reference ID,-,,column_missing
+Region Name,-,,column_missing
+Job Code,-,,column_missing
+Job Profile Name,-,,column_missing
+Job Title Default,-,,column_missing
+Pay Rate Type,-,,column_missing
+Job Profile Code,-,,column_missing
+Job Family Reference ID,-,,column_missing
+Job Family Name,-,,column_missing
+Job Family Group Reference ID,-,,column_missing
+Job Family Group Name,-,,column_missing
+Supervisory Organization Reference ID,-,,column_missing
+Primary Location,-,,column_missing
+Superior Supervisory Organization Reference ID,-,,column_missing
+Manager Position ID,-,,column_missing
+Job Management Enabled,-,,column_missing
+Position Management Enabled,-,,column_missing
+Organization Type,-,,column_missing
+Matrix Organization Reference ID,-,,column_missing
+Matrix Organization Name,-,,column_missing
+Matrix Manager Position ID,-,,column_missing
+Retiree Organization Reference ID,-,,column_missing
+Retiree Organization Name,-,,column_missing
+Union Reference ID,-,,column_missing
+Union Name,-,,column_missing
+Membership Type Reference ID,-,,column_missing
+Membership Type Name,-,,column_missing
+Worker ID,-,,column_missing
+Worker Type,-,,column_missing
+Email Type,-,,column_missing
+Primary,-,,column_missing
+Email Address,-,,column_missing
+Phone Number Type,-,,column_missing
+Phone Number,-,,column_missing
+Phone Device Type,-,,column_missing
+Address Type,-,,column_missing
+National ID,-,,column_missing
+National ID Type,-,,column_missing
+Government ID,-,,column_missing
+Government ID Type,-,,column_missing
+Passport Number,-,,column_missing
+Passport Type,-,,column_missing
+Visa ID,-,,column_missing
+Visa Type,-,,column_missing
+License ID,-,,column_missing
+License Type,-,,column_missing
+Custom ID,-,,column_missing
+Custom ID Type,-,,column_missing
+Hire Date,-,,column_missing
+Employee Type,-,,column_missing
+Position Time Type,-,,column_missing
+Default Weekly Hours,-,,column_missing
+Scheduled Weekly Hours,-,,column_missing
+Position ID,-,,column_missing
+Effective Date,-,,column_missing
+Event Subcategory Reason,-,,column_missing
+New Supervisory Organization ID,-,,column_missing
+Applicant ID,-,,column_missing
+Status Date,-,,column_missing
+Status Reference ID,-,,column_missing
+Compensation Change On Next Pay Period,-,,column_missing
+Compensation Package Name,-,,column_missing
+Compensation Grade Name,-,,column_missing
+Compensation Plan,-,,column_missing
+Pay Plan Currency,-,,column_missing
+Pay Plan Frequency,-,,column_missing
+Pay Group ID,-,,column_missing
+Country*,-,,column_missing
+Currency*,-,,column_missing
+Row ID*,-,,column_missing
+Payment Election Rule*,-,,column_missing
+Row ID**,-,,column_missing
+Order*,-,,column_missing
+Payment Type*,-,,column_missing
+Bank Account Name,-,,column_missing
+Account Number,-,,column_missing
+Roll Number,-,,column_missing
+Account Type,-,,column_missing
+Bank Name,-,,column_missing
+Distribution Amount*,-,,column_missing
+Distribution Percentage*,-,,column_missing
+Distribution Balance*,-,,column_missing
+Retiree Status Date,-,,column_missing
+Add Additional Job Subcategory Reason,-,,column_missing
+Start Date,-,,column_missing
+Employee Visibility Date,-,,column_missing
+Addl Position ID,-,,column_missing
+End Additional Job Date,-,,column_missing
+End Additional Job Subcategory,-,,column_missing
+International Assignment Type,-,,column_missing
+Intl Position ID,-,,column_missing
+Assgn Pay Group ID,-,,column_missing
+End International Assignment Date,-,,column_missing
+End International Assignment Reason,-,,column_missing
+Contingent Worker ID,-,,column_missing
+Contingent Worker Type,-,,column_missing
+Contract Begin Date,-,,column_missing
+Contract End Date,-,,column_missing
+Seniority Date,-,,column_missing
+Membership ID Type,-,,column_missing
+One-Time Payment Plan Reference ID,-,,column_missing
+Amount,-,,column_missing
+Stock Plan Reference ID,-,,column_missing
+Grant Type Reference ID,-,,column_missing
+Collective Agreement ID,-,,column_missing
+Contract Type Reference ID,-,,column_missing
+Contract Start Date,-,,column_missing
+Contract Status Reference ID,-,,column_missing
+User Name,-,,column_missing
+Provisioning Group,-,,column_missing
+Reason,-,,column_missing
+Committee,-,,column_missing
+Committee Membership Type,-,,column_missing
+Last Termination Date,-,,column_missing
+Country ISO Code - Name,-,,column_missing
+Address Usage Type,-,,column_missing
+Review Template,-,,column_missing
+Row ID,-,,column_missing
+Job History Company Reference ID type,-,,column_missing
+Job History Company Reference ID,-,,column_missing
+Language Reference ID type,-,,column_missing
+Language,-,,column_missing
+Language Ability Type Reference ID type,-,,column_missing
+Language Ability Type,-,,column_missing
+Competency,-,,column_missing
+Comment,-,,column_missing
+Goal Milestone Name,-,,column_missing
+Goal Currency Code,-,,column_missing
+Goal Unit,-,,column_missing
+Development Item Reference ID type,-,,column_missing
+Development Item Reference ID,-,,column_missing
+Development Item,-,,column_missing
+Status Reference ID type,-,,column_missing
+Updated by Worker Type,-,,column_missing
+Updated by Worker ID,-,,column_missing
+Succession Readiness,-,,column_missing
+Talent Statement Reference ID type,-,,column_missing
+Talent Statement Reference ID,-,,column_missing
+Talent Statement Type Reference ID type,-,,column_missing
+Talent Statement Type Reference ID,-,,column_missing
+Talent Statement,-,,column_missing
+Date,-,,column_missing
+Worker*,-,,column_missing
+Start Date*,-,,column_missing
+Time Off Plan,-,,column_missing
+Override Balance Date,-,,column_missing
+Carryover Date,-,,column_missing
+Leave of Absence Type ID,-,,column_missing
+First Day of Leave,-,,column_missing
+Estimated Last Day of Leave,-,,column_missing
+Request Leave of Absence,-,,column_missing
+Actual Last Day of Leave,-,,column_missing

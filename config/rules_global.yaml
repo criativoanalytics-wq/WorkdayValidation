@@ -1,0 +1,733 @@
+Location Reference ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Location Name:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Location Usage:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Location Type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Default Hours per Week:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Currency Code:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Country ISO Code:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Company Reference ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Company Name:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Organization Subtype:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Organization Visibility:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Currency ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Cost Center Reference ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Cost Center Name:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Cost Center Hierarchy ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Region Reference ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Region Name:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Job Code:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Job Profile Name:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Job Title Default:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Pay Rate Type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Job Profile Code:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Job Family Reference ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Job Family Name:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Job Family Group Reference ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Job Family Group Name:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Supervisory Organization Reference ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Primary Location:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Superior Supervisory Organization Reference ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Manager Position ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Job Management Enabled:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Position Management Enabled:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Organization Type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Matrix Organization Reference ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Matrix Organization Name:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Matrix Manager Position ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Retiree Organization Reference ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Retiree Organization Name:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Union Reference ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Union Name:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Membership Type Reference ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Membership Type Name:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Worker ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Worker Type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Email Type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Primary:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Email Address:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Phone Number Type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Phone Number:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Phone Device Type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Address Type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+National ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+National ID Type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Government ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Government ID Type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Passport Number:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Passport Type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Visa ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Visa Type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+License ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+License Type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Custom ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Custom ID Type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Employee ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Hire Date:
+  expectations:
+    - expect_column_values_to_not_be_null
+    - expect_column_values_to_match_regex:
+        regex: "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+
+Employee Type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Position Time Type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Default Weekly Hours:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Scheduled Weekly Hours:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Position ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Effective Date:
+  expectations:
+    - expect_column_values_to_not_be_null
+    - expect_column_values_to_match_regex:
+        regex: "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+
+Event Subcategory Reason:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+New Supervisory Organization ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Applicant ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Status Date:
+  expectations:
+    - expect_column_values_to_not_be_null
+    - expect_column_values_to_match_regex:
+        regex: "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+
+Status Reference ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Compensation Change On Next Pay Period:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Compensation Package Name:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Compensation Grade Name:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Compensation Plan:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Pay Plan Currency:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Pay Plan Frequency:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Pay Group ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Country*:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Currency*:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Row ID*:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Payment Election Rule*:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Row ID**:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Order*:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Payment Type*:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Bank Account Name:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Account Number:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Roll Number:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Account Type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Bank Name:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Distribution Amount*:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Distribution Percentage*:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Distribution Balance*:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Termination Date:
+  expectations:
+    - expect_column_values_to_not_be_null
+    - expect_column_values_to_match_regex:
+        regex: "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+
+Last Day of Work:
+  expectations:
+    - expect_column_values_to_not_be_null
+    - expect_column_values_to_match_regex:
+        regex: "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+
+Primary Termination Subcategory Reason:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Pay Through Date:
+  expectations:
+    - expect_column_values_to_not_be_null
+    - expect_column_values_to_match_regex:
+        regex: "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+
+Retiree Status Date:
+  expectations:
+    - expect_column_values_to_not_be_null
+    - expect_column_values_to_match_regex:
+        regex: "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+
+Add Additional Job Subcategory Reason:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Start Date:
+  expectations:
+    - expect_column_values_to_not_be_null
+    - expect_column_values_to_match_regex:
+        regex: "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+
+Employee Visibility Date:
+  expectations:
+    - expect_column_values_to_not_be_null
+    - expect_column_values_to_match_regex:
+        regex: "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+
+Addl Position ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+End Additional Job Date:
+  expectations:
+    - expect_column_values_to_not_be_null
+    - expect_column_values_to_match_regex:
+        regex: "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+
+End Additional Job Subcategory:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+International Assignment Type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Intl Position ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Assgn Pay Group ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+End International Assignment Date:
+  expectations:
+    - expect_column_values_to_not_be_null
+    - expect_column_values_to_match_regex:
+        regex: "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+
+End International Assignment Reason:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Contingent Worker ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Contingent Worker Type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Contract Begin Date:
+  expectations:
+    - expect_column_values_to_not_be_null
+    - expect_column_values_to_match_regex:
+        regex: "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+
+Contract End Date:
+  expectations:
+    - expect_column_values_to_not_be_null
+    - expect_column_values_to_match_regex:
+        regex: "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+
+Seniority Date:
+  expectations:
+    - expect_column_values_to_not_be_null
+    - expect_column_values_to_match_regex:
+        regex: "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+
+Membership ID Type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+One-Time Payment Plan Reference ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Amount:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Stock Plan Reference ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Grant Type Reference ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Collective Agreement ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Contract Type Reference ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Contract Start Date:
+  expectations:
+    - expect_column_values_to_not_be_null
+    - expect_column_values_to_match_regex:
+        regex: "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+
+Contract Status Reference ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+User Name:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Provisioning Group:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Reason:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Committee:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Committee Membership Type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Last Termination Date:
+  expectations:
+    - expect_column_values_to_not_be_null
+    - expect_column_values_to_match_regex:
+        regex: "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+
+Country ISO Code - Name:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Address Usage Type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Review Template:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Row ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Job History Company Reference ID type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Job History Company Reference ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Language Reference ID type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Language:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Language Ability Type Reference ID type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Language Ability Type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Competency:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Comment:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Goal Milestone Name:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Goal Currency Code:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Goal Unit:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Development Item Reference ID type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Development Item Reference ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Development Item:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Status Reference ID type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Updated by Worker Type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Updated by Worker ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Succession Readiness:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Talent Statement Reference ID type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Talent Statement Reference ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Talent Statement Type Reference ID type:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Talent Statement Type Reference ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Talent Statement:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Date:
+  expectations:
+    - expect_column_values_to_not_be_null
+    - expect_column_values_to_match_regex:
+        regex: "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+
+Worker*:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Start Date*:
+  expectations:
+    - expect_column_values_to_not_be_null
+    - expect_column_values_to_match_regex:
+        regex: "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+
+Time Off Plan:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Override Balance Date:
+  expectations:
+    - expect_column_values_to_not_be_null
+    - expect_column_values_to_match_regex:
+        regex: "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+
+Carryover Date:
+  expectations:
+    - expect_column_values_to_not_be_null
+    - expect_column_values_to_match_regex:
+        regex: "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+
+Leave of Absence Type ID:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+First Day of Leave:
+  expectations:
+    - expect_column_values_to_not_be_null
+    - expect_column_values_to_match_regex:
+        regex: "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+
+Estimated Last Day of Leave:
+  expectations:
+    - expect_column_values_to_not_be_null
+    - expect_column_values_to_match_regex:
+        regex: "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+
+Request Leave of Absence:
+  expectations:
+    - expect_column_values_to_not_be_null
+
+Actual Last Day of Leave:
+  expectations:
+    - expect_column_values_to_not_be_null
+    - expect_column_values_to_match_regex:
+        regex: "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"

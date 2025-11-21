@@ -1,48 +1,89 @@
 ﻿Column,Row,Value,Rule
+Region Reference ID,7,,expect_column_values_to_not_be_null
+Region Reference ID,8,,expect_column_values_to_not_be_null
+Region Reference ID,9,,expect_column_values_to_not_be_null
+Region Reference ID,10,,expect_column_values_to_not_be_null
+Region Reference ID,11,,expect_column_values_to_not_be_null
+Region Reference ID,12,,expect_column_values_to_not_be_null
+Region Reference ID,13,,expect_column_values_to_not_be_null
+Region Reference ID,14,,expect_column_values_to_not_be_null
+Region Reference ID,15,,expect_column_values_to_not_be_null
+Region Reference ID,16,,expect_column_values_to_not_be_null
+Region Reference ID,17,,expect_column_values_to_not_be_null
+Region Reference ID,18,,expect_column_values_to_not_be_null
+Region Reference ID,19,,expect_column_values_to_not_be_null
+Region Reference ID,20,,expect_column_values_to_not_be_null
+Region Reference ID,21,,expect_column_values_to_not_be_null
+Region Reference ID,22,,expect_column_values_to_not_be_null
+Region Reference ID,23,,expect_column_values_to_not_be_null
+Region Reference ID,24,,expect_column_values_to_not_be_null
+Region Reference ID,25,,expect_column_values_to_not_be_null
+Region Reference ID,26,,expect_column_values_to_not_be_null
+Region Reference ID,27,,expect_column_values_to_not_be_null
+Region Reference ID,28,,expect_column_values_to_not_be_null
+Region Reference ID,29,,expect_column_values_to_not_be_null
+Region Reference ID,30,,expect_column_values_to_not_be_null
+Region Reference ID,31,,expect_column_values_to_not_be_null
+Region Reference ID,32,,expect_column_values_to_not_be_null
+Region Reference ID,33,,expect_column_values_to_not_be_null
+Region Reference ID,34,,expect_column_values_to_not_be_null
+Region Reference ID,35,,expect_column_values_to_not_be_null
+Region Reference ID,36,,expect_column_values_to_not_be_null
+Region Reference ID,37,,expect_column_values_to_not_be_null
+Region Reference ID,38,,expect_column_values_to_not_be_null
+Region Reference ID,39,,expect_column_values_to_not_be_null
+Region Reference ID,40,,expect_column_values_to_not_be_null
+Region Reference ID,41,,expect_column_values_to_not_be_null
+Region Reference ID,42,,expect_column_values_to_not_be_null
+Region Reference ID,43,,expect_column_values_to_not_be_null
+Region Reference ID,44,,expect_column_values_to_not_be_null
+Region Reference ID,45,,expect_column_values_to_not_be_null
+Region Reference ID,46,,expect_column_values_to_not_be_null
+Region Reference ID,47,,expect_column_values_to_not_be_null
+Region Reference ID,48,,expect_column_values_to_not_be_null
+Region Reference ID,49,,expect_column_values_to_not_be_null
+Region Reference ID,50,,expect_column_values_to_not_be_null
+Region Reference ID,51,,expect_column_values_to_not_be_null
+Region Reference ID,52,,expect_column_values_to_not_be_null
+Region Reference ID,53,,expect_column_values_to_not_be_null
+Region Reference ID,54,,expect_column_values_to_not_be_null
+Region Reference ID,55,,expect_column_values_to_not_be_null
+Region Reference ID,56,,expect_column_values_to_not_be_null
+Region Reference ID,57,,expect_column_values_to_not_be_null
+Region Reference ID,58,,expect_column_values_to_not_be_null
+Region Reference ID,59,,expect_column_values_to_not_be_null
+Region Reference ID,60,,expect_column_values_to_not_be_null
+Region Reference ID,61,,expect_column_values_to_not_be_null
+Region Reference ID,62,,expect_column_values_to_not_be_null
+Region Reference ID,63,,expect_column_values_to_not_be_null
+Region Reference ID,64,,expect_column_values_to_not_be_null
+Region Reference ID,65,,expect_column_values_to_not_be_null
+Region Reference ID,66,,expect_column_values_to_not_be_null
+Region Reference ID,67,,expect_column_values_to_not_be_null
+Region Reference ID,68,,expect_column_values_to_not_be_null
+Region Reference ID,69,,expect_column_values_to_not_be_null
+Region Reference ID,70,,expect_column_values_to_not_be_null
+Region Reference ID,71,,expect_column_values_to_not_be_null
+Region Reference ID,72,,expect_column_values_to_not_be_null
+Region Reference ID,73,,expect_column_values_to_not_be_null
+Region Reference ID,74,,expect_column_values_to_not_be_null
+Region Reference ID,75,,expect_column_values_to_not_be_null
+Region Reference ID,76,,expect_column_values_to_not_be_null
+Region Reference ID,77,,expect_column_values_to_not_be_null
+Region Reference ID,78,,expect_column_values_to_not_be_null
+Region Reference ID,79,,expect_column_values_to_not_be_null
+Region Reference ID,80,,expect_column_values_to_not_be_null
+Region Reference ID,81,,expect_column_values_to_not_be_null
+Region Reference ID,82,,expect_column_values_to_not_be_null
+Region Reference ID,83,,expect_column_values_to_not_be_null
+Region Reference ID,84,,expect_column_values_to_not_be_null
+Region Reference ID,85,,expect_column_values_to_not_be_null
 Employee ID,26,,expect_column_values_to_not_be_null
 Employee ID,31,,expect_column_values_to_not_be_null
+Employee ID,65,,expect_column_values_to_not_be_null
+Employee ID,70,,expect_column_values_to_not_be_null
 Hire Date,9,,expect_column_values_to_not_be_null
-Hire Date,20,02/22/1998,expect_column_values_to_match_regex
-Employee Type,7,Regular,expect_column_values_to_be_in_set
-Employee Type,8,Regular,expect_column_values_to_be_in_set
-Employee Type,9,Regular,expect_column_values_to_be_in_set
-Employee Type,10,Regular,expect_column_values_to_be_in_set
-Employee Type,11,Regular,expect_column_values_to_be_in_set
-Employee Type,12,Regular,expect_column_values_to_be_in_set
-Employee Type,13,Regular,expect_column_values_to_be_in_set
-Employee Type,14,Regular,expect_column_values_to_be_in_set
-Employee Type,15,Regular,expect_column_values_to_be_in_set
-Employee Type,16,Regular,expect_column_values_to_be_in_set
-Employee Type,17,Regular,expect_column_values_to_be_in_set
-Employee Type,18,Regular,expect_column_values_to_be_in_set
-Employee Type,19,Regular,expect_column_values_to_be_in_set
-Employee Type,20,Regular,expect_column_values_to_be_in_set
-Employee Type,21,Regular,expect_column_values_to_be_in_set
-Employee Type,22,Regular,expect_column_values_to_be_in_set
-Employee Type,23,Regular,expect_column_values_to_be_in_set
-Employee Type,24,Regular,expect_column_values_to_be_in_set
-Employee Type,25,Regular,expect_column_values_to_be_in_set
-Employee Type,26,Regular,expect_column_values_to_be_in_set
-Employee Type,27,Regular,expect_column_values_to_be_in_set
-Employee Type,28,Regular,expect_column_values_to_be_in_set
-Employee Type,29,Regular,expect_column_values_to_be_in_set
-Employee Type,30,Regular,expect_column_values_to_be_in_set
-Employee Type,31,Regular,expect_column_values_to_be_in_set
-Employee Type,32,Regular,expect_column_values_to_be_in_set
-Employee Type,33,Regular,expect_column_values_to_be_in_set
-Employee Type,34,Regular,expect_column_values_to_be_in_set
-Employee Type,35,Regular,expect_column_values_to_be_in_set
-Employee Type,36,Regular,expect_column_values_to_be_in_set
-Employee Type,37,Regular,expect_column_values_to_be_in_set
-Employee Type,38,Regular,expect_column_values_to_be_in_set
-Employee Type,39,Regular,expect_column_values_to_be_in_set
-Employee Type,40,Regular,expect_column_values_to_be_in_set
-Employee Type,41,Regular,expect_column_values_to_be_in_set
-Employee Type,42,Regular,expect_column_values_to_be_in_set
-Employee Type,43,Regular,expect_column_values_to_be_in_set
-Employee Type,44,Regular,expect_column_values_to_be_in_set
-Employee Type,45,Regular,expect_column_values_to_be_in_set
-Employee Type,46,Regular,expect_column_values_to_be_in_set
+Hire Date,48,,expect_column_values_to_not_be_null
 Position ID,7,,expect_column_values_to_not_be_null
 Position ID,8,,expect_column_values_to_not_be_null
 Position ID,9,,expect_column_values_to_not_be_null
@@ -83,3 +124,42 @@ Position ID,43,,expect_column_values_to_not_be_null
 Position ID,44,,expect_column_values_to_not_be_null
 Position ID,45,,expect_column_values_to_not_be_null
 Position ID,46,,expect_column_values_to_not_be_null
+Position ID,47,,expect_column_values_to_not_be_null
+Position ID,48,,expect_column_values_to_not_be_null
+Position ID,49,,expect_column_values_to_not_be_null
+Position ID,50,,expect_column_values_to_not_be_null
+Position ID,51,,expect_column_values_to_not_be_null
+Position ID,52,,expect_column_values_to_not_be_null
+Position ID,53,,expect_column_values_to_not_be_null
+Position ID,54,,expect_column_values_to_not_be_null
+Position ID,55,,expect_column_values_to_not_be_null
+Position ID,56,,expect_column_values_to_not_be_null
+Position ID,57,,expect_column_values_to_not_be_null
+Position ID,58,,expect_column_values_to_not_be_null
+Position ID,59,,expect_column_values_to_not_be_null
+Position ID,60,,expect_column_values_to_not_be_null
+Position ID,61,,expect_column_values_to_not_be_null
+Position ID,62,,expect_column_values_to_not_be_null
+Position ID,63,,expect_column_values_to_not_be_null
+Position ID,64,,expect_column_values_to_not_be_null
+Position ID,65,,expect_column_values_to_not_be_null
+Position ID,66,,expect_column_values_to_not_be_null
+Position ID,67,,expect_column_values_to_not_be_null
+Position ID,68,,expect_column_values_to_not_be_null
+Position ID,69,,expect_column_values_to_not_be_null
+Position ID,70,,expect_column_values_to_not_be_null
+Position ID,71,,expect_column_values_to_not_be_null
+Position ID,72,,expect_column_values_to_not_be_null
+Position ID,73,,expect_column_values_to_not_be_null
+Position ID,74,,expect_column_values_to_not_be_null
+Position ID,75,,expect_column_values_to_not_be_null
+Position ID,76,,expect_column_values_to_not_be_null
+Position ID,77,,expect_column_values_to_not_be_null
+Position ID,78,,expect_column_values_to_not_be_null
+Position ID,79,,expect_column_values_to_not_be_null
+Position ID,80,,expect_column_values_to_not_be_null
+Position ID,81,,expect_column_values_to_not_be_null
+Position ID,82,,expect_column_values_to_not_be_null
+Position ID,83,,expect_column_values_to_not_be_null
+Position ID,84,,expect_column_values_to_not_be_null
+Position ID,85,,expect_column_values_to_not_be_null

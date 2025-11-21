@@ -1,0 +1,144 @@
+﻿Column,Row,Value,Rule
+Location Reference ID,7,,expect_column_values_to_not_be_null
+Location Reference ID,8,,expect_column_values_to_not_be_null
+Location Reference ID,9,,expect_column_values_to_not_be_null
+Location Reference ID,10,,expect_column_values_to_not_be_null
+Location Reference ID,11,,expect_column_values_to_not_be_null
+Location Reference ID,12,,expect_column_values_to_not_be_null
+Location Reference ID,13,,expect_column_values_to_not_be_null
+Location Reference ID,14,,expect_column_values_to_not_be_null
+Location Reference ID,15,,expect_column_values_to_not_be_null
+Location Reference ID,16,,expect_column_values_to_not_be_null
+Location Reference ID,17,,expect_column_values_to_not_be_null
+Location Reference ID,18,,expect_column_values_to_not_be_null
+Location Reference ID,19,,expect_column_values_to_not_be_null
+Company Reference ID,7,,expect_column_values_to_not_be_null
+Company Reference ID,8,,expect_column_values_to_not_be_null
+Company Reference ID,9,,expect_column_values_to_not_be_null
+Company Reference ID,10,,expect_column_values_to_not_be_null
+Company Reference ID,11,,expect_column_values_to_not_be_null
+Company Reference ID,12,,expect_column_values_to_not_be_null
+Company Reference ID,13,,expect_column_values_to_not_be_null
+Company Reference ID,14,,expect_column_values_to_not_be_null
+Company Reference ID,15,,expect_column_values_to_not_be_null
+Company Reference ID,16,,expect_column_values_to_not_be_null
+Company Reference ID,17,,expect_column_values_to_not_be_null
+Company Reference ID,18,,expect_column_values_to_not_be_null
+Company Reference ID,19,,expect_column_values_to_not_be_null
+Cost Center Reference ID,7,,expect_column_values_to_not_be_null
+Cost Center Reference ID,8,,expect_column_values_to_not_be_null
+Cost Center Reference ID,9,,expect_column_values_to_not_be_null
+Cost Center Reference ID,10,,expect_column_values_to_not_be_null
+Cost Center Reference ID,11,,expect_column_values_to_not_be_null
+Cost Center Reference ID,12,,expect_column_values_to_not_be_null
+Cost Center Reference ID,13,,expect_column_values_to_not_be_null
+Cost Center Reference ID,14,,expect_column_values_to_not_be_null
+Cost Center Reference ID,15,,expect_column_values_to_not_be_null
+Cost Center Reference ID,16,,expect_column_values_to_not_be_null
+Cost Center Reference ID,17,,expect_column_values_to_not_be_null
+Cost Center Reference ID,18,,expect_column_values_to_not_be_null
+Cost Center Reference ID,19,,expect_column_values_to_not_be_null
+Region Reference ID,7,,expect_column_values_to_not_be_null
+Region Reference ID,8,,expect_column_values_to_not_be_null
+Region Reference ID,9,,expect_column_values_to_not_be_null
+Region Reference ID,10,,expect_column_values_to_not_be_null
+Region Reference ID,11,,expect_column_values_to_not_be_null
+Region Reference ID,12,,expect_column_values_to_not_be_null
+Region Reference ID,13,,expect_column_values_to_not_be_null
+Region Reference ID,14,,expect_column_values_to_not_be_null
+Region Reference ID,15,,expect_column_values_to_not_be_null
+Region Reference ID,16,,expect_column_values_to_not_be_null
+Region Reference ID,17,,expect_column_values_to_not_be_null
+Region Reference ID,18,,expect_column_values_to_not_be_null
+Region Reference ID,19,,expect_column_values_to_not_be_null
+Pay Rate Type,7,,expect_column_values_to_not_be_null
+Pay Rate Type,8,,expect_column_values_to_not_be_null
+Pay Rate Type,9,,expect_column_values_to_not_be_null
+Pay Rate Type,10,,expect_column_values_to_not_be_null
+Pay Rate Type,11,,expect_column_values_to_not_be_null
+Pay Rate Type,12,,expect_column_values_to_not_be_null
+Pay Rate Type,13,,expect_column_values_to_not_be_null
+Pay Rate Type,14,,expect_column_values_to_not_be_null
+Pay Rate Type,15,,expect_column_values_to_not_be_null
+Pay Rate Type,16,,expect_column_values_to_not_be_null
+Pay Rate Type,17,,expect_column_values_to_not_be_null
+Pay Rate Type,18,,expect_column_values_to_not_be_null
+Pay Rate Type,19,,expect_column_values_to_not_be_null
+Job Profile Code,7,,expect_column_values_to_not_be_null
+Job Profile Code,8,,expect_column_values_to_not_be_null
+Job Profile Code,9,,expect_column_values_to_not_be_null
+Job Profile Code,10,,expect_column_values_to_not_be_null
+Job Profile Code,11,,expect_column_values_to_not_be_null
+Job Profile Code,12,,expect_column_values_to_not_be_null
+Job Profile Code,13,,expect_column_values_to_not_be_null
+Job Profile Code,14,,expect_column_values_to_not_be_null
+Job Profile Code,15,,expect_column_values_to_not_be_null
+Job Profile Code,16,,expect_column_values_to_not_be_null
+Job Profile Code,17,,expect_column_values_to_not_be_null
+Job Profile Code,18,,expect_column_values_to_not_be_null
+Job Profile Code,19,,expect_column_values_to_not_be_null
+Employee Type,7,,expect_column_values_to_not_be_null
+Employee Type,8,,expect_column_values_to_not_be_null
+Employee Type,9,,expect_column_values_to_not_be_null
+Employee Type,10,,expect_column_values_to_not_be_null
+Employee Type,11,,expect_column_values_to_not_be_null
+Employee Type,12,,expect_column_values_to_not_be_null
+Employee Type,13,,expect_column_values_to_not_be_null
+Employee Type,14,,expect_column_values_to_not_be_null
+Employee Type,15,,expect_column_values_to_not_be_null
+Employee Type,16,,expect_column_values_to_not_be_null
+Employee Type,17,,expect_column_values_to_not_be_null
+Employee Type,18,,expect_column_values_to_not_be_null
+Employee Type,19,,expect_column_values_to_not_be_null
+Position Time Type,7,,expect_column_values_to_not_be_null
+Position Time Type,8,,expect_column_values_to_not_be_null
+Position Time Type,9,,expect_column_values_to_not_be_null
+Position Time Type,10,,expect_column_values_to_not_be_null
+Position Time Type,11,,expect_column_values_to_not_be_null
+Position Time Type,12,,expect_column_values_to_not_be_null
+Position Time Type,13,,expect_column_values_to_not_be_null
+Position Time Type,14,,expect_column_values_to_not_be_null
+Position Time Type,15,,expect_column_values_to_not_be_null
+Position Time Type,16,,expect_column_values_to_not_be_null
+Position Time Type,17,,expect_column_values_to_not_be_null
+Position Time Type,18,,expect_column_values_to_not_be_null
+Position Time Type,19,,expect_column_values_to_not_be_null
+Default Weekly Hours,7,,expect_column_values_to_not_be_null
+Default Weekly Hours,8,,expect_column_values_to_not_be_null
+Default Weekly Hours,9,,expect_column_values_to_not_be_null
+Default Weekly Hours,10,,expect_column_values_to_not_be_null
+Default Weekly Hours,11,,expect_column_values_to_not_be_null
+Default Weekly Hours,12,,expect_column_values_to_not_be_null
+Default Weekly Hours,13,,expect_column_values_to_not_be_null
+Default Weekly Hours,14,,expect_column_values_to_not_be_null
+Default Weekly Hours,15,,expect_column_values_to_not_be_null
+Default Weekly Hours,16,,expect_column_values_to_not_be_null
+Default Weekly Hours,17,,expect_column_values_to_not_be_null
+Default Weekly Hours,18,,expect_column_values_to_not_be_null
+Default Weekly Hours,19,,expect_column_values_to_not_be_null
+Scheduled Weekly Hours,7,,expect_column_values_to_not_be_null
+Scheduled Weekly Hours,8,,expect_column_values_to_not_be_null
+Scheduled Weekly Hours,9,,expect_column_values_to_not_be_null
+Scheduled Weekly Hours,10,,expect_column_values_to_not_be_null
+Scheduled Weekly Hours,11,,expect_column_values_to_not_be_null
+Scheduled Weekly Hours,12,,expect_column_values_to_not_be_null
+Scheduled Weekly Hours,13,,expect_column_values_to_not_be_null
+Scheduled Weekly Hours,14,,expect_column_values_to_not_be_null
+Scheduled Weekly Hours,15,,expect_column_values_to_not_be_null
+Scheduled Weekly Hours,16,,expect_column_values_to_not_be_null
+Scheduled Weekly Hours,17,,expect_column_values_to_not_be_null
+Scheduled Weekly Hours,18,,expect_column_values_to_not_be_null
+Scheduled Weekly Hours,19,,expect_column_values_to_not_be_null
+New Supervisory Organization ID,7,,expect_column_values_to_not_be_null
+New Supervisory Organization ID,8,,expect_column_values_to_not_be_null
+New Supervisory Organization ID,9,,expect_column_values_to_not_be_null
+New Supervisory Organization ID,10,,expect_column_values_to_not_be_null
+New Supervisory Organization ID,11,,expect_column_values_to_not_be_null
+New Supervisory Organization ID,12,,expect_column_values_to_not_be_null
+New Supervisory Organization ID,13,,expect_column_values_to_not_be_null
+New Supervisory Organization ID,14,,expect_column_values_to_not_be_null
+New Supervisory Organization ID,15,,expect_column_values_to_not_be_null
+New Supervisory Organization ID,16,,expect_column_values_to_not_be_null
+New Supervisory Organization ID,17,,expect_column_values_to_not_be_null
+New Supervisory Organization ID,18,,expect_column_values_to_not_be_null
+New Supervisory Organization ID,19,,expect_column_values_to_not_be_null

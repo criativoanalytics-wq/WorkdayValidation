@@ -1,11 +1,14 @@
 Employee ID,Country*,Currency*,Row ID*,Payment Election Rule*,Row ID**,Order*,Payment Election Rule*.1,Country*.1,Currency*.1,Payment Type*,Country,Currency,Bank Account Nickname,Bank Account Name,Account Number,Roll Number,Account Type Code,Account Type,Bank Name,IBAN,Bank ID Number,BIC,Branch Name,Branch ID Number,Check Digit,Distribution Amount*,Distribution Percentage*,Distribution Balance*
-E123462,BRAZIL,BRL,1,TEST,1,1,TEST,BRAZIL,BRL,CASH,,,,TEST,1234,23,,AC,TEST,,,,,,,2000,50,10
-E123463,BRAZIL,BRL,1,TEST,1,1,TEST,BRAZIL,BRL,CASH,,,,TEST,1234,23,,AC,TEST,,,,,,,2000,50,10
-E123464,BRAZIL,BRL,1,TEST,1,1,TEST,BRAZIL,BRL,CASH,,,,TEST,1234,23,,AC,TEST,,,,,,,2000,50,10
-E123465,BRAZIL,BRL,1,TEST,1,1,TEST,BRAZIL,BRL,CASH,,,,TEST,1234,23,,AC,TEST,,,,,,,2000,50,10
-E123466,BRAZIL,BRL,1,TEST,1,1,TEST,BRAZIL,BRL,CASH,,,,TEST,1234,23,,AC,TEST,,,,,,,2000,50,10
-E123467,BRAZIL,BRL,1,TEST,1,1,TEST,BRAZIL,BRL,CASH,,,,TEST,1234,23,,AC,TEST,,,,,,,2000,50,10
-E123468,BRAZIL,BRL,1,TEST,1,1,TEST,BRAZIL,BRL,CASH,,,,TEST,1234,23,,AC,TEST,,,,,,,2000,50,10
-E123469,BRAZIL,BRL,1,TEST,1,1,TEST,BRAZIL,BRL,CASH,,,,TEST,1234,23,,AC,TEST,,,,,,,2000,50,10
-E123470,BRAZIL,BRL,1,TEST,1,1,TEST,BRAZIL,BRL,CASH,,,,TEST,1234,23,,AC,TEST,,,,,,,2000,50,10
-E123471,BRAZIL,BRL,1,TEST,1,1,TEST,BRAZIL,BRL,CASH,,,,TEST,1234,23,,AC,TEST,,,,,,,2000,50,10
+E123462,,,,,,,,,,,,,,TEST,1234,23,,AC,TEST,,,,,,,,,
+E123463,,,,,,,,,,,,,,TEST,1234,23,,AC,TEST,,,,,,,,,
+E123464,,,,,,,,,,,,,,TEST,1234,23,,AC,TEST,,,,,,,,,
+E123465,,,,,,,,,,,,,,TEST,1234,23,,AC,TEST,,,,,,,,,
+E123466,,,,,,,,,,,,,,TEST,1234,23,,AC,TEST,,,,,,,,,
+E123467,,,,,,,,,,,,,,TEST,1234,23,,AC,TEST,,,,,,,,,
+E123468,,,,,,,,,,,,,,TEST,1234,23,,AC,TEST,,,,,,,,,
+E123469,,,,,,,,,,,,,,TEST,1234,23,,AC,TEST,,,,,,,,,
+E123470,,,,,,,,,,,,,,TEST,1234,23,,AC,TEST,,,,,,,,,
+E123471,,,,,,,,,,,,,,TEST,1234,23,,AC,TEST,,,,,,,,,
+E123472,,,,,,,,,,,,,,TEST,1234,23,,AC,TEST,,,,,,,,,
+E123473,,,,,,,,,,,,,,TEST,1234,23,,AC,TEST,,,,,,,,,
+E123474,,,,,,,,,,,,,,TEST,1234,23,,AC,TEST,,,,,,,,,

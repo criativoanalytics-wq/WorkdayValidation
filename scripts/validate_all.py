@@ -1,4 +1,5 @@
 import os
+import sys
 import yaml
 import pandas as pd
 import openpyxl
@@ -10,7 +11,7 @@ from great_expectations.dataset import PandasDataset
 # =============================================================================
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA_DIR = os.path.join(BASE_DIR, "data/curated")
-CONFIG_FILE = os.path.join(BASE_DIR, "config", "field_mappings.yaml")
+RULES_FILE = os.path.join(BASE_DIR, "config", "rules_global.yaml")
 OUTPUT_DIR = os.path.join(BASE_DIR, "outputs")
 PREVIEW_DIR = os.path.join(OUTPUT_DIR, "previews")
 FAILS_DIR = os.path.join(OUTPUT_DIR, "failures")
@@ -19,281 +20,340 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 os.makedirs(PREVIEW_DIR, exist_ok=True)
 os.makedirs(FAILS_DIR, exist_ok=True)
 
+
 # =============================================================================
-# Configurações
+# Load Global Rules
 # =============================================================================
-with open(CONFIG_FILE, "r", encoding="utf-8") as f:
-    CONFIG = yaml.safe_load(f)
-ALIASES = CONFIG.get("aliases", {})
+with open(RULES_FILE, "r", encoding="utf-8") as f:
+    GLOBAL_RULES = yaml.safe_load(f)
 
-DEBUG_MODE = True  # altere para False se não quiser gerar previews
+DEBUG_MODE = True
 
+def debug(msg):
+    if DEBUG_MODE:
+        print(msg)
 
-def get_col(df, key):
-    """Retorna o nome real da coluna a partir do alias configurado."""
-    for name in ALIASES.get(key, []):
-        if name in df.columns:
-            return name
-    return None
+# paleta simples sem depender de lib externa
+COLOR = {
+    "cyan": "\033[96m",
+    "yellow": "\033[93m",
+    "green": "\033[92m",
+    "red": "\033[91m",
+    "bold": "\033[1m",
+    "end": "\033[0m"
+}
 
+def color(text, c):
+    if DEBUG_MODE:
+        return f"{COLOR[c]}{text}{COLOR['end']}"
+    return text
 
 def detect_type(file_path):
-    """Identifica o tipo de DGW com base no nome do arquivo."""
     filename = os.path.basename(file_path).lower()
     if "hire" in filename:
         return "HireStack"
-    elif "personalcontact" in filename or "contactinfo" in filename:
+    elif "contact" in filename:
         return "PersonalContactInfo"
-    elif "compensation" in filename:
-        return "Compensation"
-    elif "address" in filename:
-        return "Address"
-    elif "organization" in filename:
-        return "Organization"
-    elif "job" in filename:
-        return "JobData"
-    else:
-        return "Generic"
+    return "Generic"
 
 
-def get_data_sheets(file_path):
-    """Retorna uma lista de abas válidas (ignora abas cujo nome começa com '>')."""
+def get_valid_sheets(file_path):
     wb = openpyxl.load_workbook(file_path, read_only=True)
-    valid_sheets = [s for s in wb.sheetnames if not s.strip().startswith(">")]
+    sheets = [s for s in wb.sheetnames if not s.strip().startswith(">")]
     wb.close()
-    return valid_sheets
+    return sheets
 
 
 
 # =============================================================================
-# Validação
+# Função para aplicar regra GE dinamicamente
 # =============================================================================
+def apply_rule(ge_df, df, column_name, rule_obj):
+    """
+    rule_obj pode ser:
+    - {rule: not_null}
+    - {rule: regex, pattern: "..."}
+    - {rule: allowed_set, values: [...]}
+    """
+
+    if rule_obj["rule"] == "not_null":
+        ge_df.expect_column_values_to_not_be_null(column_name)
+
+    elif rule_obj["rule"] == "regex":
+        regex = rule_obj["pattern"]
+
+        # Normaliza data antes de aplicar regex
+        clean_col = f"_norm_{column_name.replace(' ', '_')}"
+        raw = df[column_name].astype(str).str.replace(r"\s*00:00:00.*$", "", regex=True)
+
+        normalized = raw.copy()
+        normalized[normalized.isin(["nan", "None", "", "NaT"])] = pd.NA
+
+        ge_df[clean_col] = normalized
+
+        ge_df.expect_column_values_to_not_be_null(clean_col)
+        ge_df.expect_column_values_to_match_regex(clean_col, regex)
+
+    elif rule_obj["rule"] == "allowed_set":
+        allowed = rule_obj["values"]
+        ge_df.expect_column_values_to_be_in_set(column_name, allowed)
+
+
+
+# =============================================================================
+# Validação Principal
+# =============================================================================
+def get_col(df, yaml_column, aliases):
+    """
+    Localiza uma coluna real no dataframe baseada no nome do YAML ou aliases.
+    - yaml_column: nome exato do arquivo global_rules.yaml
+    - aliases: dicionário de alias carregado em field_mappings.yaml
+    """
+    # 1) Nome exato
+    if yaml_column in df.columns:
+        return yaml_column
+
+    # 2) Aliases possíveis
+    if yaml_column in aliases:
+        for alias in aliases[yaml_column]:
+            if alias in df.columns:
+                return alias
+
+    # 3) Não existe
+    return None
+
+
 def validate_dgw(file_path):
     """
-    Executa a validação completa de todas as abas válidas de um arquivo DGW.
-    Ignora abas que começam com '>' e utiliza a linha 6 como cabeçalho.
-    Retorna uma lista de resultados (um por aba).
+    Versão FINAL com logs detalhados:
+    - Usa regras globais (rules_global.yaml)
+    - Usa get_col() para mapear alias → coluna real
+    - Valida apenas colunas existentes
+    - Logs aparecem apenas quando DEBUG_MODE = True
     """
-    # Detecta tipo de DGW
-    dgw_type = detect_type(file_path)
-    valid_sheets = []
-    try:
-        wb = openpyxl.load_workbook(file_path, read_only=True)
-        valid_sheets = [s for s in wb.sheetnames if not s.strip().startswith(">")]
-        wb.close()
-    except Exception as e:
-        print(f"⚠️ Error opening workbook {file_path}: {e}")
-        valid_sheets = []
 
+    def debug(msg):
+        if DEBUG_MODE:
+            print(msg)
+
+    # ---------------------------------------------------------
+    # Load Global Rules
+    # ---------------------------------------------------------
+    try:
+        with open(RULES_FILE, "r", encoding="utf-8") as f:
+            GLOBAL_RULES = yaml.safe_load(f)
+        debug("\n📘 Global rules loaded successfully.")
+    except Exception as e:
+        print(f"❌ Error loading YAML rules: {e}")
+        return []
+
+    # Load aliases (optional)
+    aliases = {}
+    alias_file = os.path.join(BASE_DIR, "config", "field_mappings.yaml")
+    if os.path.exists(alias_file):
+        with open(alias_file, "r", encoding="utf-8") as f:
+            alias_yaml = yaml.safe_load(f)
+            aliases = alias_yaml.get("aliases", {})
+
+        debug(f"📘 Aliases loaded: {aliases}")
+    else:
+        debug("⚠️ No alias file found. Proceeding without aliases.")
+
+    dgw_type = detect_type(file_path)
+
+    # ---------------------------------------------------------
+    # Load valid sheets
+    # ---------------------------------------------------------
+    valid_sheets = get_valid_sheets(file_path)
     if not valid_sheets:
         print(f"⚠️ No valid tabs found in {file_path}")
         return []
 
+    debug(f"\n📄 Valid sheets detected: {valid_sheets}")
+
     all_results = []
 
+    # ---------------------------------------------------------
+    # Validate each sheet
+    # ---------------------------------------------------------
     for sheet_name in valid_sheets:
-        print(f"\n➡️  Reading {os.path.basename(file_path)} → aba '{sheet_name}' (Header: line 6)")
+
+        debug(f"\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+        debug(f"➡️ Validating sheet: {sheet_name}")
+        debug(f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
 
         try:
             df = pd.read_excel(file_path, sheet_name=sheet_name, header=5)
+            debug(f"📊 Columns detected: {list(df.columns)}")
         except Exception as e:
-            print(f"❌ Error reading tab '{sheet_name}': {e}")
-            all_results.append({
-                "File": os.path.basename(file_path),
-                "Sheet": sheet_name,
-                "Type": dgw_type,
-                "Total Checks": 0,
-                "Failed": 0,
-                "Success %": 0,
-                "Error": str(e),
-                "Fail HTML": ""
-            })
+            print(f"❌ Error reading sheet {sheet_name}: {e}")
             continue
 
-        #print(f"Columns detected: {list(df.columns)}")
-
-        # Preview opcional
         if DEBUG_MODE:
-            preview_path = os.path.join(PREVIEW_DIR, f"{os.path.basename(file_path)}_{sheet_name}_preview.csv")
-            df.head(10).to_csv(preview_path, index=False)
-            print(f"🧩 Preview saved in: {preview_path}")
+            preview_path = os.path.join(
+                PREVIEW_DIR,
+                f"{os.path.basename(file_path)}_{sheet_name}_preview.csv"
+            )
+            df.head(20).to_csv(preview_path, index=False)
+            debug(f"🧩 Preview saved: {preview_path}")
 
-        # Ajuste de formato de data
-        #hire_col = get_col(df, "hire_date")
-        #if hire_col in df.columns:
-        #    df[hire_col] = df[hire_col].astype(str)
-
-        # Cria dataset GE
         ge_df = PandasDataset(df)
+        failure_details = []
+        total_checks = 0
 
-        # =========================================================
-        # 🔎 Regras genéricas
-        # =========================================================
-        if get_col(df, "country_code"):
-            ge_df.expect_column_values_to_match_regex(get_col(df, "country_code"), r"^[A-Z]{3}$")
-        if get_col(df, "currency_code"):
-            ge_df.expect_column_values_to_match_regex(get_col(df, "currency_code"), r"^[A-Z]{3}$")
+        # ---------------------------------------------------------
+        # Apply global rules
+        # ---------------------------------------------------------
+        debug("\n📌 Starting column rule validation...")
 
-        # =========================================================
-        # 🔎 Regras específicas por tipo de DGW
-        # =========================================================
-        if dgw_type == "HireStack":
-            emp = get_col(df, "employee_id")
-            hire = get_col(df, "hire_date")
-            etype = get_col(df, "employee_type")
-            position_number = get_col(df, "position_number")
+        for yaml_column, rule_set in GLOBAL_RULES.items():
 
-            # Cria lista para falhas manuais (será fundida a 'details' depois)
-            manual_failures = []
+            #debug(f"\n🔍 Checking YAML column: {yaml_column}")
 
-            # 1) Employee ID: não nulo  (vai aparecer agora)
-            if emp:
-                ge_df.expect_column_values_to_not_be_null(emp)
+            # Encontrar coluna real usando get_col()
+            real_col = get_col(df, yaml_column, aliases)
 
-            # 2) Datas: normalização + 2 regras (vazio e formato)
-            if hire:
-                try:
-                    norm_col = "_norm_hire_date"
+            if not real_col:
+                #debug(f"   ⚠️ Column not present in this sheet. Skipping.")
+                continue
 
-                    # Força leitura textual, preservando formatos originais
-                    raw_values = df[hire].apply(lambda x: str(x).strip() if pd.notna(x) else "")
+            debug(f"   ✔ Column found in Excel as: {real_col}")
+            expectations = rule_set.get("expectations", [])
+            debug(f"   ➤ Expectations: {expectations}")
 
-                    # Remove o sufixo "00:00:00" se vier de células datetime
-                    cleaned = raw_values.str.replace(r"\s*00:00:00(\+00:00)?$", "", regex=True)
+            # -----------------------------
+            # NOT NULL
+            # -----------------------------
+            if "expect_column_values_to_not_be_null" in expectations:
+                debug(f"      • Applying NOT NULL")
 
-                    # 1️⃣ Marca vazios
-                    is_empty = cleaned.eq("") | cleaned.str.lower().isin(["nan", "nat", "none"])
+                res = ge_df.expect_column_values_to_not_be_null(real_col)
+                total_checks += 1
 
-                    # 2️⃣ Regex de formato correto (yyyy-mm-dd)
-                    valid_regex = r"^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$"
+                if not res.success:
+                    debug(f"        ❌ Not Null FAILED")
+                    for idx in res.result.get("unexpected_index_list", []):
+                        failure_details.append({
+                            "Column": real_col,
+                            "Row": idx + 7,
+                            "Value": df.loc[idx, real_col],
+                            "Rule": "not_null"
+                        })
+                else:
+                    debug(f"        ✔ Not Null PASSED")
 
-                    # 3️⃣ Cria coluna normalizada
-                    normalized = cleaned.copy()
-                    normalized[is_empty] = pd.NA
+            # -----------------------------
+            # REGEX
+            # -----------------------------
+            if "expect_column_values_to_match_regex" in expectations:
+                pattern = rule_set.get("pattern")
+                debug(f"      • Applying REGEX → {pattern}")
 
-                    # Anexa ao dataset GE
-                    ge_df[norm_col] = normalized
+                res = ge_df.expect_column_values_to_match_regex(real_col, pattern)
+                total_checks += 1
 
-                    # (a) Vazios → falha
-                    ge_df.expect_column_values_to_not_be_null(norm_col)
+                if not res.success:
+                    debug(f"        ❌ Regex FAILED")
+                    for idx, val in zip(
+                        res.result.get("unexpected_index_list", []),
+                        res.result.get("unexpected_list", [])
+                    ):
+                        failure_details.append({
+                            "Column": real_col,
+                            "Row": idx + 7,
+                            "Value": val,
+                            "Rule": f"regex: {pattern}"
+                        })
+                else:
+                    debug(f"        ✔ Regex PASSED")
 
-                    # (b) Formato incorreto → falha
-                    ge_df.expect_column_values_to_match_regex(
-                        norm_col,
-                        valid_regex,
-                        result_format="COMPLETE",
-                    )
+            # -----------------------------
+            # IN SET
+            # -----------------------------
+            if "expect_column_values_to_be_in_set" in expectations:
+                allowed = rule_set.get("allowed_values", [])
+                debug(f"      • Applying IN SET → {allowed}")
 
-                except Exception as e:
-                    print(f"⚠️ Error validating date format in column '{hire}': {e}")
+                res = ge_df.expect_column_values_to_be_in_set(real_col, allowed)
+                total_checks += 1
 
-            # 3) Outras regras
-            if etype:
-                ge_df.expect_column_values_to_be_in_set(
-                    etype, ["Permanent", "Temporary", "Intern", "Contractor"]
-                )
-            if position_number:
-                ge_df.expect_column_values_to_not_be_null(position_number)
+                if not res.success:
+                    debug(f"        ❌ In Set FAILED")
+                    for idx, val in zip(
+                        res.result.get("unexpected_index_list", []),
+                        res.result.get("unexpected_list", [])
+                    ):
+                        failure_details.append({
+                            "Column": real_col,
+                            "Row": idx + 7,
+                            "Value": val,
+                            "Rule": f"in_set: {allowed}"
+                        })
+                else:
+                    debug(f"        ✔ In Set PASSED")
 
+        # ---------------------------------------------------------
+        # Finalização da aba
+        # ---------------------------------------------------------
+        # Agora executamos a validação REAL do GE
+        validation = ge_df.validate(result_format="COMPLETE")
 
-        elif dgw_type == "PersonalContactInfo":
-            email = get_col(df, "email")
-            phone = get_col(df, "phone")
-            if email:
-                ge_df.expect_column_values_to_match_regex(email, r"[^@]+@[^@]+\.[^@]+")
-            if phone:
-                ge_df.expect_column_values_to_match_regex(phone, r"^[\d\+\-\(\) ]{8,20}$")
+        failed = 0
+        failure_details = []
 
-        # =========================================================
-        # 🧩 Executa as validações
-        # =========================================================
-        try:
-            result = ge_df.validate(result_format="COMPLETE")
-        except Exception as e:
-            print(f"❌ Internal error during tab validation '{sheet_name}': {e}")
-            result = {"results": [], "statistics": {"evaluated_expectations": 0}}
-            all_results.append({
-                "File": os.path.basename(file_path),
-                "Sheet": sheet_name,
-                "Type": dgw_type,
-                "Total Checks": 0,
-                "Failed": 0,
-                "Success %": 0,
-                "Error": f"Validation crash: {e}",
-                "Fail HTML": f"<div class='fail-container'><b>Erro interno:</b> {e}</div>"
-            })
-            continue
+        for r in validation["results"]:
+            if not r.get("success"):
+                failed += 1
 
-            # Contagem mais segura de resultados
-        total = len(result.get("results", []))
-        failed = sum(1 for r in result["results"] if not r.get("success", False))
-        if total > 0:
-            success_rate = (1 - failed / total) * 100
-        else:
-            success_rate = 0  # Nenhuma regra avaliada = erro total
-        success_rate = round(float(success_rate), 2)
+                rule_name = r["expectation_config"]["expectation_type"]
+                col = r["expectation_config"]["kwargs"].get("column")
 
-        # =========================================================
-        # 📋 Gera relatório detalhado de falhas (linha, coluna, valor, regra)
-        # =========================================================
-        details = []
-        for r in result["results"]:
-            if not r["success"]:
-                rule_name = r["expectation_config"].get("expectation_type", "Unknown Rule")
-                col = r["expectation_config"]["kwargs"].get("column", "N/A")
-                # 🔁 Mostra o nome real da coluna no relatório
-                if col == "_norm_hire_date":
-                    col = hire
                 unexpected_vals = (
-                    r["result"].get("unexpected_list")
-                    or r["result"].get("partial_unexpected_list")
-                    or []
+                        r["result"].get("unexpected_list")
+                        or r["result"].get("partial_unexpected_list")
+                        or []
                 )
+
                 unexpected_idx = (
-                    r["result"].get("unexpected_index_list")
-                    or r["result"].get("partial_unexpected_index_list")
-                    or []
+                        r["result"].get("unexpected_index_list")
+                        or r["result"].get("partial_unexpected_index_list")
+                        or []
                 )
+
                 for val, idx in zip(unexpected_vals, unexpected_idx):
-                    details.append({
+                    failure_details.append({
                         "Column": col,
                         "Row": idx + 7,
                         "Value": val,
                         "Rule": rule_name
                     })
 
-        # =========================================================
-        # 🧱 Monta HTML de falhas
-        # =========================================================
-        if details:
-            df_details = pd.DataFrame(details)
-            fail_path = os.path.join(FAILS_DIR, f"{os.path.basename(file_path)}_{sheet_name}_failures.csv")
-            df_details.to_csv(fail_path, index=False, encoding="utf-8-sig")
+        total_checks = len(validation["results"])
+        success_rate = (1 - failed / total_checks) * 100 if total_checks > 0 else 100
 
-            fail_html = df_details[["Column", "Row", "Value", "Rule"]].to_html(
-                index=False, border=0, classes="fail-table", justify="center"
+        debug(f"\n📘 Finished sheet: {sheet_name}")
+        debug(f"   ➤ Total checks: {total_checks}")
+        debug(f"   ➤ Failures: {failed}")
+        debug(f"   ➤ Success rate: {round(success_rate, 2)}%")
+
+        if failed:
+            df_fail = pd.DataFrame(failure_details)
+            fail_path = os.path.join(
+                FAILS_DIR,
+                f"{os.path.basename(file_path)}_{sheet_name}_failures.csv"
             )
-            fail_html = fail_html.replace("&lt;", "<").replace("&gt;", ">").replace("&quot;", '"').replace("&amp;", "&")
-
-            fail_html = f"""
-            <div class="fail-container" style="margin-top:10px;">
-                <h4 style='color:#b00000;margin:10px 0;'>Fault Details — Aba: {sheet_name}</h4>
-                {fail_html}
-            </div>
-            """
-            print(f"❌ Details of saved failures in: {fail_path}")
+            df_fail.to_csv(fail_path, index=False, encoding="utf-8-sig")
+            fail_html = df_fail.to_html(index=False, border=0)
+            debug(f"   ❌ Failures saved to: {fail_path}")
         else:
-            fail_html = f"<div class='fail-container'><i>No errors reported in the tab {sheet_name}.</i></div>"
-            print(f"✅ No detailed faults recorded in the tab {sheet_name}.")
+            fail_html = "<i>No validation errors found.</i>"
+            debug("   ✔ No failures.")
 
-        # =========================================================
-        # ✅ Adiciona resultado da aba
-        # =========================================================
         all_results.append({
             "File": os.path.basename(file_path),
             "Sheet": sheet_name,
             "Type": dgw_type,
-            "Total Checks": total,
+            "Total Checks": total_checks,
             "Failed": failed,
             "Success %": round(success_rate, 2),
             "Error": "",
@@ -301,6 +361,7 @@ def validate_dgw(file_path):
         })
 
     return all_results
+
 
 def build_progress_bar(res):
     """Gera a barra de progresso com cor e largura corrigidas."""

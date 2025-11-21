@@ -1,0 +1,131 @@
+﻿Column,Row,Value,Rule
+Country*,7,,expect_column_values_to_not_be_null
+Country*,8,,expect_column_values_to_not_be_null
+Country*,9,,expect_column_values_to_not_be_null
+Country*,10,,expect_column_values_to_not_be_null
+Country*,11,,expect_column_values_to_not_be_null
+Country*,12,,expect_column_values_to_not_be_null
+Country*,13,,expect_column_values_to_not_be_null
+Country*,14,,expect_column_values_to_not_be_null
+Country*,15,,expect_column_values_to_not_be_null
+Country*,16,,expect_column_values_to_not_be_null
+Country*,17,,expect_column_values_to_not_be_null
+Country*,18,,expect_column_values_to_not_be_null
+Country*,19,,expect_column_values_to_not_be_null
+Currency*,7,,expect_column_values_to_not_be_null
+Currency*,8,,expect_column_values_to_not_be_null
+Currency*,9,,expect_column_values_to_not_be_null
+Currency*,10,,expect_column_values_to_not_be_null
+Currency*,11,,expect_column_values_to_not_be_null
+Currency*,12,,expect_column_values_to_not_be_null
+Currency*,13,,expect_column_values_to_not_be_null
+Currency*,14,,expect_column_values_to_not_be_null
+Currency*,15,,expect_column_values_to_not_be_null
+Currency*,16,,expect_column_values_to_not_be_null
+Currency*,17,,expect_column_values_to_not_be_null
+Currency*,18,,expect_column_values_to_not_be_null
+Currency*,19,,expect_column_values_to_not_be_null
+Row ID*,7,,expect_column_values_to_not_be_null
+Row ID*,8,,expect_column_values_to_not_be_null
+Row ID*,9,,expect_column_values_to_not_be_null
+Row ID*,10,,expect_column_values_to_not_be_null
+Row ID*,11,,expect_column_values_to_not_be_null
+Row ID*,12,,expect_column_values_to_not_be_null
+Row ID*,13,,expect_column_values_to_not_be_null
+Row ID*,14,,expect_column_values_to_not_be_null
+Row ID*,15,,expect_column_values_to_not_be_null
+Row ID*,16,,expect_column_values_to_not_be_null
+Row ID*,17,,expect_column_values_to_not_be_null
+Row ID*,18,,expect_column_values_to_not_be_null
+Row ID*,19,,expect_column_values_to_not_be_null
+Payment Election Rule*,7,,expect_column_values_to_not_be_null
+Payment Election Rule*,8,,expect_column_values_to_not_be_null
+Payment Election Rule*,9,,expect_column_values_to_not_be_null
+Payment Election Rule*,10,,expect_column_values_to_not_be_null
+Payment Election Rule*,11,,expect_column_values_to_not_be_null
+Payment Election Rule*,12,,expect_column_values_to_not_be_null
+Payment Election Rule*,13,,expect_column_values_to_not_be_null
+Payment Election Rule*,14,,expect_column_values_to_not_be_null
+Payment Election Rule*,15,,expect_column_values_to_not_be_null
+Payment Election Rule*,16,,expect_column_values_to_not_be_null
+Payment Election Rule*,17,,expect_column_values_to_not_be_null
+Payment Election Rule*,18,,expect_column_values_to_not_be_null
+Payment Election Rule*,19,,expect_column_values_to_not_be_null
+Row ID**,7,,expect_column_values_to_not_be_null
+Row ID**,8,,expect_column_values_to_not_be_null
+Row ID**,9,,expect_column_values_to_not_be_null
+Row ID**,10,,expect_column_values_to_not_be_null
+Row ID**,11,,expect_column_values_to_not_be_null
+Row ID**,12,,expect_column_values_to_not_be_null
+Row ID**,13,,expect_column_values_to_not_be_null
+Row ID**,14,,expect_column_values_to_not_be_null
+Row ID**,15,,expect_column_values_to_not_be_null
+Row ID**,16,,expect_column_values_to_not_be_null
+Row ID**,17,,expect_column_values_to_not_be_null
+Row ID**,18,,expect_column_values_to_not_be_null
+Row ID**,19,,expect_column_values_to_not_be_null
+Order*,7,,expect_column_values_to_not_be_null
+Order*,8,,expect_column_values_to_not_be_null
+Order*,9,,expect_column_values_to_not_be_null
+Order*,10,,expect_column_values_to_not_be_null
+Order*,11,,expect_column_values_to_not_be_null
+Order*,12,,expect_column_values_to_not_be_null
+Order*,13,,expect_column_values_to_not_be_null
+Order*,14,,expect_column_values_to_not_be_null
+Order*,15,,expect_column_values_to_not_be_null
+Order*,16,,expect_column_values_to_not_be_null
+Order*,17,,expect_column_values_to_not_be_null
+Order*,18,,expect_column_values_to_not_be_null
+Order*,19,,expect_column_values_to_not_be_null
+Payment Type*,7,,expect_column_values_to_not_be_null
+Payment Type*,8,,expect_column_values_to_not_be_null
+Payment Type*,9,,expect_column_values_to_not_be_null
+Payment Type*,10,,expect_column_values_to_not_be_null
+Payment Type*,11,,expect_column_values_to_not_be_null
+Payment Type*,12,,expect_column_values_to_not_be_null
+Payment Type*,13,,expect_column_values_to_not_be_null
+Payment Type*,14,,expect_column_values_to_not_be_null
+Payment Type*,15,,expect_column_values_to_not_be_null
+Payment Type*,16,,expect_column_values_to_not_be_null
+Payment Type*,17,,expect_column_values_to_not_be_null
+Payment Type*,18,,expect_column_values_to_not_be_null
+Payment Type*,19,,expect_column_values_to_not_be_null
+Distribution Amount*,7,,expect_column_values_to_not_be_null
+Distribution Amount*,8,,expect_column_values_to_not_be_null
+Distribution Amount*,9,,expect_column_values_to_not_be_null
+Distribution Amount*,10,,expect_column_values_to_not_be_null
+Distribution Amount*,11,,expect_column_values_to_not_be_null
+Distribution Amount*,12,,expect_column_values_to_not_be_null
+Distribution Amount*,13,,expect_column_values_to_not_be_null
+Distribution Amount*,14,,expect_column_values_to_not_be_null
+Distribution Amount*,15,,expect_column_values_to_not_be_null
+Distribution Amount*,16,,expect_column_values_to_not_be_null
+Distribution Amount*,17,,expect_column_values_to_not_be_null
+Distribution Amount*,18,,expect_column_values_to_not_be_null
+Distribution Amount*,19,,expect_column_values_to_not_be_null
+Distribution Percentage*,7,,expect_column_values_to_not_be_null
+Distribution Percentage*,8,,expect_column_values_to_not_be_null
+Distribution Percentage*,9,,expect_column_values_to_not_be_null
+Distribution Percentage*,10,,expect_column_values_to_not_be_null
+Distribution Percentage*,11,,expect_column_values_to_not_be_null
+Distribution Percentage*,12,,expect_column_values_to_not_be_null
+Distribution Percentage*,13,,expect_column_values_to_not_be_null
+Distribution Percentage*,14,,expect_column_values_to_not_be_null
+Distribution Percentage*,15,,expect_column_values_to_not_be_null
+Distribution Percentage*,16,,expect_column_values_to_not_be_null
+Distribution Percentage*,17,,expect_column_values_to_not_be_null
+Distribution Percentage*,18,,expect_column_values_to_not_be_null
+Distribution Percentage*,19,,expect_column_values_to_not_be_null
+Distribution Balance*,7,,expect_column_values_to_not_be_null
+Distribution Balance*,8,,expect_column_values_to_not_be_null
+Distribution Balance*,9,,expect_column_values_to_not_be_null
+Distribution Balance*,10,,expect_column_values_to_not_be_null
+Distribution Balance*,11,,expect_column_values_to_not_be_null
+Distribution Balance*,12,,expect_column_values_to_not_be_null
+Distribution Balance*,13,,expect_column_values_to_not_be_null
+Distribution Balance*,14,,expect_column_values_to_not_be_null
+Distribution Balance*,15,,expect_column_values_to_not_be_null
+Distribution Balance*,16,,expect_column_values_to_not_be_null
+Distribution Balance*,17,,expect_column_values_to_not_be_null
+Distribution Balance*,18,,expect_column_values_to_not_be_null
+Distribution Balance*,19,,expect_column_values_to_not_be_null
